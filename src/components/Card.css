@@ -1,0 +1,103 @@
+.card {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.card-header {
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  position: relative;
+  padding-right: 100px; /* 編集ボタンのスペースを確保 */
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  display: inline-block;
+  background-image: var(--accent-gradient);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.card-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 400;
+  margin-top: 4px;
+  padding-right: 0;
+  max-width: calc(100% - 100px); /* 編集ボタンのスペースを考慮 */
+}
+
+.card-content {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.card-content.empty {
+  color: var(--text-secondary);
+  min-height: 100px;
+}
+
+.card-edit-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 7px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  background: var(--accent-gradient);
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.card-edit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* スマホ向けスタイル */
+@media (max-width: 768px) {
+  .card-header {
+    padding-right: 80px; /* スマホでは少し小さめに */
+  }
+
+  .card-subtitle {
+    max-width: calc(100% - 80px);
+    font-size: 13px;
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+
+  .card-edit-button {
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1;
+  }
+
+  .card-title {
+    font-size: 18px;
+  }
+}
+

@@ -116,7 +116,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
   const handleSave = () => {
     if (
       !editedItem.organization ||
-      !editedItem.department ||
+      !editedItem.serviceType ||
       !editedItem.startYear ||
       !editedItem.startMonth
     ) {
@@ -148,16 +148,16 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h2 className="modal-title">職歴詳細</h2>
-          <button className="modal-close" onClick={onClose}>
+    <div className="career-detail-overlay" onClick={onClose}>
+      <div className="career-detail-content" onClick={(e) => e.stopPropagation()}>
+        <div className="career-detail-header">
+          <h2 className="career-detail-title">職歴詳細</h2>
+          <button className="career-detail-close" onClick={onClose}>
             ×
           </button>
         </div>
 
-        <div className="modal-body">
+        <div className="career-detail-body">
           {/* ヘッダー情報 */}
           <div className="career-header-info">
             <div className="career-number-circle">{index + 1}</div>
@@ -260,6 +260,63 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             </div>
 
             <div className="detail-item">
+              <div className="detail-label">勤務先</div>
+              {isEditing ? (
+                <input
+                  type="text"
+                  className="detail-input"
+                  value={editedItem.organization || ''}
+                  onChange={(e) =>
+                    setEditedItem({ ...editedItem, organization: e.target.value })
+                  }
+                  placeholder="勤務先を入力"
+                />
+              ) : (
+                <div className="detail-value">
+                  {editedItem.organization || '未入力'}
+                </div>
+              )}
+            </div>
+
+            <div className="detail-item">
+              <div className="detail-label">サービス形態</div>
+              {isEditing ? (
+                <input
+                  type="text"
+                  className="detail-input"
+                  value={editedItem.serviceType || ''}
+                  onChange={(e) =>
+                    setEditedItem({ ...editedItem, serviceType: e.target.value })
+                  }
+                  placeholder="サービス形態を入力"
+                />
+              ) : (
+                <div className="detail-value">
+                  {editedItem.serviceType || '未入力'}
+                </div>
+              )}
+            </div>
+
+            <div className="detail-item">
+              <div className="detail-label">診療科／分野</div>
+              {isEditing ? (
+                <input
+                  type="text"
+                  className="detail-input"
+                  value={editedItem.medicalField || ''}
+                  onChange={(e) =>
+                    setEditedItem({ ...editedItem, medicalField: e.target.value })
+                  }
+                  placeholder="診療科／分野を入力"
+                />
+              ) : (
+                <div className="detail-value">
+                  {editedItem.medicalField || '未入力'}
+                </div>
+              )}
+            </div>
+
+            <div className="detail-item">
               <div className="detail-label">職種</div>
               {isEditing ? (
                 <input
@@ -279,51 +336,49 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             </div>
 
             <div className="detail-item">
-              <div className="detail-label">やったこと</div>
+              <div className="detail-label">勤務形態</div>
               {isEditing ? (
-                <textarea
-                  className="detail-textarea"
-                  value={editedItem.whatDid || ''}
+                <input
+                  type="text"
+                  className="detail-input"
+                  value={editedItem.workType || ''}
                   onChange={(e) =>
-                    setEditedItem({ ...editedItem, whatDid: e.target.value })
+                    setEditedItem({ ...editedItem, workType: e.target.value })
                   }
-                  placeholder="やったことを入力"
-                  rows={4}
+                  placeholder="勤務形態を入力"
                 />
               ) : (
                 <div className="detail-value">
-                  {editedItem.whatDid || '未入力'}
+                  {editedItem.workType || '未入力'}
                 </div>
               )}
             </div>
 
             <div className="detail-item">
-              <div className="detail-label">学んだこと</div>
+              <div className="detail-label">経験詳細</div>
               {isEditing ? (
                 <textarea
                   className="detail-textarea"
-                  value={editedItem.whatLearned || ''}
+                  value={editedItem.experienceDetail || ''}
                   onChange={(e) =>
-                    setEditedItem({
-                      ...editedItem,
-                      whatLearned: e.target.value,
-                    })
+                    setEditedItem({ ...editedItem, experienceDetail: e.target.value })
                   }
-                  placeholder="学んだことを入力"
-                  rows={4}
+                  placeholder="経験詳細を入力"
+                  rows={6}
+                  style={{ resize: 'vertical', minHeight: '120px' }}
                 />
               ) : (
                 <div className="detail-value">
-                  {editedItem.whatLearned || '未入力'}
+                  {editedItem.experienceDetail || '未入力'}
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        <div className="modal-footer">
+        <div className="career-detail-footer">
           {isEditing ? (
-            <div className="modal-footer-actions">
+            <div className="career-detail-footer-actions">
               <button className="btn-cancel" onClick={handleCancel}>
                 キャンセル
               </button>
@@ -332,7 +387,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
               </button>
             </div>
           ) : (
-            <div className="modal-footer-actions">
+            <div className="career-detail-footer-actions">
               <button className="btn-delete" onClick={handleDelete}>
                 削除
               </button>

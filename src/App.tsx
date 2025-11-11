@@ -60,6 +60,8 @@ function App() {
   };
 
   const handleDataUpdate = (data: ProfileData) => {
+    console.log('App - handleDataUpdate called with:', data)
+    console.log('App - data.careerHistory:', data.careerHistory)
     setProfileData(data);
   };
 
@@ -92,7 +94,7 @@ function App() {
         <Route path="/" element={<Navigate to="/registration" replace />} />
         <Route path="*" element={<Navigate to="/registration" replace />} />
       </Routes>
-    </div>
+      </div>
   );
 }
 
@@ -109,16 +111,24 @@ function ProfileSheetWrapper({
   const location = useLocation();
   const [profileData, setProfileData] = useState<ProfileData>(initialProfileData);
 
+  // initialProfileDataが変更されたら更新
+  useEffect(() => {
+    console.log('ProfileSheetWrapper - initialProfileData updated:', initialProfileData)
+    setProfileData(initialProfileData);
+  }, [initialProfileData]);
+
   useEffect(() => {
     // ログイン時に渡されたプロフィールデータを反映
     const state = location.state as { profileData?: ProfileData } | null;
     if (state?.profileData) {
+      console.log('ProfileSheetWrapper - location.state.profileData:', state.profileData)
       setProfileData(state.profileData);
       onDataUpdate(state.profileData);
     }
-  }, [location, onDataUpdate]);
+  }, [location.state]);
 
   const handleDataUpdate = (data: ProfileData) => {
+    console.log('ProfileSheetWrapper - handleDataUpdate called with:', data)
     setProfileData(data);
     onDataUpdate(data);
   };

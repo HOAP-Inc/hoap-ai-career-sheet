@@ -1,22 +1,94 @@
-.career-add-form {
+.career-add-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.career-add-modal {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  animation: careerAddSlideIn 0.3s ease;
+}
+
+@keyframes careerAddSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.career-add-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   padding: 24px;
-  background: var(--bg-primary);
-  border-radius: 8px;
-  margin-top: 24px;
+  border-bottom: 1px solid var(--border-color);
 }
 
-.form-title {
-  font-size: 18px;
+.career-add-title {
+  font-size: 22px;
   font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 20px;
+  margin: 0 0 4px 0;
+  background-image: var(--accent-gradient);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
-.career-add-form .form-group {
+.career-add-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.career-add-close:hover {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.career-add-body {
+  padding: 24px;
+}
+
+.career-add-body .form-group {
   margin-bottom: 16px;
 }
 
-.career-add-form .form-group label {
+.career-add-body .form-group:last-of-type {
+  margin-bottom: 24px;
+}
+
+.career-add-body .form-group label {
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -24,9 +96,10 @@
   margin-bottom: 8px;
 }
 
-.career-add-form .form-group input[type="text"],
-.career-add-form .form-group input[type="number"],
-.career-add-form .form-group select {
+.career-add-body .form-group input[type="text"],
+.career-add-body .form-group input[type="number"],
+.career-add-body .form-group select,
+.career-add-body .form-group textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid var(--border-color);
@@ -38,19 +111,102 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.career-add-form .form-group input[type="text"]:focus,
-.career-add-form .form-group input[type="number"]:focus,
-.career-add-form .form-group select:focus {
+.career-add-body .form-group input[type="text"]:focus,
+.career-add-body .form-group input[type="number"]:focus,
+.career-add-body .form-group select:focus,
+.career-add-body .form-group textarea:focus {
   outline: none;
   border-color: #bc1888;
   box-shadow: 0 0 0 3px rgba(188, 24, 136, 0.1);
 }
 
+.career-add-body .form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.5;
+}
+
+.form-group-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.form-group-half {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group-half label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.form-group-half input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group-half input[type="text"]:focus {
+  outline: none;
+  border-color: #bc1888;
+  box-shadow: 0 0 0 3px rgba(188, 24, 136, 0.1);
+}
+
+@media (max-width: 768px) {
+  .career-add-modal {
+    width: 95%;
+    max-height: 85vh;
+  }
+
+  .career-add-header {
+    padding: 20px;
+  }
+
+  .career-add-body {
+    padding: 20px;
+  }
+
+  .form-group-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .form-group-half {
+    width: 100%;
+  }
+}
+
 .period-inputs {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.period-checkbox {
+  margin-left: 0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+}
+
+@media (max-width: 768px) {
+  .period-checkbox {
+    width: 100%;
+    margin-top: 8px;
+  }
 }
 
 .period-select {
@@ -91,7 +247,7 @@
   color: var(--text-primary);
 }
 
-.career-add-form .checkbox-label {
+.career-add-body .checkbox-label {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -99,7 +255,7 @@
   font-weight: 400;
 }
 
-.career-add-form .checkbox-label input[type="checkbox"] {
+.career-add-body .checkbox-label input[type="checkbox"] {
   width: auto;
   cursor: pointer;
 }
@@ -108,49 +264,75 @@
   margin-left: 6px;
 }
 
-.career-add-form .form-actions {
-  display: flex !important;
-  flex-direction: row !important;
-  justify-content: flex-end !important;
-  align-items: center !important;
-  gap: 12px !important;
-  margin-top: 24px;
-  width: 100%;
+.career-add-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 
-.career-add-form .form-actions .btn-cancel,
-.career-add-form .form-actions .btn-submit {
-  padding: 8px 16px !important;
+.career-add-footer .btn-cancel,
+.career-add-footer .btn-submit {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.career-add-footer .btn-cancel {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.career-add-footer .btn-cancel:hover {
+  background: #f5f5f5;
+}
+
+.career-add-footer .btn-submit {
+  background: var(--accent-gradient);
+  color: white;
+}
+
+.career-add-footer .btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* SectionEditModalと同じスタイルを強制適用 - より具体的なセレクタで上書き */
+.career-add-modal .career-add-body .career-add-footer .btn-cancel,
+.career-add-modal .career-add-body .career-add-footer .btn-submit {
+  padding: 12px 24px !important;
   border: none !important;
   border-radius: 8px !important;
   font-size: 14px !important;
   font-weight: 600 !important;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
   white-space: nowrap !important;
   min-width: auto !important;
   width: auto !important;
-  flex-shrink: 0 !important;
-  display: inline-block !important;
 }
 
-.career-add-form .form-actions .btn-cancel {
+.career-add-modal .career-add-body .career-add-footer .btn-cancel {
   background: var(--bg-primary) !important;
   color: var(--text-primary) !important;
   border: 1px solid var(--border-color) !important;
 }
 
-.career-add-form .form-actions .btn-cancel:hover {
+.career-add-modal .career-add-body .career-add-footer .btn-cancel:hover {
   background: #f5f5f5 !important;
 }
 
-.career-add-form .form-actions .btn-submit {
+.career-add-modal .career-add-body .career-add-footer .btn-submit {
   background: var(--accent-gradient) !important;
   color: white !important;
 }
 
-.career-add-form .form-actions .btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
+.career-add-modal .career-add-body .career-add-footer .btn-submit:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-hover) !important;
 }
 

@@ -29,57 +29,90 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
   const isMobileView =
     typeof window !== 'undefined' ? window.innerWidth <= 768 : false
 
-  const toTotalMonths = (year: number, month: number) => year * 12 + (month - 1)
+  // careerHistoryが変更されるたびに再計算
+  const calculatedValues = React.useMemo(() => {
+    // ヘルパー関数をuseMemoの中に移動
+    const toTotalMonths = (year: number, month: number) => year * 12 + (month - 1)
+    const getStartMonth = (item: CareerItem) => item.startMonth ?? 1
+    const getEndYear = (item: CareerItem) =>
+      item.isCurrent ? currentYear : item.endYear ?? item.startYear
+    const getEndMonth = (item: CareerItem) =>
+      item.isCurrent ? currentMonth : item.endMonth ?? 1
 
-  const getStartMonth = (item: CareerItem) => item.startMonth ?? 1
-  const getEndYear = (item: CareerItem) =>
-    item.isCurrent ? currentYear : item.endYear ?? item.startYear
-  const getEndMonth = (item: CareerItem) =>
-    item.isCurrent ? currentMonth : item.endMonth ?? 1
+    const earliestStartYear = careerHistory.length
+      ? Math.min(...careerHistory.map((item) => item.startYear))
+      : currentYear - 1
+    const latestEndYear = careerHistory.length
+      ? Math.max(
+          ...careerHistory.map((item) => (item.isCurrent ? currentYear : item.endYear ?? item.startYear)),
+        )
+      : currentYear
 
-  const earliestStartYear = careerHistory.length
-    ? Math.min(...careerHistory.map((item) => item.startYear))
-    : currentYear - 1
-  const latestEndYear = careerHistory.length
-    ? Math.max(
-        ...careerHistory.map((item) => (item.isCurrent ? currentYear : item.endYear ?? item.startYear)),
-      )
-    : currentYear
+    const allStartMonthValues = careerHistory.length
+      ? careerHistory.map((item) =>
+          toTotalMonths(item.startYear, getStartMonth(item)),
+        )
+      : [toTotalMonths(earliestStartYear, currentMonth)]
+    const allEndMonthValues = careerHistory.length
+      ? careerHistory.map((item) =>
+          toTotalMonths(getEndYear(item), getEndMonth(item)),
+        )
+      : [toTotalMonths(latestEndYear, currentMonth)]
 
-  const allStartMonthValues = careerHistory.length
-    ? careerHistory.map((item) =>
-        toTotalMonths(item.startYear, getStartMonth(item)),
-      )
-    : [toTotalMonths(earliestStartYear, currentMonth)]
-  const allEndMonthValues = careerHistory.length
-    ? careerHistory.map((item) =>
-        toTotalMonths(getEndYear(item), getEndMonth(item)),
-      )
-    : [toTotalMonths(latestEndYear, currentMonth)]
+    const minTotalMonths = allStartMonthValues.length > 0 ? Math.min(...allStartMonthValues) : toTotalMonths(currentYear, currentMonth)
+    const maxTotalMonths = allEndMonthValues.length > 0 ? Math.max(...allEndMonthValues) : toTotalMonths(currentYear, currentMonth)
 
-  const minTotalMonths = Math.min(...allStartMonthValues)
-  const maxTotalMonths = Math.max(...allEndMonthValues)
+    const minYear = earliestStartYear
+    const maxYear = latestEndYear
 
-  const minYear = earliestStartYear
-  const maxYear = latestEndYear
+    const generateYearLabels = () => {
+      const years = [];
+      for (let year = minYear; year <= maxYear; year += 2) {
+        years.push(year);
+      }
+      if (years[years.length - 1] !== maxYear) {
+        years.push(maxYear);
+      }
+      return years;
+    };
 
-  const generateYearLabels = () => {
-    const years = [];
-    for (let year = minYear; year <= maxYear; year += 2) {
-      years.push(year);
+    const yearLabels = generateYearLabels();
+
+    console.log('useMemo内 - careerHistory.length:', careerHistory.length)
+    console.log('useMemo内 - minTotalMonths:', minTotalMonths)
+    console.log('useMemo内 - maxTotalMonths:', maxTotalMonths)
+
+    return {
+      minTotalMonths,
+      maxTotalMonths,
+      minYear,
+      maxYear,
+      yearLabels,
+      toTotalMonths,
+      getStartMonth,
+      getEndYear,
+      getEndMonth,
     }
-    if (years[years.length - 1] !== maxYear) {
-      years.push(maxYear);
-    }
-    return years;
-  };
+  }, [careerHistory, currentYear, currentMonth])
 
-  const yearLabels = generateYearLabels();
+  const { minTotalMonths, maxTotalMonths, yearLabels, toTotalMonths, getStartMonth, getEndYear, getEndMonth } = calculatedValues
+
+  // デバッグ用: careerHistoryの状態を確認
+  useEffect(() => {
+    console.log('CareerGraph - careerHistory:', careerHistory)
+    console.log('CareerGraph - careerHistory.length:', careerHistory.length)
+    console.log('CareerGraph - minTotalMonths:', minTotalMonths)
+    console.log('CareerGraph - maxTotalMonths:', maxTotalMonths)
+    console.log('CareerGraph - yearLabels:', yearLabels)
+  }, [careerHistory, minTotalMonths, maxTotalMonths, yearLabels])
 
   const calculateBarPosition = (item: CareerItem) => {
     const startTotal = toTotalMonths(item.startYear, getStartMonth(item))
     const endTotal = toTotalMonths(getEndYear(item), getEndMonth(item))
-    const timelineMonths = maxTotalMonths - minTotalMonths + 1
+    
+    // タイムラインの月数を計算（0除算を防ぐ）
+    const timelineMonths = Math.max(maxTotalMonths - minTotalMonths + 1, 1)
+    
     const leftOffset = ((startTotal - minTotalMonths) / timelineMonths) * 100
     const widthPercent =
       ((endTotal - startTotal + 1) / timelineMonths) * 100
@@ -115,9 +148,11 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
   };
 
   const handleAdd = (item: CareerItem) => {
+    console.log('CareerGraph - handleAdd called with:', item)
     if (onCareerAdd) {
       onCareerAdd(item);
       setShowAddForm(false);
+      console.log('CareerGraph - showAddForm set to false')
     }
   };
 
@@ -151,100 +186,96 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
           )}
         </div>
 
-        {showAddForm && onCareerAdd ? (
-          <div className="career-add-form-wrapper">
-            <CareerAddForm onAdd={handleAdd} onCancel={() => setShowAddForm(false)} />
-          </div>
-        ) : (
-          <>
-            <div className="career-timeline">
-              {/* 年のタイムライン */}
-              {careerHistory.length > 0 && (
-                <div className="timeline-years">
-                  {yearLabels.map((year, idx) => (
-                    <div key={idx} className="timeline-year-mark">
-                      <span className="timeline-year-text">{year}</span>
-                    </div>
-                  ))}
+        <div className="career-timeline">
+          {/* 年のタイムライン */}
+          {careerHistory.length > 0 && (
+            <div className="timeline-years">
+              {yearLabels.map((year, idx) => (
+                <div key={idx} className="timeline-year-mark">
+                  <span className="timeline-year-text">{year}</span>
                 </div>
-              )}
-
-              {/* 職歴リストとバー */}
-              {careerHistory.length === 0 ? (
-                <div className="career-empty-message">
-                  <p>キャリア履歴がありません。右上の「追加」ボタンから追加してください。</p>
-                </div>
-              ) : (
-                <div className="career-items-container">
-                  {!isMobileView && (
-                    <div className="career-items-list">
-                      {careerHistory.map((_, index) => (
-                        <div key={index} className="career-item-label">
-                          職歴{index + 1}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                <div
-                  className="career-bars-container"
-                  ref={(el) => {
-                    if (el) {
-                      const containerWidth = el.offsetWidth
-                      // コンテナ幅を保存して後で使用
-                      ;(el as any).__containerWidth = containerWidth
-                    }
-                  }}
-                  style={{ height: `${careerHistory.length * 90 + 40}px` }}
-                >
-                  {careerHistory.map((item, index) => {
-                      const position = calculateBarPosition(item)
-                      const period = formatPeriod(item)
-                      const widthPercent = position.widthPercent
-                      
-                      const isMobile = isMobileView
-
-                      // 法人名と診療科名を結合
-                      const orgText = `${item.organization}${item.department ? `／${item.department}` : ''}`
-                      
-                      // ラベルはバーの左端から配置
-                      let labelLeftPercent = position.leftPercent
-                      
-                      // 右端から20pxの余白を確保
-                      const rightMarginPx = 20
-                      
-                      // 矢印ボタンは常にバーの内側右端に配置
-                      const arrowLeft = `calc(${position.leftPercent}% + ${widthPercent}% - 28px)`
-
-                      // ラベルは常に2行表示（法人名／診療科名 + 勤務期間）
-                      const labelClass = 'career-bar-label right stacked'
-
-                      // ラベルの垂直位置
-                      const labelTop = isMobile ? 36 : 48
-
-                      return (
-                        <CareerBarLabel
-                          key={index}
-                          index={index}
-                          orgText={orgText}
-                          period={period}
-                          labelLeftPercent={labelLeftPercent}
-                          labelTop={labelTop}
-                          rightMarginPx={rightMarginPx}
-                          labelClass={labelClass}
-                          position={position}
-                          isMobile={isMobile}
-                          arrowLeft={arrowLeft}
-                          onCareerClick={() => handleCareerClick(index)}
-                        />
-                      )
-                    })}
-                  </div>
-                </div>
-              )}
+              ))}
             </div>
-          </>
-        )}
+          )}
+
+          {/* 職歴リストとバー */}
+          {careerHistory.length === 0 ? (
+            <div className="career-empty-message">
+              <p>キャリア履歴がありません。右上の「追加」ボタンから追加してください。</p>
+            </div>
+          ) : (
+            <div className="career-items-container">
+              {!isMobileView && (
+              <div className="career-items-list">
+                {careerHistory.map((_, index) => (
+                  <div key={index} className="career-item-label">
+                    職歴{index + 1}
+                  </div>
+                ))}
+              </div>
+              )}
+              <div
+                className="career-bars-container"
+              ref={(el) => {
+                if (el) {
+                  const containerWidth = el.offsetWidth
+                  // コンテナ幅を保存して後で使用
+                  ;(el as any).__containerWidth = containerWidth
+                }
+              }}
+              style={{ height: `${careerHistory.length * 90 + 40}px` }}
+              >
+                {careerHistory.map((item, index) => {
+                  const position = calculateBarPosition(item)
+                  const period = formatPeriod(item)
+                  const widthPercent = position.widthPercent
+                  
+                  const isMobile = isMobileView
+
+                  // 法人名と診療科名を結合
+                  const orgText = `${item.organization}${item.serviceType ? `／${item.serviceType}` : ''}${item.medicalField ? `／${item.medicalField}` : ''}${item.department ? `／${item.department}` : ''}`
+                  
+                  // ラベルはバーの左端から配置
+                  let labelLeftPercent = position.leftPercent
+                  
+                  // 右端から20pxの余白を確保
+                  const rightMarginPx = 20
+
+                  // 矢印ボタンは常にバーの内側右端に配置
+                  const arrowLeft = `calc(${position.leftPercent}% + ${widthPercent}% - 28px)`
+
+                  // ラベルは常に2行表示（法人名／診療科名 + 勤務期間）
+                  const labelClass = 'career-bar-label right stacked'
+
+                  // ラベルの垂直位置
+                  const labelTop = isMobile ? 36 : 48
+
+                  return (
+                    <CareerBarLabel
+                      key={index}
+                      index={index}
+                      orgText={orgText}
+                      period={period}
+                      labelLeftPercent={labelLeftPercent}
+                      labelTop={labelTop}
+                      rightMarginPx={rightMarginPx}
+                      labelClass={labelClass}
+                      position={position}
+                      isMobile={isMobile}
+                      arrowLeft={arrowLeft}
+                      onCareerClick={() => handleCareerClick(index)}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+
+      {showAddForm && onCareerAdd && (
+        <CareerAddForm onAdd={handleAdd} onCancel={() => setShowAddForm(false)} />
+      )}
 
       {selectedCareerIndex !== null && (
         <CareerDetailModal

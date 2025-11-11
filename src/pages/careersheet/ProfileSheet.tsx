@@ -47,9 +47,15 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
   };
 
   const handleCareerAdd = (item: CareerItem) => {
+    console.log('ProfileSheet - handleCareerAdd called with:', item)
+    console.log('ProfileSheet - current careerHistory:', profileData.careerHistory)
+    
     const updatedCareerHistory = [...profileData.careerHistory, item].sort(
       (a, b) => monthValue(a) - monthValue(b),
     );
+    
+    console.log('ProfileSheet - updated careerHistory:', updatedCareerHistory)
+    
     const updatedData = {
       ...profileData,
       careerHistory: updatedCareerHistory,

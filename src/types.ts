@@ -24,11 +24,15 @@ export interface CareerItem {
   startMonth?: number; // 1-12
   endYear?: number;
   endMonth?: number; // 1-12
-  organization: string;
-  department: string;
+  organization: string; // 勤務先
+  serviceType?: string; // サービス形態（新規）
+  medicalField?: string; // 診療科／分野
+  department?: string; // 部署／診療科（後方互換性のため残す）
   isCurrent: boolean;
   jobTitle?: string; // 職種
-  whatDid?: string; // やったこと
-  whatLearned?: string; // 学んだこと
+  workType?: string; // 勤務形態
+  experienceDetail?: string; // 経験詳細
+  whatDid?: string; // やったこと（後方互換性のため残す）
+  whatLearned?: string; // 学んだこと（後方互換性のため残す）
 }
 

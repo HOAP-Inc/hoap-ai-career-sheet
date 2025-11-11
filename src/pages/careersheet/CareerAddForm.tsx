@@ -19,8 +19,12 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
     endYear: undefined,
     endMonth: undefined,
     organization: '',
-    department: '',
+    serviceType: '',
+    medicalField: '',
     isCurrent: false,
+    jobTitle: '',
+    workType: '',
+    experienceDetail: '',
   })
 
   const handleCareerChange = (field: keyof CareerItem, value: string | number | boolean | undefined) => {
@@ -88,7 +92,7 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!careerItem.organization || !careerItem.department || !careerItem.startYear || !careerItem.startMonth) {
+    if (!careerItem.organization || !careerItem.serviceType || !careerItem.startYear || !careerItem.startMonth) {
       alert('すべての必須フィールドを入力してください')
       return
     }
@@ -104,17 +108,28 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
       endYear: careerItem.isCurrent ? undefined : (careerItem.endYear as number | undefined),
       endMonth: careerItem.isCurrent ? undefined : careerItem.endMonth,
       organization: careerItem.organization,
-      department: careerItem.department,
+      serviceType: careerItem.serviceType,
+      medicalField: careerItem.medicalField,
       isCurrent: careerItem.isCurrent || false,
+      jobTitle: careerItem.jobTitle,
+      workType: careerItem.workType,
+      experienceDetail: careerItem.experienceDetail,
     }
 
+    console.log('CareerAddForm - 追加するデータ:', newItem)
     onAdd(newItem)
   }
 
   return (
-    <div className="career-add-form">
-      <h3 className="form-title">キャリア履歴を追加</h3>
-      <form onSubmit={handleSubmit}>
+    <div className="career-add-overlay" onClick={onCancel}>
+      <div className="career-add-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="career-add-header">
+          <h3 className="career-add-title">キャリア履歴を追加</h3>
+          <button type="button" className="career-add-close" onClick={onCancel}>
+            ×
+          </button>
+        </div>
+        <form className="career-add-body" onSubmit={handleSubmit}>
         <div className="form-group">
           <label>在籍期間</label>
           <div className="period-inputs">
@@ -179,10 +194,18 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
               </select>
               <span className="period-suffix">月</span>
             </div>
+            <label className="checkbox-label period-checkbox">
+              <input
+                type="checkbox"
+                checked={careerItem.isCurrent || false}
+                onChange={(e) => handleCareerChange('isCurrent', e.target.checked)}
+              />
+              <span className="checkbox-text">在籍中</span>
+            </label>
           </div>
         </div>
         <div className="form-group">
-          <label>法人名（医院・クリニック名）</label>
+          <label>勤務先</label>
           <input
             type="text"
             value={careerItem.organization || ''}
@@ -190,26 +213,54 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
             required
           />
         </div>
+        <div className="form-group form-group-row">
+          <div className="form-group-half">
+            <label>サービス形態</label>
+            <input
+              type="text"
+              value={careerItem.serviceType || ''}
+              onChange={(e) => handleCareerChange('serviceType', e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group-half">
+            <label>診療科／分野</label>
+            <input
+              type="text"
+              value={careerItem.medicalField || ''}
+              onChange={(e) => handleCareerChange('medicalField', e.target.value)}
+            />
+          </div>
+        </div>
+        <div className="form-group form-group-row">
+          <div className="form-group-half">
+            <label>職種</label>
+            <input
+              type="text"
+              value={careerItem.jobTitle || ''}
+              onChange={(e) => handleCareerChange('jobTitle', e.target.value)}
+            />
+          </div>
+          <div className="form-group-half">
+            <label>勤務形態</label>
+            <input
+              type="text"
+              value={careerItem.workType || ''}
+              onChange={(e) => handleCareerChange('workType', e.target.value)}
+            />
+          </div>
+        </div>
         <div className="form-group">
-          <label>部署／診療科</label>
-          <input
-            type="text"
-            value={careerItem.department || ''}
-            onChange={(e) => handleCareerChange('department', e.target.value)}
-            required
+          <label>経験詳細</label>
+          <textarea
+            value={careerItem.experienceDetail || ''}
+            onChange={(e) => handleCareerChange('experienceDetail', e.target.value)}
+            rows={4}
+            placeholder="経験詳細を入力してください"
+            style={{ resize: 'vertical', minHeight: '100px' }}
           />
         </div>
-        <div className="form-group">
-          <label className="checkbox-label">
-            <input
-              type="checkbox"
-              checked={careerItem.isCurrent || false}
-              onChange={(e) => handleCareerChange('isCurrent', e.target.checked)}
-            />
-            <span className="checkbox-text">在籍中</span>
-          </label>
-        </div>
-        <div className="form-actions">
+        <div className="career-add-footer">
           <button type="button" onClick={onCancel} className="btn-cancel">
             キャンセル
           </button>
@@ -218,6 +269,7 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 };

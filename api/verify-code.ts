@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { getVerificationCode, deleteVerificationCode } from './lib/kv';
+import { getVerificationCode, deleteVerificationCode } from './lib/kv.js';
 
 export default async function handler(
   req: VercelRequest,

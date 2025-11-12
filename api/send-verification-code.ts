@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { sendVerificationEmail } from './lib/mailgun';
-import { saveVerificationCode } from './lib/kv';
+import { sendVerificationEmail } from './lib/mailgun.js';
+import { saveVerificationCode } from './lib/kv.js';
 
 export default async function handler(
   req: VercelRequest,

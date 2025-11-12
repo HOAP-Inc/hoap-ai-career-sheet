@@ -32,7 +32,10 @@ export const sendVerificationEmail = async (email: string): Promise<void> => {
   }
 
   // 実際のAPIを呼び出す
-  const url = `${API_BASE_URL}/api/send-verification-code`;
+  // API_BASE_URLが空の場合は相対パスを使用（Vercelデプロイ時）
+  const url = API_BASE_URL 
+    ? `${API_BASE_URL}/api/send-verification-code`
+    : '/api/send-verification-code';
   console.log('📧 Calling API:', url);
   
   try {
@@ -74,7 +77,10 @@ export const resendVerificationEmail = async (email: string): Promise<void> => {
     return;
   }
 
-  const response = await fetch(`${API_BASE_URL}/api/send-verification-code`, {
+  const url = API_BASE_URL 
+    ? `${API_BASE_URL}/api/send-verification-code`
+    : '/api/send-verification-code';
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -135,7 +141,10 @@ export const verifyCode = async (code: string): Promise<{ email: string }> => {
     throw new Error('メールアドレスが見つかりません');
   }
 
-  const response = await fetch(`${API_BASE_URL}/api/verify-code`, {
+  const url = API_BASE_URL 
+    ? `${API_BASE_URL}/api/verify-code`
+    : '/api/verify-code';
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -174,7 +183,10 @@ export const registerUser = async (data: {
     return;
   }
 
-  const response = await fetch(`${API_BASE_URL}/api/register-user`, {
+  const url = API_BASE_URL 
+    ? `${API_BASE_URL}/api/register-user`
+    : '/api/register-user';
+  const response = await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -216,12 +216,12 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
         <div className="form-group form-group-row">
           <div className="form-group-half">
             <label>サービス形態</label>
-            <input
-              type="text"
+          <input
+            type="text"
               value={careerItem.serviceType || ''}
               onChange={(e) => handleCareerChange('serviceType', e.target.value)}
-              required
-            />
+            required
+          />
           </div>
           <div className="form-group-half">
             <label>診療科／分野</label>

@@ -32,12 +32,12 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
   // careerHistoryが変更されるたびに再計算
   const calculatedValues = React.useMemo(() => {
     // ヘルパー関数をuseMemoの中に移動
-    const toTotalMonths = (year: number, month: number) => year * 12 + (month - 1)
-    const getStartMonth = (item: CareerItem) => item.startMonth ?? 1
-    const getEndYear = (item: CareerItem) =>
-      item.isCurrent ? currentYear : item.endYear ?? item.startYear
-    const getEndMonth = (item: CareerItem) =>
-      item.isCurrent ? currentMonth : item.endMonth ?? 1
+  const toTotalMonths = (year: number, month: number) => year * 12 + (month - 1)
+  const getStartMonth = (item: CareerItem) => item.startMonth ?? 1
+  const getEndYear = (item: CareerItem) =>
+    item.isCurrent ? currentYear : item.endYear ?? item.startYear
+  const getEndMonth = (item: CareerItem) =>
+    item.isCurrent ? currentMonth : item.endMonth ?? 1
 
     const earliestStartYear = careerHistory.length
       ? Math.min(...careerHistory.map((item) => item.startYear))
@@ -48,15 +48,15 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
         )
       : currentYear
 
-    const allStartMonthValues = careerHistory.length
-      ? careerHistory.map((item) =>
-          toTotalMonths(item.startYear, getStartMonth(item)),
-        )
+  const allStartMonthValues = careerHistory.length
+    ? careerHistory.map((item) =>
+        toTotalMonths(item.startYear, getStartMonth(item)),
+      )
       : [toTotalMonths(earliestStartYear, currentMonth)]
-    const allEndMonthValues = careerHistory.length
-      ? careerHistory.map((item) =>
-          toTotalMonths(getEndYear(item), getEndMonth(item)),
-        )
+  const allEndMonthValues = careerHistory.length
+    ? careerHistory.map((item) =>
+        toTotalMonths(getEndYear(item), getEndMonth(item)),
+      )
       : [toTotalMonths(latestEndYear, currentMonth)]
 
     const minTotalMonths = allStartMonthValues.length > 0 ? Math.min(...allStartMonthValues) : toTotalMonths(currentYear, currentMonth)
@@ -65,18 +65,18 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
     const minYear = earliestStartYear
     const maxYear = latestEndYear
 
-    const generateYearLabels = () => {
-      const years = [];
-      for (let year = minYear; year <= maxYear; year += 2) {
-        years.push(year);
-      }
-      if (years[years.length - 1] !== maxYear) {
-        years.push(maxYear);
-      }
-      return years;
-    };
+  const generateYearLabels = () => {
+    const years = [];
+    for (let year = minYear; year <= maxYear; year += 2) {
+      years.push(year);
+    }
+    if (years[years.length - 1] !== maxYear) {
+      years.push(maxYear);
+    }
+    return years;
+  };
 
-    const yearLabels = generateYearLabels();
+  const yearLabels = generateYearLabels();
 
     console.log('useMemo内 - careerHistory.length:', careerHistory.length)
     console.log('useMemo内 - minTotalMonths:', minTotalMonths)
@@ -186,36 +186,36 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
           )}
         </div>
 
-        <div className="career-timeline">
-          {/* 年のタイムライン */}
-          {careerHistory.length > 0 && (
-            <div className="timeline-years">
-              {yearLabels.map((year, idx) => (
-                <div key={idx} className="timeline-year-mark">
-                  <span className="timeline-year-text">{year}</span>
+            <div className="career-timeline">
+              {/* 年のタイムライン */}
+              {careerHistory.length > 0 && (
+                <div className="timeline-years">
+                  {yearLabels.map((year, idx) => (
+                    <div key={idx} className="timeline-year-mark">
+                      <span className="timeline-year-text">{year}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          )}
-
-          {/* 職歴リストとバー */}
-          {careerHistory.length === 0 ? (
-            <div className="career-empty-message">
-              <p>キャリア履歴がありません。右上の「追加」ボタンから追加してください。</p>
-            </div>
-          ) : (
-            <div className="career-items-container">
-              {!isMobileView && (
-              <div className="career-items-list">
-                {careerHistory.map((_, index) => (
-                  <div key={index} className="career-item-label">
-                    職歴{index + 1}
-                  </div>
-                ))}
-              </div>
               )}
-              <div
-                className="career-bars-container"
+
+              {/* 職歴リストとバー */}
+              {careerHistory.length === 0 ? (
+                <div className="career-empty-message">
+                  <p>キャリア履歴がありません。右上の「追加」ボタンから追加してください。</p>
+                </div>
+              ) : (
+                <div className="career-items-container">
+              {!isMobileView && (
+                  <div className="career-items-list">
+                    {careerHistory.map((_, index) => (
+                      <div key={index} className="career-item-label">
+                        職歴{index + 1}
+                      </div>
+                    ))}
+                  </div>
+              )}
+                  <div
+                    className="career-bars-container"
               ref={(el) => {
                 if (el) {
                   const containerWidth = el.offsetWidth
@@ -224,12 +224,12 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
                 }
               }}
               style={{ height: `${careerHistory.length * 90 + 40}px` }}
-              >
-                {careerHistory.map((item, index) => {
-                  const position = calculateBarPosition(item)
-                  const period = formatPeriod(item)
-                  const widthPercent = position.widthPercent
-                  
+                  >
+                    {careerHistory.map((item, index) => {
+                      const position = calculateBarPosition(item)
+                      const period = formatPeriod(item)
+                      const widthPercent = position.widthPercent
+                      
                   const isMobile = isMobileView
 
                   // 法人名と診療科名を結合
@@ -241,8 +241,8 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
                   // 右端から20pxの余白を確保
                   const rightMarginPx = 20
 
-                  // 矢印ボタンは常にバーの内側右端に配置
-                  const arrowLeft = `calc(${position.leftPercent}% + ${widthPercent}% - 28px)`
+                      // 矢印ボタンは常にバーの内側右端に配置
+                      const arrowLeft = `calc(${position.leftPercent}% + ${widthPercent}% - 28px)`
 
                   // ラベルは常に2行表示（法人名／診療科名 + 勤務期間）
                   const labelClass = 'career-bar-label right stacked'
@@ -250,9 +250,9 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
                   // ラベルの垂直位置
                   const labelTop = isMobile ? 36 : 48
 
-                  return (
+                      return (
                     <CareerBarLabel
-                      key={index}
+                          key={index}
                       index={index}
                       orgText={orgText}
                       period={period}
@@ -265,12 +265,12 @@ export const CareerGraph: React.FC<CareerGraphProps> = ({
                       arrowLeft={arrowLeft}
                       onCareerClick={() => handleCareerClick(index)}
                     />
-                  )
-                })}
-              </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
       </div>
 
       {showAddForm && onCareerAdd && (

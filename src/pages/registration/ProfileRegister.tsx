@@ -168,18 +168,22 @@ export const ProfileRegister: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      const age = calculateAge(formData.birthYear, formData.birthMonth, formData.birthDay);
       const phoneWithoutHyphen = formData.phone.replace(/[-\s]/g, '');
 
-      // API呼び出し（開発環境ではモックレスポンスを返す）
+      // API呼び出し（実際のバックエンドに送信）
       await registerUser({
         email: email,
         name: formData.name,
         phone: phoneWithoutHyphen,
-        age: age,
+        birthYear: formData.birthYear,
+        birthMonth: formData.birthMonth,
+        birthDay: formData.birthDay,
+        gender: formData.gender,
         postalCode: formData.postalCode,
         location: formData.location,
+        addressDetail: formData.addressDetail,
         password: formData.password,
+        agreedToPrivacy: formData.agreedToPrivacy,
       });
 
       // 登録データをlocalStorageに保存（ログイン時に使用）

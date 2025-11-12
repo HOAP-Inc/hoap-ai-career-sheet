@@ -1,10 +1,14 @@
 /**
  * API呼び出し用のユーティリティ
- * 開発環境ではモックレスポンスを返します
+ * USE_MOCK_API=true の場合はモックレスポンスを返します
  */
 
-const isDevelopment = import.meta.env.DEV;
+// モックモードの切り替え（環境変数で制御、デフォルトはfalse = 実際のAPI使用）
+const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true';
 const MOCK_DELAY = 1000; // モック時の遅延時間（ms）
+
+// APIのベースURL（本番とローカルで自動切り替え）
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 // モック用の遅延関数
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -13,17 +17,15 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
  * 認証メール送信API
  */
 export const sendVerificationEmail = async (email: string): Promise<void> => {
-  if (isDevelopment) {
-    // 開発環境ではモックレスポンスを返す
+  if (USE_MOCK_API) {
+    // モック環境ではモックレスポンスを返す
     console.log('📧 [MOCK] 認証メール送信:', email);
     await delay(MOCK_DELAY);
-    // エラーをシミュレートする場合はコメントアウトを外す
-    // throw new Error('メール送信に失敗しました（モックエラー）');
     return;
   }
 
-  // 本番環境では実際のAPIを呼び出す
-  const response = await fetch('/api/auth/send-verification-email', {
+  // 実際のAPIを呼び出す
+  const response = await fetch(`${API_BASE_URL}/api/send-verification-code`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +35,7 @@ export const sendVerificationEmail = async (email: string): Promise<void> => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || 'メール送信に失敗しました');
+    throw new Error(errorData.error || 'メール送信に失敗しました');
   }
 };
 
@@ -41,13 +43,13 @@ export const sendVerificationEmail = async (email: string): Promise<void> => {
  * 認証メール再送信API
  */
 export const resendVerificationEmail = async (email: string): Promise<void> => {
-  if (isDevelopment) {
+  if (USE_MOCK_API) {
     console.log('📧 [MOCK] 認証メール再送信:', email);
     await delay(MOCK_DELAY);
     return;
   }
 
-  const response = await fetch('/api/auth/resend-verification-email', {
+  const response = await fetch(`${API_BASE_URL}/api/send-verification-code`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -57,7 +59,7 @@ export const resendVerificationEmail = async (email: string): Promise<void> => {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || '再送信に失敗しました');
+    throw new Error(errorData.error || '再送信に失敗しました');
   }
 };
 
@@ -92,32 +94,33 @@ export const verifyToken = async (token: string): Promise<{ email: string }> => 
  * 認証コード認証API
  */
 export const verifyCode = async (code: string): Promise<{ email: string }> => {
-  if (isDevelopment) {
+  if (USE_MOCK_API) {
     console.log('🔐 [MOCK] 認証コード認証:', code);
     await delay(MOCK_DELAY);
-    
-    // テスト用の認証コード（開発環境では任意の6桁でOK）
-    if (code === '123456') {
-      // エラーをシミュレートする場合はコメントアウトを外す
-      // throw new Error('認証コードが正しくありません（モックエラー）');
-    }
     
     // EmailRegisterで入力されたemailをlocalStorageから取得
     const email = localStorage.getItem('registration_email') || 'test@example.com';
     return { email };
   }
 
-  const response = await fetch('/api/auth/verify-code', {
+  // EmailRegisterで入力されたemailをlocalStorageから取得
+  const email = localStorage.getItem('registration_email');
+  
+  if (!email) {
+    throw new Error('メールアドレスが見つかりません');
+  }
+
+  const response = await fetch(`${API_BASE_URL}/api/verify-code`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ code: code.trim() }),
+    body: JSON.stringify({ email, code: code.trim() }),
   });
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || '認証コードが正しくありません');
+    throw new Error(errorData.error || '認証コードが正しくありません');
   }
 
   return response.json();
@@ -130,20 +133,23 @@ export const registerUser = async (data: {
   email: string;
   name: string;
   phone: string;
-  age: number;
+  birthYear: number;
+  birthMonth: number;
+  birthDay: number;
+  gender: string;
   postalCode: string;
   location: string;
+  addressDetail?: string;
   password: string;
+  agreedToPrivacy: boolean;
 }): Promise<void> => {
-  if (isDevelopment) {
+  if (USE_MOCK_API) {
     console.log('✅ [MOCK] ユーザー登録:', data);
     await delay(MOCK_DELAY);
-    // エラーをシミュレートする場合はコメントアウトを外す
-    // throw new Error('登録に失敗しました（モックエラー）');
     return;
   }
 
-  const response = await fetch('/api/auth/register', {
+  const response = await fetch(`${API_BASE_URL}/api/register-user`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -153,8 +159,9 @@ export const registerUser = async (data: {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.message || '登録に失敗しました');
+    throw new Error(errorData.error || '登録に失敗しました');
   }
 };
+
 
 

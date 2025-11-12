@@ -30,8 +30,12 @@ export const EmailRegister: React.FC = () => {
     setIsLoading(true);
 
     try {
+      console.log('🚀 EmailRegister: Starting email send for:', email);
+      
       // API呼び出し（開発環境ではモックレスポンスを返す）
       await sendVerificationEmail(email);
+      
+      console.log('✅ EmailRegister: Email sent successfully');
       
       // emailをlocalStorageに保存（認証コード認証時に使用）
       localStorage.setItem('registration_email', email);
@@ -39,11 +43,12 @@ export const EmailRegister: React.FC = () => {
       // 成功時はEmailSentページへ遷移（emailをstateで渡す）
       navigate('/registration/email-sent', { state: { email } });
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : 'メール送信に失敗しました。しばらくしてから再度お試しください。',
-      );
+      console.error('❌ EmailRegister: Error occurred:', err);
+      const errorMessage = err instanceof Error
+        ? err.message
+        : 'メール送信に失敗しました。しばらくしてから再度お試しください。';
+      console.error('❌ EmailRegister: Error message:', errorMessage);
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }

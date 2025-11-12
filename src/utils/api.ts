@@ -17,6 +17,13 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
  * 認証メール送信API
  */
 export const sendVerificationEmail = async (email: string): Promise<void> => {
+  console.log('📧 sendVerificationEmail called:', {
+    email,
+    USE_MOCK_API,
+    API_BASE_URL,
+    fullUrl: `${API_BASE_URL}/api/send-verification-code`,
+  });
+
   if (USE_MOCK_API) {
     // モック環境ではモックレスポンスを返す
     console.log('📧 [MOCK] 認証メール送信:', email);
@@ -25,17 +32,35 @@ export const sendVerificationEmail = async (email: string): Promise<void> => {
   }
 
   // 実際のAPIを呼び出す
-  const response = await fetch(`${API_BASE_URL}/api/send-verification-code`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email }),
-  });
+  const url = `${API_BASE_URL}/api/send-verification-code`;
+  console.log('📧 Calling API:', url);
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
 
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(errorData.error || 'メール送信に失敗しました');
+    console.log('📧 API Response:', {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('📧 API Error:', errorData);
+      throw new Error(errorData.error || 'メール送信に失敗しました');
+    }
+
+    const result = await response.json().catch(() => ({}));
+    console.log('📧 API Success:', result);
+  } catch (error) {
+    console.error('📧 Fetch Error:', error);
+    throw error;
   }
 };
 

@@ -4,9 +4,16 @@ import Mailgun from 'mailgun.js';
 const mailgun = new Mailgun(formData);
 
 // Mailgunクライアントを初期化
+const apiKey = process.env.MAILGUN_API_KEY;
+const domain = process.env.MAILGUN_DOMAIN || 'hoap-inc.jp';
+
+if (!apiKey) {
+  console.warn('MAILGUN_API_KEY is not set. Email sending will fail.');
+}
+
 export const mg = mailgun.client({
   username: 'api',
-  key: process.env.MAILGUN_API_KEY || '',
+  key: apiKey || '',
 });
 
 // 認証コードメールを送信
@@ -34,14 +41,18 @@ export async function sendVerificationEmail(email: string, code: string) {
   };
 
   try {
-    const response = await mg.messages.create(
-      process.env.MAILGUN_DOMAIN || 'hoap-inc.jp',
-      messageData
-    );
+    if (!apiKey) {
+      throw new Error('MAILGUN_API_KEY is not configured');
+    }
+
+    const response = await mg.messages.create(domain, messageData);
     console.log('Email sent successfully:', response);
     return response;
   } catch (error) {
     console.error('Failed to send email:', error);
+    if (error instanceof Error) {
+      console.error('Error details:', error.message);
+    }
     throw error;
   }
 }

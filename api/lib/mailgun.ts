@@ -4,11 +4,19 @@ import Mailgun from 'mailgun.js';
 const mailgun = new Mailgun(formData);
 
 // Mailgunクライアントを初期化
-const apiKey = process.env.MAILGUN_API_KEY;
+let apiKey = process.env.MAILGUN_API_KEY;
 const domain = process.env.MAILGUN_DOMAIN || 'hoap-inc.jp';
 
 if (!apiKey) {
   console.warn('MAILGUN_API_KEY is not set. Email sending will fail.');
+} else {
+  // MailgunのAPIキーが 'key-' で始まらない場合は追加
+  // ただし、既に 'key-' で始まる場合はそのまま使用
+  if (!apiKey.startsWith('key-')) {
+    // 提供されたキーが既に正しい形式の可能性もあるので、そのまま使用
+    // Mailgunの新しいAPIキー形式では 'key-' プレフィックスが不要な場合もある
+    console.log('API key format check: key does not start with "key-"');
+  }
 }
 
 export const mg = mailgun.client({
@@ -45,13 +53,31 @@ export async function sendVerificationEmail(email: string, code: string) {
       throw new Error('MAILGUN_API_KEY is not configured');
     }
 
+    console.log('Attempting to send email:', {
+      domain,
+      from: messageData.from,
+      to: messageData.to,
+      apiKeyPrefix: apiKey.substring(0, 10) + '...',
+    });
+
     const response = await mg.messages.create(domain, messageData);
-    console.log('Email sent successfully:', response);
+    console.log('Email sent successfully:', {
+      id: response.id,
+      message: response.message,
+    });
     return response;
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Failed to send email:', error);
     if (error instanceof Error) {
-      console.error('Error details:', error.message);
+      console.error('Error name:', error.name);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
+    if (error && typeof error === 'object' && 'status' in error) {
+      console.error('HTTP status:', error.status);
+    }
+    if (error && typeof error === 'object' && 'details' in error) {
+      console.error('Error details:', error.details);
     }
     throw error;
   }

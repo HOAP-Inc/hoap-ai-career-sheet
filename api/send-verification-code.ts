@@ -66,6 +66,22 @@ export default async function handler(
   } catch (error) {
     console.error('Error sending verification code:', error);
     
+    // エラーの詳細をログに出力
+    if (error instanceof Error) {
+      console.error('Error name:', error.name);
+      console.error('Error message:', error.message);
+      console.error('Error stack:', error.stack);
+    }
+    
+    // 環境変数の確認（値は表示しない）
+    console.error('Environment check:', {
+      hasMailgunApiKey: !!process.env.MAILGUN_API_KEY,
+      hasMailgunDomain: !!process.env.MAILGUN_DOMAIN,
+      mailgunDomain: process.env.MAILGUN_DOMAIN,
+      hasKvUrl: !!process.env.KV_REST_API_URL,
+      hasKvToken: !!process.env.KV_REST_API_TOKEN,
+    });
+    
     return res.status(500).json({
       success: false,
       error: 'メール送信に失敗しました。しばらくしてから再度お試しください。',

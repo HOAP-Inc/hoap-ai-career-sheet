@@ -30,8 +30,11 @@ export default async function handler(
   try {
     const { email, code } = req.body;
 
+    console.log('📥 Verify code request:', { email, code, hasEmail: !!email, hasCode: !!code });
+
     // バリデーション
     if (!email || typeof email !== 'string') {
+      console.error('❌ Email validation failed:', email);
       return res.status(400).json({
         success: false,
         error: 'メールアドレスが必要です',
@@ -39,6 +42,7 @@ export default async function handler(
     }
 
     if (!code || typeof code !== 'string') {
+      console.error('❌ Code validation failed:', code);
       return res.status(400).json({
         success: false,
         error: '認証コードが必要です',
@@ -46,9 +50,12 @@ export default async function handler(
     }
 
     // Vercel KVから認証コードを取得
+    console.log('🔍 Fetching saved code for:', email);
     const savedCode = await getVerificationCode(email);
+    console.log('📝 Saved code:', { savedCode, inputCode: code, match: savedCode === code });
 
     if (!savedCode) {
+      console.error('❌ No saved code found for:', email);
       return res.status(400).json({
         success: false,
         error: '認証コードの有効期限が切れています。再度送信してください。',
@@ -57,6 +64,7 @@ export default async function handler(
 
     // 認証コードを比較
     if (savedCode !== code) {
+      console.error('❌ Code mismatch:', { savedCode, inputCode: code });
       return res.status(400).json({
         success: false,
         error: '認証コードが正しくありません',

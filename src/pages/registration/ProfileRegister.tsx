@@ -16,8 +16,10 @@ export const ProfileRegister: React.FC = () => {
     birthYear: new Date().getFullYear() - 30,
     birthMonth: 1,
     birthDay: 1,
+    gender: '',
     postalCode: '',
     location: '',
+    addressDetail: '',
     password: '',
     passwordConfirm: '',
     privacyAgreed: false,
@@ -107,7 +109,9 @@ export const ProfileRegister: React.FC = () => {
         }
         break;
       case 3:
-        // 生年月日のバリデーションは不要（デフォルト値がある）
+        if (!formData.gender) {
+          newErrors.gender = '性別を選択してください';
+        }
         break;
       case 4:
         if (!formData.location.trim()) {
@@ -183,10 +187,11 @@ export const ProfileRegister: React.FC = () => {
         location: formData.location,
         addressDetail: formData.addressDetail,
         password: formData.password,
-        agreedToPrivacy: formData.agreedToPrivacy,
+        agreedToPrivacy: formData.privacyAgreed,
       });
 
       // 登録データをlocalStorageに保存（ログイン時に使用）
+      const age = calculateAge(formData.birthYear, formData.birthMonth, formData.birthDay);
       const registrationData = {
         name: formData.name,
         email: email,
@@ -334,8 +339,27 @@ export const ProfileRegister: React.FC = () => {
                   ))}
                 </select>
               </div>
+              <div className="form-field" style={{ marginTop: '16px' }}>
+                <select
+                  value={formData.gender}
+                  onChange={(e) => handleChange('gender', e.target.value)}
+                  className={`form-input ${errors.gender ? 'error' : ''}`}
+                  style={{ marginTop: '8px' }}
+                >
+                  <option value="">性別を選択してください</option>
+                  <option value="男">男</option>
+                  <option value="女">女</option>
+                  <option value="その他">その他</option>
+                </select>
+                {errors.gender && <div className="error-message">{errors.gender}</div>}
+              </div>
             </div>
-            <button type="button" onClick={handleNext} className="btn-next">
+            <button 
+              type="button" 
+              onClick={handleNext} 
+              className="btn-next"
+              disabled={!formData.gender}
+            >
               次へ
             </button>
           </div>
@@ -371,6 +395,14 @@ export const ProfileRegister: React.FC = () => {
                 <div className="address-display">{formData.location}</div>
               )}
               {errors.location && <div className="error-message">{errors.location}</div>}
+              <input
+                type="text"
+                placeholder="建物名・部屋番号（任意）"
+                value={formData.addressDetail}
+                onChange={(e) => handleChange('addressDetail', e.target.value)}
+                className="form-input"
+                style={{ marginTop: '12px' }}
+              />
             </div>
             <button
               type="button"

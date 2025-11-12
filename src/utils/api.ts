@@ -67,7 +67,7 @@ export const resendVerificationEmail = async (email: string): Promise<void> => {
  * トークン認証API
  */
 export const verifyToken = async (token: string): Promise<{ email: string }> => {
-  if (isDevelopment) {
+  if (USE_MOCK_API) {
     console.log('🔐 [MOCK] トークン認証:', token);
     await delay(MOCK_DELAY);
     // モック用のemailを返す（実際のトークンから取得できないため）

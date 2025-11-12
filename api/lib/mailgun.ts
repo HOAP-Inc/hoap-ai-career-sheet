@@ -1,7 +1,8 @@
 import formData from 'form-data';
 import Mailgun from 'mailgun.js';
 
-const mailgun = new Mailgun(formData);
+// Mailgun v9+ の正しいインポート方法
+const mailgun = new (Mailgun as any)(formData);
 
 // Mailgunクライアントを初期化
 let apiKey = process.env.MAILGUN_API_KEY;

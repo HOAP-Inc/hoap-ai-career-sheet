@@ -115,10 +115,18 @@
   gap: 16px;
 }
 
+.profile-personal-header {
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+  position: relative;
+  padding-right: 100px;
+}
+
 .profile-personal-title {
-  margin: 0 0 4px 0;
   font-size: 20px;
   font-weight: 600;
+  margin: 0 0 4px 0;
   display: inline-block;
   background-image: var(--accent-gradient);
   background-size: 100% 100%;
@@ -127,11 +135,6 @@
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 12px;
-  margin-bottom: 16px;
-  padding-right: 100px;
-  position: relative;
 }
 
 .profile-personal-body {
@@ -217,6 +220,10 @@
 
   .profile-personal-panel {
     min-width: 100%;
+  }
+
+  .profile-personal-header {
+    padding-right: 80px;
   }
 
   .profile-personal-title {

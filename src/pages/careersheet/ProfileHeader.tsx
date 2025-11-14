@@ -90,7 +90,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </div>
 
         <div className="profile-personal-panel">
-          <h3 className="profile-personal-title">私はこんな人（自己分析）</h3>
+          <div className="profile-personal-header">
+            <h3 className="profile-personal-title">私はこんな人（自己分析）</h3>
+          </div>
           <div className={`profile-personal-body ${personalWords ? '' : 'empty'}`}>
             {personalWords || '未入力です'}
           </div>

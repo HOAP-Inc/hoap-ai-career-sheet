@@ -5,6 +5,7 @@ import { Card } from '../../components/Card';
 import { CareerGraph } from './CareerGraph';
 import { ProfileBasics } from './ProfileBasics';
 import { ProfileEditModal } from './ProfileEditModal';
+import { ProfileBasicsEditModal } from './ProfileBasicsEditModal';
 import { SectionEditModal } from './SectionEditModal';
 import './ProfileSheet.css';
 
@@ -21,6 +22,8 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
 }) => {
   const [profileData, setProfileData] = useState<ProfileData>(data);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [isEditingBasics, setIsEditingBasics] = useState(false);
+  const [isEditingPersonalWords, setIsEditingPersonalWords] = useState(false);
   const [editingSection, setEditingSection] = useState<{
     type: 'can' | 'will' | 'being' | 'doing' | 'must' | null;
     value: string;
@@ -89,6 +92,24 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
     setIsEditingProfile(false);
   };
 
+  const handleBasicsSave = (updated: Partial<ProfileData>) => {
+    const updatedData = { ...profileData, ...updated };
+    setProfileData(updatedData);
+    if (onDataUpdate) {
+      onDataUpdate(updatedData);
+    }
+    setIsEditingBasics(false);
+  };
+
+  const handlePersonalWordsSave = (value: string) => {
+    const updatedData = { ...profileData, personalWords: value };
+    setProfileData(updatedData);
+    if (onDataUpdate) {
+      onDataUpdate(updatedData);
+    }
+    setIsEditingPersonalWords(false);
+  };
+
   const handleSectionEdit = (type: 'can' | 'will' | 'being' | 'doing' | 'must') => {
     const value = profileData[type] || '';
     setEditingSection({ type, value });
@@ -117,7 +138,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
           personalWords={profileData.personalWords}
           memberId={profileData.memberId}
           onPhotoChange={onPhotoChange}
-          onEdit={() => setIsEditingProfile(true)}
+          onEditPersonalWords={() => setIsEditingPersonalWords(true)}
         />
 
         <div className="profile-basics-wrapper">
@@ -130,6 +151,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             email={profileData.email}
             phone={profileData.phone}
             qualifications={profileData.qualifications}
+            onEdit={() => setIsEditingBasics(true)}
           />
         </div>
 
@@ -215,6 +237,21 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         onClose={() => setIsEditingProfile(false)}
         onSave={handleProfileSave}
       />
+      <ProfileBasicsEditModal
+        data={profileData}
+        isOpen={isEditingBasics}
+        onClose={() => setIsEditingBasics(false)}
+        onSave={handleBasicsSave}
+      />
+      {isEditingPersonalWords && (
+        <SectionEditModal
+          isOpen={true}
+          title="私はこんな人（自己分析）"
+          value={profileData.personalWords || ''}
+          onClose={() => setIsEditingPersonalWords(false)}
+          onSave={handlePersonalWordsSave}
+        />
+      )}
       {editingSection.type && (
         <SectionEditModal
           isOpen={true}

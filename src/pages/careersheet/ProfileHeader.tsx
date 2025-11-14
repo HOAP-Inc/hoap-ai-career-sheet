@@ -7,7 +7,7 @@ interface ProfileHeaderProps {
   personalWords?: string
   memberId?: string
   onPhotoChange?: (file: File) => void
-  onEdit?: () => void
+  onEditPersonalWords?: () => void
 }
 
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
@@ -16,7 +16,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   personalWords,
   memberId,
   onPhotoChange,
-  onEdit,
+  onEditPersonalWords,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -33,11 +33,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   return (
     <div className="profile-header-no-frame">
-      {onEdit && (
-        <button className="profile-edit-button" onClick={onEdit}>
-          編集
-        </button>
-      )}
       <div className="profile-main-content">
         <div className="profile-summary-column">
           <div className="profile-photo-wrapper" onClick={handlePhotoClick}>
@@ -92,6 +87,11 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <div className="profile-personal-panel">
           <div className="profile-personal-header">
             <h3 className="profile-personal-title">私はこんな人（自己分析）</h3>
+            {onEditPersonalWords && (
+              <button className="card-edit-button" onClick={onEditPersonalWords}>
+                編集
+              </button>
+            )}
           </div>
           <div className={`profile-personal-body ${personalWords ? '' : 'empty'}`}>
             {personalWords || '未入力です'}

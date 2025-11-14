@@ -11,6 +11,7 @@ interface ProfileBasicsProps {
   email?: string;
   phone?: string;
   qualifications?: string[];
+  onEdit?: () => void;
 }
 
 export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
@@ -22,6 +23,7 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
   email,
   phone,
   qualifications,
+  onEdit,
 }) => {
   const formatLocation = (value?: string) => {
     if (!value) return '';
@@ -31,7 +33,7 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
   const displayLocation = formatLocation(location);
 
   return (
-    <Card title="基本プロフィール" className="section-card">
+    <Card title="基本プロフィール" className="section-card" onEdit={onEdit}>
       <div className="profile-basics-content">
         <div className="profile-basics-row">
           <ProfileRow label="年齢" value={age !== undefined ? `${age}歳` : ''} />

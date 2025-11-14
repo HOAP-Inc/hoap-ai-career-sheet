@@ -3,6 +3,7 @@ import type { ProfileData, CareerItem } from '../../types';
 import { ProfileHeader } from './ProfileHeader';
 import { Card } from '../../components/Card';
 import { CareerGraph } from './CareerGraph';
+import { ProfileBasics } from './ProfileBasics';
 import { ProfileEditModal } from './ProfileEditModal';
 import { SectionEditModal } from './SectionEditModal';
 import './ProfileSheet.css';
@@ -113,15 +114,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         <ProfileHeader
           name={profileData.name}
           photo={profileData.photo}
-          location={profileData.location}
-          postalCode={profileData.postalCode}
-          addressDetail={profileData.addressDetail}
-          age={profileData.age}
-          gender={profileData.gender}
-          email={profileData.email}
-          phone={profileData.phone}
           personalWords={profileData.personalWords}
-          qualifications={profileData.qualifications}
           memberId={profileData.memberId}
           onPhotoChange={onPhotoChange}
           onEdit={() => setIsEditingProfile(true)}
@@ -130,12 +123,12 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         <div className="sheet-grid">
           <div className="sheet-row sheet-row-experience">
             <div className="sheet-col">
-        <CareerGraph
-          careerHistory={profileData.careerHistory}
-          onCareerUpdate={handleCareerUpdate}
-          onCareerAdd={handleCareerAdd}
-          onCareerDelete={handleCareerDelete}
-        />
+              <CareerGraph
+                careerHistory={profileData.careerHistory}
+                onCareerUpdate={handleCareerUpdate}
+                onCareerAdd={handleCareerAdd}
+                onCareerDelete={handleCareerDelete}
+              />
             </div>
             <div className="sheet-col">
               <Card
@@ -147,6 +140,18 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
                   {profileData.can || ''}
                 </div>
               </Card>
+            </div>
+            <div className="sheet-col">
+              <ProfileBasics
+                age={profileData.age}
+                gender={profileData.gender}
+                postalCode={profileData.postalCode}
+                location={profileData.location}
+                addressDetail={profileData.addressDetail}
+                email={profileData.email}
+                phone={profileData.phone}
+                qualifications={profileData.qualifications}
+              />
             </div>
           </div>
 

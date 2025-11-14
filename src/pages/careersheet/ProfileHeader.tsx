@@ -4,15 +4,7 @@ import './ProfileHeader.css';
 interface ProfileHeaderProps {
   name: string
   photo?: string
-  location?: string
-  postalCode?: string
-  addressDetail?: string
-  age?: number
-  gender?: string
-  email?: string
-  phone?: string
   personalWords?: string
-  qualifications?: string[]
   memberId?: string
   onPhotoChange?: (file: File) => void
   onEdit?: () => void
@@ -21,15 +13,7 @@ interface ProfileHeaderProps {
 export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   name,
   photo,
-  location,
-  postalCode,
-  addressDetail,
-  age,
-  gender,
-  email,
-  phone,
   personalWords,
-  qualifications,
   memberId,
   onPhotoChange,
   onEdit,
@@ -47,15 +31,8 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     }
   }
 
-  const formatLocation = (value?: string) => {
-    if (!value) return ''
-    return value.trim()
-  }
-
-  const displayLocation = formatLocation(location)
-
   return (
-    <div className="profile-header">
+    <div className="profile-header-no-frame">
       {onEdit && (
         <button className="profile-edit-button" onClick={onEdit}>
           編集
@@ -119,45 +96,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           </div>
         </div>
       </div>
-
-      <div className="profile-basics-section">
-        <h4 className="profile-basics-heading">基本プロフィール</h4>
-        <div className="profile-basics-content">
-          <div className="profile-basics-row">
-            <ProfileRow 
-              label="年齢" 
-              value={age !== undefined ? `${age}歳` : ''} 
-            />
-            <ProfileRow 
-              label="性別" 
-              value={gender || ''} 
-            />
-          </div>
-          <div className="profile-basics-row profile-basics-row-single">
-            <ProfileRow
-              label="住所"
-              value={[postalCode ? `〒${postalCode}` : null, displayLocation, addressDetail].filter(Boolean).join(' ')}
-            />
-          </div>
-          <div className="profile-basics-row">
-            <ProfileRow label="メールアドレス" value={email || ''} />
-            <ProfileRow label="電話番号" value={phone || '(非公開)'} />
-          </div>
-          <div className="profile-basics-row profile-basics-row-single">
-            <ProfileRow
-              label="所有資格"
-              value={qualifications && qualifications.length > 0 ? qualifications.join(' / ') : ''}
-            />
-          </div>
-        </div>
-      </div>
     </div>
   )
 }
-
-const ProfileRow: React.FC<{ label: string; value: string }> = ({ label, value }) => (
-  <div className="profile-row">
-    <span className="profile-row-label">{label}</span>
-    <span className={`profile-row-value ${value ? '' : 'empty'}`}>{value || '未入力'}</span>
-  </div>
-)

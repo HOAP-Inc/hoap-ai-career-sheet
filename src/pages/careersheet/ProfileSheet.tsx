@@ -118,7 +118,6 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
           addressDetail={profileData.addressDetail}
           age={profileData.age}
           gender={profileData.gender}
-          jobTitle={profileData.jobTitle}
           email={profileData.email}
           phone={profileData.phone}
           personalWords={profileData.personalWords}

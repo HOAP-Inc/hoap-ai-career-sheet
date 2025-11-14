@@ -9,7 +9,6 @@ interface ProfileHeaderProps {
   addressDetail?: string
   age?: number
   gender?: string
-  jobTitle?: string
   email?: string
   phone?: string
   personalWords?: string
@@ -27,7 +26,6 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   addressDetail,
   age,
   gender,
-  jobTitle,
   email,
   phone,
   personalWords,

@@ -19,11 +19,11 @@
   flex-direction: row;
   align-items: center;
   gap: 0;
-  background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
+  background: var(--bg-secondary);
   border-radius: 10px;
   padding: 0;
-  border: none;
-  box-shadow: none;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
   overflow: hidden;
 }
 
@@ -51,9 +51,6 @@
   align-items: center;
   justify-content: center;
   background: var(--bg-secondary);
-  border-radius: 8px;
-  box-shadow: var(--shadow);
-  margin: 4px;
 }
 
 .profile-row-value.empty {

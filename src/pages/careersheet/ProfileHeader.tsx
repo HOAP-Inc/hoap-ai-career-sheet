@@ -86,7 +86,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
         <div className="profile-personal-panel">
           <div className="profile-personal-header">
-            <h3 className="profile-personal-title">私はこんな人（自己分析）</h3>
+            <div className="profile-personal-title-wrapper">
+              <h3 className="profile-personal-title">私はこんな人</h3><span className="profile-personal-title-description">（自己分析）</span>
+            </div>
             {onEditPersonalWords && (
               <button className="card-edit-button" onClick={onEditPersonalWords}>
               編集

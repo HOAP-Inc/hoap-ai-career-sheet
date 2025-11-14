@@ -22,7 +22,7 @@
 .card-title-wrapper {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 0;
   flex-wrap: wrap;
 }
 

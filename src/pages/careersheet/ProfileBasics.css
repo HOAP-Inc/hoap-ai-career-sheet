@@ -16,21 +16,28 @@
 
 .profile-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 4px;
+  gap: 0;
   background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 0;
   border: none;
   box-shadow: none;
+  overflow: hidden;
 }
 
 .profile-row-label {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: white;
+  background: var(--accent-gradient);
+  padding: 10px 14px;
+  width: 33.33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .profile-row-value {
@@ -38,6 +45,11 @@
   font-weight: 500;
   color: var(--text-primary);
   text-align: center;
+  padding: 10px 14px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .profile-row-value.empty {

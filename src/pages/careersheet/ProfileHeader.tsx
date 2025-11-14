@@ -49,12 +49,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   const formatLocation = (value?: string) => {
     if (!value) return ''
-    const match = value.match(/^(.*?[都道府県])\s*(.*?市|.*?区|.*?町|.*?村)/)
-    if (match) {
-      return `${match[1]} ${match[2]}`
-    }
-    const parts = value.split(/\s+/)
-    return parts.slice(0, 2).join(' ') || value
+    return value.trim()
   }
 
   const displayLocation = formatLocation(location)

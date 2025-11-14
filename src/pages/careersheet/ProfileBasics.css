@@ -41,8 +41,8 @@
 }
 
 /* 単一項目（住所、所有資格）のグラデーション部分の幅を2列の項目と揃える */
-.profile-basics-row-single .profile-row-label {
-  width: calc((100% - 12px) / 2 * 33.33%);
+.profile-basics-row.profile-basics-row-single .profile-row-label {
+  width: calc((100% - 12px) / 2 * 33.33%) !important;
   min-width: 80px; /* 最小幅を設定して可読性を保つ */
 }
 

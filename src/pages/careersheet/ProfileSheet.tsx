@@ -168,7 +168,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             <div className="sheet-col">
               <Card
                 title="Can"
-                titleDescription="今できること"
+                titleDescription="（今できること）"
                 className="section-card"
                 onEdit={() => handleSectionEdit('can')}
               >
@@ -183,7 +183,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             <div className="sheet-col">
               <Card
                 title="Must"
-                titleDescription="譲れない条件"
+                titleDescription="（譲れない条件）"
                 className="section-card"
                 onEdit={() => handleSectionEdit('must')}
               >
@@ -195,7 +195,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             <div className="sheet-col">
               <Card
                 title="Will"
-                titleDescription="やりたいこと"
+                titleDescription="（やりたいこと）"
                 className="section-card"
                 onEdit={() => handleSectionEdit('will')}
               >
@@ -210,7 +210,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             <div className="sheet-col">
               <Card
                 title="Being"
-                titleDescription="AI分析"
+                titleDescription="（AI分析）"
                 subtitle="どんな存在でありたいか？／どんな価値観か？"
                 className="section-card"
                 onEdit={() => handleSectionEdit('being')}
@@ -223,7 +223,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             <div className="sheet-col">
               <Card
                 title="Doing"
-                titleDescription="AI分析"
+                titleDescription="（AI分析）"
                 subtitle="どんな行動パターンか？／どんな役割か？"
                 className="section-card"
                 onEdit={() => handleSectionEdit('doing')}

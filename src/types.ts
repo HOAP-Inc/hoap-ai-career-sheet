@@ -17,6 +17,7 @@ export interface ProfileData {
   being: string;
   careerHistory: CareerItem[];
   qualifications?: string[];
+  memberId?: string;
 }
 
 export interface CareerItem {

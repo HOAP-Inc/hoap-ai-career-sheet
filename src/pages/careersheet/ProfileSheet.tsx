@@ -123,6 +123,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
           phone={profileData.phone}
           personalWords={profileData.personalWords}
           qualifications={profileData.qualifications}
+          memberId={profileData.memberId}
           onPhotoChange={onPhotoChange}
           onEdit={() => setIsEditingProfile(true)}
         />

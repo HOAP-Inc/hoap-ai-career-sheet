@@ -133,10 +133,30 @@
   box-shadow: var(--shadow-hover);
 }
 
-.profile-location {
+.profile-postal {
   font-size: 14px;
   color: var(--text-secondary);
   margin: 0;
+}
+
+.profile-location-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.profile-location,
+.profile-address-detail {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.profile-address-detail {
+  display: inline-flex;
+  align-items: center;
 }
 
 .profile-job-title-box {
@@ -288,6 +308,18 @@
   }
 
   .profile-location {
+    font-size: 13px;
+  }
+
+  .profile-postal {
+    font-size: 13px;
+  }
+
+  .profile-location-row {
+    gap: 10px;
+  }
+
+  .profile-address-detail {
     font-size: 13px;
   }
 

@@ -117,14 +117,16 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             {gender && <span>性別: {gender}</span>}
           </div>
         )}
-        {displayLocation && (
-          <div className="profile-location">{displayLocation}</div>
+        {postalCode && (
+          <div className="profile-postal">〒{postalCode}</div>
         )}
-        {(postalCode || addressDetail) && (
-          <div className="profile-contact">
-            {postalCode && <span className="profile-contact-item">〒{postalCode}</span>}
+        {(displayLocation || addressDetail) && (
+          <div className="profile-location-row">
+            {displayLocation && (
+              <div className="profile-location">{displayLocation}</div>
+            )}
             {addressDetail && (
-              <span className="profile-contact-item">{addressDetail}</span>
+              <div className="profile-address-detail">{addressDetail}</div>
             )}
           </div>
         )}

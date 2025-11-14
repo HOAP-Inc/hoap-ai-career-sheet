@@ -83,8 +83,19 @@
 }
 
 .profile-contact {
-  font-size: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 13px;
   color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.profile-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
 }
 
 .profile-name {
@@ -278,6 +289,11 @@
 
   .profile-location {
     font-size: 13px;
+  }
+
+  .profile-contact {
+    font-size: 12px;
+    gap: 8px;
   }
 
   .profile-job-title-content {

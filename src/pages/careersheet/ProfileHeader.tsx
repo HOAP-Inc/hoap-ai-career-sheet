@@ -5,9 +5,13 @@ interface ProfileHeaderProps {
   name: string
   photo?: string
   location?: string
+  postalCode?: string
+  addressDetail?: string
   age?: number
   gender?: string
   jobTitle?: string
+  email?: string
+  phone?: string
   personalWords?: string
   qualifications?: string[]
   onPhotoChange?: (file: File) => void
@@ -18,9 +22,13 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   name,
   photo,
   location,
+  postalCode,
+  addressDetail,
   age,
   gender,
   jobTitle,
+  email,
+  phone,
   personalWords,
   qualifications,
   onPhotoChange,
@@ -111,6 +119,20 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         )}
         {displayLocation && (
           <div className="profile-location">{displayLocation}</div>
+        )}
+        {(postalCode || addressDetail) && (
+          <div className="profile-contact">
+            {postalCode && <span className="profile-contact-item">〒{postalCode}</span>}
+            {addressDetail && (
+              <span className="profile-contact-item">{addressDetail}</span>
+            )}
+          </div>
+        )}
+        {(email || phone) && (
+          <div className="profile-contact">
+            {email && <span className="profile-contact-item">Mail: {email}</span>}
+            {phone && <span className="profile-contact-item">Tel: {phone}</span>}
+          </div>
         )}
         {jobTitle && (
           <div className="profile-job-title-box">

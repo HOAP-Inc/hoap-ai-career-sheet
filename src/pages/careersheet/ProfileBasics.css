@@ -22,7 +22,7 @@
   background: var(--bg-secondary);
   border-radius: 10px;
   padding: 0;
-  border: 1px solid var(--border-color);
+  border: 1px solid rgba(253, 242, 248, 0.8);
   box-shadow: var(--shadow);
   overflow: hidden;
 }

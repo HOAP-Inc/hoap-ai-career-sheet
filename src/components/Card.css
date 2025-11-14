@@ -41,10 +41,17 @@
 }
 
 .card-title-description {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--text-secondary);
+  font-size: 20px;
+  font-weight: 600;
   margin: 0 0 4px 0;
+  display: inline-block;
+  background-image: var(--accent-gradient);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 
 .card-subtitle {
@@ -111,6 +118,10 @@
   }
 
   .card-title {
+    font-size: 18px;
+  }
+
+  .card-title-description {
     font-size: 18px;
   }
 }

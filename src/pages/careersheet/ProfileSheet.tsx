@@ -128,14 +128,14 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         />
 
         <div className="sheet-grid">
-          <div className="sheet-row">
+          <div className="sheet-row sheet-row-experience">
             <div className="sheet-col">
-              <CareerGraph
-                careerHistory={profileData.careerHistory}
-                onCareerUpdate={handleCareerUpdate}
-                onCareerAdd={handleCareerAdd}
-                onCareerDelete={handleCareerDelete}
-              />
+        <CareerGraph
+          careerHistory={profileData.careerHistory}
+          onCareerUpdate={handleCareerUpdate}
+          onCareerAdd={handleCareerAdd}
+          onCareerDelete={handleCareerDelete}
+        />
             </div>
             <div className="sheet-col">
               <Card

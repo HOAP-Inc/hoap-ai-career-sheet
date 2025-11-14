@@ -16,8 +16,7 @@ export const Card: React.FC<CardProps> = ({ children, className = '', title, tit
       {title && (
         <div className="card-header">
           <div className="card-title-wrapper">
-            <h2 className="card-title">{title}</h2>
-            {titleDescription && <span className="card-title-description">{titleDescription}</span>}
+            <h2 className="card-title">{title}</h2>{titleDescription && <span className="card-title-description">{titleDescription}</span>}
           </div>
           {subtitle && <p className="card-subtitle">{subtitle}</p>}
           {onEdit && (

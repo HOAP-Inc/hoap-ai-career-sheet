@@ -54,6 +54,59 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
   const displayLocation = formatLocation(location)
 
+  const detailItems: Array<{ label: string; value: string }> = []
+
+  const ageGender: string[] = []
+  if (age !== undefined) {
+    ageGender.push(`${age}歳`)
+  }
+  if (gender) {
+    ageGender.push(gender)
+  }
+  if (ageGender.length > 0) {
+    detailItems.push({
+      label: '年齢 / 性別',
+      value: ageGender.join('・'),
+    })
+  }
+
+  const locationParts = [
+    postalCode ? `〒${postalCode}` : null,
+    displayLocation || null,
+    addressDetail || null,
+  ].filter(Boolean)
+  if (locationParts.length > 0) {
+    detailItems.push({
+      label: '所在地',
+      value: locationParts.join('　'),
+    })
+  }
+
+  const contactParts = [
+    email ? `Mail: ${email}` : null,
+    phone ? `Tel: ${phone}` : null,
+  ].filter(Boolean)
+  if (contactParts.length > 0) {
+    detailItems.push({
+      label: '連絡先',
+      value: contactParts.join('　'),
+    })
+  }
+
+  if (jobTitle) {
+    detailItems.push({
+      label: '職種',
+      value: jobTitle,
+    })
+  }
+
+  if (qualifications && qualifications.length > 0) {
+    detailItems.push({
+      label: '保有資格',
+      value: qualifications.join(' / '),
+    })
+  }
+
   return (
     <div className="profile-header">
       {onEdit && (
@@ -105,60 +158,27 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       <div className="profile-info">
         <div className="profile-info-header">
           <h1 className="profile-name">{name}</h1>
+          <div className="profile-personal-inline">
+            <h3 className="profile-personal-inline-title">私はこんな人（自己分析）</h3>
+            <div
+              className={`profile-personal-inline-text ${
+                personalWords ? '' : 'empty'
+              }`}
+            >
+              {personalWords || '未入力です'}
+            </div>
+          </div>
         </div>
-        {(age || gender) && (
-          <div className="profile-meta-row">
-            {age !== undefined && <span>年齢: {age}</span>}
-            {gender && <span>性別: {gender}</span>}
-          </div>
-        )}
-        {postalCode && (
-          <div className="profile-postal">〒{postalCode}</div>
-        )}
-        {(displayLocation || addressDetail) && (
-          <div className="profile-location-row">
-            {displayLocation && (
-              <div className="profile-location">{displayLocation}</div>
-            )}
-            {addressDetail && (
-              <div className="profile-address-detail">{addressDetail}</div>
-            )}
-          </div>
-        )}
-        {(email || phone) && (
-          <div className="profile-contact">
-            {email && <span className="profile-contact-item">Mail: {email}</span>}
-            {phone && <span className="profile-contact-item">Tel: {phone}</span>}
-          </div>
-        )}
-        {jobTitle && (
-          <div className="profile-job-title-box">
-            <div className="profile-job-title-content">
-              <span className="profile-job-title-text">{jobTitle}</span>
-            </div>
-          </div>
-        )}
-        {qualifications && qualifications.length > 0 && (
-          <div className="profile-qualifications-section">
-            <div className="profile-qualifications-list">
-              {qualifications.map((qualification, index) => (
-                <div key={index} className="profile-qualification-badge">
-                  <span className="profile-qualification-text">{qualification}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
         </div>
       </div>
-        {personalWords && (
-          <div className="profile-personal-words-section">
-            <div className="profile-personal-words-box">
-              <div className="profile-personal-words-content">
-                <h3 className="profile-personal-words-title">私はこんな人</h3>
-                <div className="profile-personal-words-text">{personalWords}</div>
+        {detailItems.length > 0 && (
+          <div className="profile-details-grid">
+            {detailItems.map((item) => (
+              <div className="profile-detail-card" key={item.label}>
+                <span className="profile-detail-label">{item.label}</span>
+                <span className="profile-detail-value">{item.value}</span>
               </div>
-            </div>
+            ))}
           </div>
         )}
     </div>

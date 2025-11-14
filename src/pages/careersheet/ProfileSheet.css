@@ -43,6 +43,12 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* Ensure card frame styles are applied */
+  background: var(--bg-secondary) !important;
+  border-radius: 10px !important;
+  padding: 24px !important;
+  box-shadow: var(--shadow) !important;
+  margin-bottom: 0 !important; /* Grid gap manages spacing */
 }
 
 .section-card .card-content {

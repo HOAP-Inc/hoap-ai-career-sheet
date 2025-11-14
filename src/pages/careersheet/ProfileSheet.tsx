@@ -127,15 +127,16 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
           onEdit={() => setIsEditingProfile(true)}
         />
 
-        <CareerGraph
-          careerHistory={profileData.careerHistory}
-          onCareerUpdate={handleCareerUpdate}
-          onCareerAdd={handleCareerAdd}
-          onCareerDelete={handleCareerDelete}
-        />
-
         <div className="sheet-grid">
-          <div className="sheet-row three-columns">
+          <div className="sheet-row">
+            <div className="sheet-col">
+              <CareerGraph
+                careerHistory={profileData.careerHistory}
+                onCareerUpdate={handleCareerUpdate}
+                onCareerAdd={handleCareerAdd}
+                onCareerDelete={handleCareerDelete}
+              />
+            </div>
             <div className="sheet-col">
               <Card
                 title="Can"
@@ -147,17 +148,9 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
                 </div>
               </Card>
             </div>
-            <div className="sheet-col">
-              <Card
-                title="Will"
-                className="section-card"
-                onEdit={() => handleSectionEdit('will')}
-              >
-                <div className={profileData.will ? '' : 'empty'}>
-                  {profileData.will || ''}
-                </div>
-              </Card>
-            </div>
+          </div>
+
+          <div className="sheet-row three-columns">
             <div className="sheet-col">
               <Card
                 title="Must"
@@ -166,6 +159,17 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
               >
                 <div className={profileData.must ? '' : 'empty'}>
                   {profileData.must || ''}
+                </div>
+              </Card>
+            </div>
+            <div className="sheet-col">
+              <Card
+                title="Will"
+                className="section-card"
+                onEdit={() => handleSectionEdit('will')}
+              >
+                <div className={profileData.will ? '' : 'empty'}>
+                  {profileData.will || ''}
                 </div>
               </Card>
             </div>
@@ -213,11 +217,11 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
               ? 'Can'
               : editingSection.type === 'will'
                 ? 'Will'
-                : editingSection.type === 'being'
-                  ? 'Being'
-                  : editingSection.type === 'doing'
-                    ? 'Doing'
-                    : 'Must'
+              : editingSection.type === 'being'
+                ? 'Being'
+                : editingSection.type === 'doing'
+                  ? 'Doing'
+                  : 'Must'
           }
           subtitle={
             editingSection.type === 'being'

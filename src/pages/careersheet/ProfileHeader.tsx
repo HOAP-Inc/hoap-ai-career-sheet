@@ -125,15 +125,20 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       <div className="profile-basics-section">
         <h4 className="profile-basics-heading">基本プロフィール</h4>
         <div className="profile-basics-grid">
-          <ProfileRow label="年齢" value={age !== undefined ? `${age}歳` : ''} />
-          <ProfileRow label="性別" value={gender || ''} />
+          <ProfileRow 
+            label="年齢" 
+            value={age !== undefined ? `${age}歳` : ''} 
+          />
+          <ProfileRow 
+            label="性別" 
+            value={gender || ''} 
+          />
           <ProfileRow
             label="住所"
-            value={[displayLocation, addressDetail].filter(Boolean).join(' ')}
+            value={[postalCode ? `〒${postalCode}` : null, displayLocation, addressDetail].filter(Boolean).join(' ')}
           />
           <ProfileRow label="電話番号" value={phone || '(非公開)'} />
           <ProfileRow label="メールアドレス" value={email || ''} />
-          <ProfileRow label="現在の状況" value={jobTitle || ''} />
           <ProfileRow
             label="保有資格"
             value={qualifications && qualifications.length > 0 ? qualifications.join(' / ') : ''}

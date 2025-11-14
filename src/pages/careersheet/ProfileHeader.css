@@ -186,18 +186,6 @@
   color: var(--text-secondary);
 }
 
-.profile-name {
-  font-size: 24px;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin: 0;
-  line-height: 1.2;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
 .profile-edit-button {
   position: absolute;
   top: 20px;
@@ -221,13 +209,12 @@
   box-shadow: var(--shadow-hover);
 }
 
-
 /* スマホ向けスタイル */
 @media (max-width: 768px) {
   .profile-header {
     padding: 16px;
     gap: 12px;
-}
+  }
 
   .profile-edit-button {
     top: 16px;
@@ -235,51 +222,42 @@
     padding: 6px 12px;
     font-size: 12px;
     line-height: 1;
-}
-
-  .profile-main-content {
-    gap: 12px;
   }
 
-  .profile-photo-container {
-    width: 88px;
-    height: 88px;
-}
+  .profile-main-content {
+    gap: 16px;
+    flex-direction: column;
+  }
 
-  .profile-info {
-    gap: 10px;
-    min-width: 0;
+  .profile-summary-column {
+    width: 100%;
+  }
+
+  .profile-photo-ring {
+    width: 140px;
+    height: 140px;
+  }
+
+  .profile-photo-round,
+  .profile-photo-placeholder-round {
+    width: 128px;
+    height: 128px;
   }
 
   .profile-name {
-    font-size: 20px;
-}
-
-  .profile-edit-button {
-    margin-left: auto;
-    padding: 8px 16px;
-    font-size: 14px;
-}
-
-  .profile-personal-inline {
-    padding: 14px 16px;
-}
-
-  .profile-personal-inline-title {
-  font-size: 15px;
+    font-size: 22px;
   }
 
-  .profile-personal-inline-text {
-    font-size: 13px;
-}
+  .profile-personal-panel {
+    min-width: 100%;
+  }
 
-  .profile-details-grid {
+  .profile-basics-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
-}
+    gap: 8px;
+  }
 
-  .profile-detail-card {
-    padding: 12px 14px;
-    min-height: 64px;
+  .profile-row {
+    padding: 8px 12px;
   }
 }

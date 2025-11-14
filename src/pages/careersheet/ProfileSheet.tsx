@@ -120,6 +120,19 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
           onEdit={() => setIsEditingProfile(true)}
         />
 
+        <div className="profile-basics-wrapper">
+          <ProfileBasics
+            age={profileData.age}
+            gender={profileData.gender}
+            postalCode={profileData.postalCode}
+            location={profileData.location}
+            addressDetail={profileData.addressDetail}
+            email={profileData.email}
+            phone={profileData.phone}
+            qualifications={profileData.qualifications}
+          />
+        </div>
+
         <div className="sheet-grid">
           <div className="sheet-row sheet-row-experience">
             <div className="sheet-col">
@@ -140,18 +153,6 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
                   {profileData.can || ''}
                 </div>
               </Card>
-            </div>
-            <div className="sheet-col">
-              <ProfileBasics
-                age={profileData.age}
-                gender={profileData.gender}
-                postalCode={profileData.postalCode}
-                location={profileData.location}
-                addressDetail={profileData.addressDetail}
-                email={profileData.email}
-                phone={profileData.phone}
-                qualifications={profileData.qualifications}
-              />
             </div>
           </div>
 

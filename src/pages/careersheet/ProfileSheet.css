@@ -23,7 +23,7 @@
 }
 
 .sheet-row.sheet-row-experience {
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
 
 .sheet-row.three-columns {
@@ -62,6 +62,10 @@
   min-height: 100px;
   display: flex;
   align-items: flex-start;
+}
+
+.profile-basics-wrapper {
+  margin-bottom: 20px;
 }
 
 @media (max-width: 1024px) {

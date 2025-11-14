@@ -90,10 +90,7 @@
   font-weight: 600;
   margin: 0;
   line-height: 1.2;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .profile-id {

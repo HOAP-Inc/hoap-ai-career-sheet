@@ -19,6 +19,13 @@
   padding-right: 100px; /* 編集ボタンのスペースを確保 */
 }
 
+.card-title-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .card-title {
   font-size: 20px;
   font-weight: 600;
@@ -31,6 +38,13 @@
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+}
+
+.card-title-description {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  margin: 0 0 4px 0;
 }
 
 .card-subtitle {

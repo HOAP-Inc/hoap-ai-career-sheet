@@ -21,7 +21,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
   const [profileData, setProfileData] = useState<ProfileData>(data);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [editingSection, setEditingSection] = useState<{
-    type: 'can' | 'being' | 'doing' | 'must' | null;
+    type: 'can' | 'will' | 'being' | 'doing' | 'must' | null;
     value: string;
   }>({ type: null, value: '' });
 
@@ -88,7 +88,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
     setIsEditingProfile(false);
   };
 
-  const handleSectionEdit = (type: 'can' | 'being' | 'doing' | 'must') => {
+  const handleSectionEdit = (type: 'can' | 'will' | 'being' | 'doing' | 'must') => {
     const value = profileData[type] || '';
     setEditingSection({ type, value });
   };
@@ -135,8 +135,8 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         />
 
         <div className="sheet-grid">
-          <div className="sheet-row">
-            <div className="sheet-col full-width">
+          <div className="sheet-row three-columns">
+            <div className="sheet-col">
               <Card
                 title="Can"
                 className="section-card"
@@ -144,6 +144,28 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
               >
                 <div className={profileData.can ? '' : 'empty'}>
                   {profileData.can || ''}
+                </div>
+              </Card>
+            </div>
+            <div className="sheet-col">
+              <Card
+                title="Will"
+                className="section-card"
+                onEdit={() => handleSectionEdit('will')}
+              >
+                <div className={profileData.will ? '' : 'empty'}>
+                  {profileData.will || ''}
+                </div>
+              </Card>
+            </div>
+            <div className="sheet-col">
+              <Card
+                title="Must"
+                className="section-card"
+                onEdit={() => handleSectionEdit('must')}
+              >
+                <div className={profileData.must ? '' : 'empty'}>
+                  {profileData.must || ''}
                 </div>
               </Card>
             </div>
@@ -175,20 +197,6 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
               </Card>
             </div>
           </div>
-
-          <div className="sheet-row">
-            <div className="sheet-col full-width">
-              <Card
-                title="Must"
-                className="section-card"
-                onEdit={() => handleSectionEdit('must')}
-              >
-                <div className={profileData.must ? '' : 'empty'}>
-                  {profileData.must || ''}
-                </div>
-              </Card>
-            </div>
-          </div>
         </div>
       </div>
       <ProfileEditModal
@@ -203,11 +211,13 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
           title={
             editingSection.type === 'can'
               ? 'Can'
-              : editingSection.type === 'being'
-                ? 'Being'
-                : editingSection.type === 'doing'
-                  ? 'Doing'
-                  : 'Must'
+              : editingSection.type === 'will'
+                ? 'Will'
+                : editingSection.type === 'being'
+                  ? 'Being'
+                  : editingSection.type === 'doing'
+                    ? 'Doing'
+                    : 'Must'
           }
           subtitle={
             editingSection.type === 'being'

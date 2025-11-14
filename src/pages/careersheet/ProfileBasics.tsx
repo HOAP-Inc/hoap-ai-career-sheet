@@ -62,7 +62,9 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
 
 const ProfileRow: React.FC<{ label: string; value: string }> = ({ label, value }) => (
   <div className="profile-row">
-    <span className="profile-row-label">{label}</span>
+    <span className="profile-row-label">
+      {label}<span className="profile-row-separator">｜</span>
+    </span>
     <span className={`profile-row-value ${value ? '' : 'empty'}`}>{value || '未入力'}</span>
   </div>
 );

@@ -52,7 +52,14 @@ export default async function handler(
     // Vercel KVから認証コードを取得
     console.log('🔍 Fetching saved code for:', email);
     const savedCode = await getVerificationCode(email);
-    console.log('📝 Saved code:', { savedCode, inputCode: code, match: savedCode === code });
+    const normalizedInputCode = typeof code === 'string' ? code.trim() : '';
+    console.log('📝 Saved code:', {
+      savedCode,
+      savedCodeType: typeof savedCode,
+      inputCode: normalizedInputCode,
+      inputCodeType: typeof normalizedInputCode,
+      match: savedCode === normalizedInputCode,
+    });
 
     if (!savedCode) {
       console.error('❌ No saved code found for:', email);
@@ -63,8 +70,8 @@ export default async function handler(
     }
 
     // 認証コードを比較
-    if (savedCode !== code) {
-      console.error('❌ Code mismatch:', { savedCode, inputCode: code });
+    if (savedCode !== normalizedInputCode) {
+      console.error('❌ Code mismatch:', { savedCode, inputCode: normalizedInputCode });
       return res.status(400).json({
         success: false,
         error: '認証コードが正しくありません',

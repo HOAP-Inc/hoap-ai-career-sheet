@@ -23,7 +23,7 @@ export async function saveVerificationCode(email: string, code: string): Promise
     throw new Error('Redis is not configured. Please set KV_REST_API_URL and KV_REST_API_TOKEN environment variables.');
   }
   const key = `verification:${email}`;
-  await redis.set(key, code, { ex: 600 }); // 600秒 = 10分
+  await redis.set(key, code.toString(), { ex: 600 }); // 600秒 = 10分
   console.log(`Verification code saved for ${email}`);
 }
 
@@ -33,8 +33,8 @@ export async function getVerificationCode(email: string): Promise<string | null>
     throw new Error('Redis is not configured. Please set KV_REST_API_URL and KV_REST_API_TOKEN environment variables.');
   }
   const key = `verification:${email}`;
-  const code = await redis.get<string>(key);
-  return code;
+  const code = await redis.get<string | number>(key);
+  return code !== null && code !== undefined ? String(code) : null;
 }
 
 // 認証コードを削除

@@ -113,7 +113,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </div>
 
         <div className="profile-personal-panel">
-          <h3 className="profile-personal-title">私はこんな人</h3>
+          <h3 className="profile-personal-title">私はこんな人（自己分析）</h3>
           <div className={`profile-personal-body ${personalWords ? '' : 'empty'}`}>
             {personalWords || '未入力です'}
           </div>
@@ -122,25 +122,33 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 
       <div className="profile-basics-section">
         <h4 className="profile-basics-heading">基本プロフィール</h4>
-        <div className="profile-basics-grid">
-          <ProfileRow 
-            label="年齢" 
-            value={age !== undefined ? `${age}歳` : ''} 
-          />
-          <ProfileRow 
-            label="性別" 
-            value={gender || ''} 
-          />
-          <ProfileRow
-            label="住所"
-            value={[postalCode ? `〒${postalCode}` : null, displayLocation, addressDetail].filter(Boolean).join(' ')}
-          />
-          <ProfileRow label="電話番号" value={phone || '(非公開)'} />
-          <ProfileRow label="メールアドレス" value={email || ''} />
-          <ProfileRow
-            label="保有資格"
-            value={qualifications && qualifications.length > 0 ? qualifications.join(' / ') : ''}
-          />
+        <div className="profile-basics-content">
+          <div className="profile-basics-row">
+            <ProfileRow 
+              label="年齢" 
+              value={age !== undefined ? `${age}歳` : ''} 
+            />
+            <ProfileRow 
+              label="性別" 
+              value={gender || ''} 
+            />
+          </div>
+          <div className="profile-basics-row profile-basics-row-single">
+            <ProfileRow
+              label="住所"
+              value={[postalCode ? `〒${postalCode}` : null, displayLocation, addressDetail].filter(Boolean).join(' ')}
+            />
+          </div>
+          <div className="profile-basics-row">
+            <ProfileRow label="メールアドレス" value={email || ''} />
+            <ProfileRow label="電話番号" value={phone || '(非公開)'} />
+          </div>
+          <div className="profile-basics-row profile-basics-row-single">
+            <ProfileRow
+              label="所有資格"
+              value={qualifications && qualifications.length > 0 ? qualifications.join(' / ') : ''}
+            />
+          </div>
         </div>
       </div>
     </div>

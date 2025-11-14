@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { verifyToken, verifyCode } from '../../utils/api';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { verifyToken, verifyCode, resendVerificationEmail } from '../../utils/api';
 import './RegistrationForm.css';
 
 export const Verify: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const [token, setToken] = useState('');
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [email, setEmail] = useState('');
+  const [isResending, setIsResending] = useState(false);
+  const [resendFeedback, setResendFeedback] = useState<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     // URLパラメータからtokenを取得
@@ -21,6 +28,18 @@ export const Verify: React.FC = () => {
       handleVerifyToken(tokenParam);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    const stateEmail = (location.state as { email?: string } | null)?.email;
+    if (stateEmail) {
+      setEmail(stateEmail);
+    } else {
+      const savedEmail = localStorage.getItem('registration_email');
+      if (savedEmail) {
+        setEmail(savedEmail);
+      }
+    }
+  }, [location.state]);
 
   const handleVerifyToken = async (tokenToVerify: string) => {
     setIsVerifying(true);
@@ -42,6 +61,26 @@ export const Verify: React.FC = () => {
       );
     } finally {
       setIsVerifying(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (!email || isResending) return;
+    setIsResending(true);
+    setResendFeedback(null);
+
+    try {
+      await resendVerificationEmail(email);
+      setResendFeedback({ type: 'success', message: '認証メールを再送信しました' });
+      setTimeout(() => setResendFeedback(null), 3000);
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : '再送信に失敗しました。しばらくしてから再度お試しください。';
+      setResendFeedback({ type: 'error', message });
+    } finally {
+      setIsResending(false);
     }
   };
 
@@ -98,6 +137,14 @@ export const Verify: React.FC = () => {
         <div className="registration-header">
           <p className="registration-subtitle">認証コードを入力してください</p>
         </div>
+        {email && (
+          <div className="registration-info">
+            <p>
+              <strong>{email}</strong>
+              に送信された認証コードを入力してください。
+            </p>
+          </div>
+        )}
         {token ? (
           <div className="registration-form">
             <div className="form-field">
@@ -144,6 +191,24 @@ export const Verify: React.FC = () => {
             >
               {isVerifying ? '認証中...' : '認証する'}
             </button>
+            <button
+              type="button"
+              className="btn-next"
+              onClick={handleResend}
+              disabled={isResending}
+              style={{ marginTop: '12px', background: '#6b7280' }}
+            >
+              {isResending ? '再送信中...' : '認証メールを再送信'}
+            </button>
+            {resendFeedback && (
+              <div
+                className={
+                  resendFeedback.type === 'success' ? 'success-message' : 'error-message'
+                }
+              >
+                {resendFeedback.message}
+              </div>
+            )}
           </form>
         )}
       </div>

@@ -16,6 +16,10 @@ export const EmailSent: React.FC = () => {
     const stateEmail = (location.state as { email?: string })?.email;
     if (stateEmail) {
       setEmail(stateEmail);
+      navigate('/registration/verify', {
+        replace: true,
+        state: { email: stateEmail, from: 'email-sent' },
+      });
     } else {
       // stateがない場合は前のページに戻る
       navigate('/registration');

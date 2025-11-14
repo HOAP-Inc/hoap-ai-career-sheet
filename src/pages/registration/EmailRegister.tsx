@@ -40,8 +40,8 @@ export const EmailRegister: React.FC = () => {
       // emailをlocalStorageに保存（認証コード認証時に使用）
       localStorage.setItem('registration_email', email);
 
-      // 成功時はEmailSentページへ遷移（emailをstateで渡す）
-      navigate('/registration/email-sent', { state: { email } });
+      // 成功時は認証コード入力ページへダイレクト遷移（emailをstateで渡す）
+      navigate('/registration/verify', { state: { email, from: 'email-register' } });
     } catch (err) {
       console.error('❌ EmailRegister: Error occurred:', err);
       const errorMessage = err instanceof Error

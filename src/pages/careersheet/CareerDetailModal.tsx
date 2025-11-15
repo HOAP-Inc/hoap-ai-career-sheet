@@ -299,6 +299,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
                   }
                   multiple={false}
                   placeholder="分類を選択"
+                  secondPlaceholder="形態を選択"
                   inlineLayout
                   labelWeight="normal"
                   labelOverrides={{ first: '　分類', second: '形態' }}
@@ -322,6 +323,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
                   }
                   multiple={false}
                   placeholder="大分類を選択"
+                  secondPlaceholder="詳細を選択"
                   inlineLayout
                   labelWeight="normal"
                   labelOverrides={{ first: '　大分類', second: '詳細' }}

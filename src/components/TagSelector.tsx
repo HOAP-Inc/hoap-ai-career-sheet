@@ -13,6 +13,7 @@ interface TagSelectorProps {
   onChange: (value: number | number[]) => void;
   multiple?: boolean;
   placeholder?: string;
+  secondPlaceholder?: string;
   disabled?: boolean;
   inlineLayout?: boolean;
   labelWeight?: 'bold' | 'normal';
@@ -29,6 +30,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
   onChange,
   multiple = false,
   placeholder = '選択してください',
+  secondPlaceholder,
   disabled = false,
   inlineLayout = false,
   labelWeight = 'bold',
@@ -138,6 +140,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
     .join(' ');
 
   const isSecondStepDisabled = disabled || !selectedSubcategory;
+  const secondPlaceholderText = secondPlaceholder || placeholder;
 
   const secondStepContent = (
     <div className={secondStepClasses}>
@@ -148,7 +151,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
           onChange={handleTagChange}
           disabled={isSecondStepDisabled}
         >
-          <option value="">{placeholder}</option>
+          <option value="">{secondPlaceholderText}</option>
           {availableTags.map((tag) => (
             <option key={tag.id} value={tag.id} disabled={selectedTags.includes(tag.id)}>
               {tag.name}
@@ -162,7 +165,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
           onChange={handleTagChange}
           disabled={isSecondStepDisabled}
         >
-          <option value="">{placeholder}</option>
+          <option value="">{secondPlaceholderText}</option>
           {availableTags.map((tag) => (
             <option key={tag.id} value={tag.id}>
               {tag.name}

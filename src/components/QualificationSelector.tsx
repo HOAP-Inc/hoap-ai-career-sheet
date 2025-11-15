@@ -62,7 +62,7 @@ export const QualificationSelector: React.FC<QualificationSelectorProps> = ({
   return (
     <div className="tag-selector">
       {/* 資格選択 */}
-      <div className="tag-selector-step">
+      <div className="tag-selector-step indented">
         <label className="tag-selector-label">資格名</label>
         {multiple ? (
           <select

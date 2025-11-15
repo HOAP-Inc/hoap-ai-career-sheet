@@ -10,6 +10,14 @@
   gap: 8px;
 }
 
+.tag-selector-step.indented {
+  padding-left: 1em; /* 全角スペース分のインデント */
+}
+
+.tag-selector-step.indented .tag-selector-label {
+  font-weight: 400; /* 太字解除 */
+}
+
 .tag-selector-label {
   font-size: 14px;
   font-weight: 500;

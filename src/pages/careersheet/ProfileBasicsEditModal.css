@@ -73,6 +73,14 @@
   gap: 8px;
 }
 
+.profile-basics-edit-group.indented {
+  padding-left: 1em; /* 全角スペース分のインデント */
+}
+
+.profile-basics-edit-group.indented label {
+  font-weight: 400; /* 太字解除 */
+}
+
 .profile-basics-edit-row {
   display: flex;
   gap: 16px;

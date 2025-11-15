@@ -96,7 +96,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
   return (
     <div className="tag-selector">
       {/* ステップ1: サブカテゴリー選択 */}
-      <div className="tag-selector-step">
+      <div className={`tag-selector-step ${category === '専門資格' ? 'indented' : ''}`}>
         <label className="tag-selector-label">
           {category === 'サービス形態'
             ? 'サービス分類'
@@ -123,7 +123,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
 
       {/* ステップ2: タグ選択 */}
       {selectedSubcategory && (
-        <div className="tag-selector-step">
+        <div className={`tag-selector-step ${category === '専門資格' ? 'indented' : ''}`}>
           <label className="tag-selector-label">
             {category === 'サービス形態'
               ? 'サービス形態'

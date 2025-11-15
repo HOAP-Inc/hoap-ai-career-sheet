@@ -56,7 +56,7 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
     return null;
   }
 
-  const handleChange = (field: keyof ProfileData, value: string | number | string[] | undefined) => {
+  const handleChange = (field: keyof ProfileData, value: string | number | string[] | number[] | undefined) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 

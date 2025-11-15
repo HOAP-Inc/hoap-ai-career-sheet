@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { Tag } from '../types';
 import {
-  getTagsByCategory,
   getSubcategories,
   getTagsByCategoryAndSubcategory,
   getTagById,

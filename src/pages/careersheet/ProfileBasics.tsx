@@ -4,6 +4,9 @@ import './ProfileBasics.css';
 
 interface ProfileBasicsProps {
   age?: number;
+  birthYear?: number;
+  birthMonth?: number;
+  birthDay?: number;
   gender?: string;
   postalCode?: string;
   location?: string;
@@ -16,6 +19,9 @@ interface ProfileBasicsProps {
 
 export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
   age,
+  birthYear,
+  birthMonth,
+  birthDay,
   gender,
   postalCode,
   location,
@@ -32,11 +38,22 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
 
   const displayLocation = formatLocation(location);
 
+  const formatBirthDate = () => {
+    if (birthYear && birthMonth && birthDay) {
+      const ageText = age !== undefined ? `（${age}歳）` : '';
+      return `${birthYear}年${birthMonth}月${birthDay}日${ageText}`;
+    }
+    if (age !== undefined) {
+      return `${age}歳`;
+    }
+    return '';
+  };
+
   return (
     <Card title="基本プロフィール" className="section-card" onEdit={onEdit}>
       <div className="profile-basics-content">
         <div className="profile-basics-row">
-          <ProfileRow label="年齢" value={age !== undefined ? `${age}歳` : ''} />
+          <ProfileRow label="生年月日" value={formatBirthDate()} />
           <ProfileRow label="性別" value={gender || ''} />
         </div>
         <div className="profile-basics-row profile-basics-row-single">

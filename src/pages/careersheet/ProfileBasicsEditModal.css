@@ -84,6 +84,15 @@
   min-width: 160px;
 }
 
+.profile-basics-edit-group-inline {
+  flex: 1;
+  min-width: 100px;
+}
+
+.profile-basics-edit-group-inline select {
+  width: 100%;
+}
+
 .postal-row {
   display: grid;
   grid-template-columns: 1fr 120px;

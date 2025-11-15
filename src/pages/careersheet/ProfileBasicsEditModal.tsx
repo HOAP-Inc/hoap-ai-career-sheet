@@ -20,6 +20,9 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
 }) => {
   const [formData, setFormData] = useState<Partial<ProfileData>>({
     age: data.age,
+    birthYear: data.birthYear,
+    birthMonth: data.birthMonth,
+    birthDay: data.birthDay,
     gender: data.gender,
     postalCode: data.postalCode,
     location: data.location,
@@ -33,6 +36,9 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
   useEffect(() => {
     setFormData({
       age: data.age,
+      birthYear: data.birthYear,
+      birthMonth: data.birthMonth,
+      birthDay: data.birthDay,
       gender: data.gender,
       postalCode: data.postalCode,
       location: data.location,
@@ -74,9 +80,31 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
     }
   };
 
+  const calculateAge = (year?: number, month?: number, day?: number): number | undefined => {
+    if (!year || !month || !day) return undefined;
+    const today = new Date();
+    const birthDate = new Date(year, month - 1, day);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+    return age;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(formData);
+    // 生年月日から年齢を自動計算
+    const calculatedAge = calculateAge(
+      formData.birthYear,
+      formData.birthMonth,
+      formData.birthDay,
+    );
+    const updatedData = {
+      ...formData,
+      age: calculatedAge,
+    };
+    onSave(updatedData);
     onClose();
   };
 
@@ -90,23 +118,59 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
           </button>
         </div>
         <form className="profile-basics-edit-body" onSubmit={handleSubmit}>
-          <div className="profile-basics-edit-row">
-            <div className="profile-basics-edit-group">
-              <label>年齢</label>
-              <select
-                value={formData.age ?? ''}
-                onChange={(e) =>
-                  handleChange('age', e.target.value ? parseInt(e.target.value) : undefined)
-                }
-              >
-                <option value="">未設定</option>
-                {ages.map((age) => (
-                  <option key={age} value={age}>
-                    {age}
-                  </option>
-                ))}
-              </select>
+          <div className="profile-basics-edit-group">
+            <label>生年月日</label>
+            <div className="profile-basics-edit-row">
+              <div className="profile-basics-edit-group-inline">
+                <select
+                  value={formData.birthYear ?? ''}
+                  onChange={(e) =>
+                    handleChange('birthYear', e.target.value ? parseInt(e.target.value) : undefined)
+                  }
+                >
+                  <option value="">年</option>
+                  {Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i).map(
+                    (year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ),
+                  )}
+                </select>
+              </div>
+              <div className="profile-basics-edit-group-inline">
+                <select
+                  value={formData.birthMonth ?? ''}
+                  onChange={(e) =>
+                    handleChange('birthMonth', e.target.value ? parseInt(e.target.value) : undefined)
+                  }
+                >
+                  <option value="">月</option>
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                    <option key={month} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="profile-basics-edit-group-inline">
+                <select
+                  value={formData.birthDay ?? ''}
+                  onChange={(e) =>
+                    handleChange('birthDay', e.target.value ? parseInt(e.target.value) : undefined)
+                  }
+                >
+                  <option value="">日</option>
+                  {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                    <option key={day} value={day}>
+                      {day}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
+          </div>
+          <div className="profile-basics-edit-row">
             <div className="profile-basics-edit-group">
               <label>性別</label>
               <select

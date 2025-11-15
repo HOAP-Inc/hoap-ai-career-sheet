@@ -144,6 +144,9 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         <div className="profile-basics-wrapper">
           <ProfileBasics
             age={profileData.age}
+            birthYear={profileData.birthYear}
+            birthMonth={profileData.birthMonth}
+            birthDay={profileData.birthDay}
             gender={profileData.gender}
             postalCode={profileData.postalCode}
             location={profileData.location}
@@ -152,7 +155,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             phone={profileData.phone}
             qualifications={profileData.qualifications}
             onEdit={() => setIsEditingBasics(true)}
-        />
+          />
         </div>
 
         <div className="sheet-grid">

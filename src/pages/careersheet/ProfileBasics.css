@@ -17,9 +17,9 @@
 .profile-row {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   gap: 0;
-  background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
+  background: var(--bg-secondary);
   border-radius: 10px;
   padding: 0;
   border: 1px solid rgba(253, 242, 248, 0.8);
@@ -40,9 +40,9 @@
   text-align: center;
 }
 
-/* 所有資格・専門資格の場合はラベル背景を透明にして、.profile-row全体のグラデーションを使用 */
+/* 所有資格・専門資格のラベルも他の項目と同様にグラデーション背景を適用 */
 .profile-row-qualifications .profile-row-label {
-  background: transparent;
+  background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
 }
 
 /* 単一項目（住所、所有資格）のグラデーション部分の幅を2列の項目と揃える */
@@ -67,7 +67,7 @@
 }
 
 .profile-row-value.profile-qualifications-value {
-  background: transparent;
+  background: var(--bg-secondary);
 }
 
 .profile-row-value.empty {

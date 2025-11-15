@@ -79,10 +79,14 @@
 
 .qualification-badge {
   display: inline-block;
-  background: var(--accent-gradient);
-  color: white;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   padding: 6px 16px;
   border-radius: 20px;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), var(--accent-gradient);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
   font-size: 13px;
   font-weight: 600;
   white-space: nowrap;

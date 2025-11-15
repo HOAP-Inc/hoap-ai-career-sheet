@@ -166,7 +166,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
 
       {/* 複数選択の場合、選択済みタグを表示 */}
       {multiple && selectedTags.length > 0 && (
-        <div className="tag-selector-selected">
+        <div className={`tag-selector-selected ${category === '専門資格' ? 'indented' : ''}`}>
           {selectedTags.map((id) => {
             const tag = getTagById(id);
             return tag ? (

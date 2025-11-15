@@ -83,13 +83,24 @@
   color: var(--text-primary);
   padding: 6px 16px;
   border-radius: 20px;
-  border: 2px solid transparent;
-  background-image: linear-gradient(white, white), var(--accent-gradient);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
   font-size: 13px;
   font-weight: 400;
   white-space: nowrap;
+  position: relative;
+  border: 2px solid transparent;
+}
+
+/* グラデーション枠を::beforeで実現 */
+.qualification-badge::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 20px;
+  background: var(--accent-gradient);
+  z-index: -1;
 }
 
 /* スマホ向けスタイル */

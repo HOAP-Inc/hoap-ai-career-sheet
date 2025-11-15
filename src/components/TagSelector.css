@@ -10,11 +10,31 @@
   gap: 8px;
 }
 
+.tag-selector-inline {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.tag-selector-step.inline-start {
+  flex: 0 0 180px;
+}
+
+.tag-selector-step.inline-end {
+  flex: 1;
+  min-width: 200px;
+}
+
 .tag-selector-step.indented {
   padding-left: 1em; /* 全角スペース分のインデント */
 }
 
 .tag-selector-step.indented .tag-selector-label {
+  font-weight: 400; /* 太字解除 */
+}
+
+.tag-selector-label-normal {
   font-weight: 400; /* 太字解除 */
 }
 

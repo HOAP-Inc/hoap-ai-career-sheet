@@ -14,6 +14,13 @@ interface TagSelectorProps {
   multiple?: boolean;
   placeholder?: string;
   disabled?: boolean;
+  inlineLayout?: boolean;
+  labelWeight?: 'bold' | 'normal';
+  labelOverrides?: {
+    first?: string;
+    second?: string;
+  };
+  indentFirstStep?: boolean;
 }
 
 export const TagSelector: React.FC<TagSelectorProps> = ({
@@ -23,18 +30,20 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
   multiple = false,
   placeholder = '選択してください',
   disabled = false,
+  inlineLayout = false,
+  labelWeight = 'bold',
+  labelOverrides,
+  indentFirstStep = false,
 }) => {
   const [selectedSubcategory, setSelectedSubcategory] = useState<string>('');
   const [subcategories, setSubcategories] = useState<string[]>([]);
   const [availableTags, setAvailableTags] = useState<Tag[]>([]);
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
-  // 初期化：既存の値からサブカテゴリーを設定
   useEffect(() => {
     const subs = getSubcategories(category);
     setSubcategories(subs);
 
-    // 既存の値がある場合、サブカテゴリーを自動選択
     if (value) {
       const ids = Array.isArray(value) ? value : [value];
       if (ids.length > 0) {
@@ -47,7 +56,6 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
     }
   }, [category, value]);
 
-  // サブカテゴリーが選ばれたらタグ一覧を更新
   useEffect(() => {
     if (selectedSubcategory) {
       const tags = getTagsByCategoryAndSubcategory(category, selectedSubcategory);
@@ -60,7 +68,6 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
   const handleSubcategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sub = e.target.value;
     setSelectedSubcategory(sub);
-    // サブカテゴリー変更時は選択をクリア
     setSelectedTags([]);
     if (multiple) {
       onChange([]);
@@ -74,14 +81,12 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
     if (!id) return;
 
     if (multiple) {
-      // 複数選択の場合
       const newSelected = selectedTags.includes(id)
         ? selectedTags.filter((t) => t !== id)
         : [...selectedTags, id];
       setSelectedTags(newSelected);
       onChange(newSelected);
     } else {
-      // 単一選択の場合
       setSelectedTags([id]);
       onChange(id);
     }
@@ -93,26 +98,92 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
     onChange(newSelected);
   };
 
-  return (
-    <div className="tag-selector">
-      {/* ステップ1: サブカテゴリー選択 */}
-      <div className={`tag-selector-step ${category === '専門資格' ? 'indented' : ''}`}>
-        <label className="tag-selector-label">
-          {category === 'サービス形態'
-            ? 'サービス分類'
-            : category === '診療科・分野'
-              ? '分野'
-              : category === '専門資格'
-                ? '資格分類'
-                : 'カテゴリー'}
-        </label>
+  const firstLabelDefault =
+    category === 'サービス形態'
+      ? 'サービス分類'
+      : category === '診療科・分野'
+        ? '分野'
+        : category === '専門資格'
+          ? '資格分類'
+          : 'カテゴリー';
+
+  const secondLabelDefault =
+    category === 'サービス形態'
+      ? 'サービス形態'
+      : category === '診療科・分野'
+        ? '診療科・分野'
+        : category === '専門資格'
+          ? '資格名'
+          : '項目';
+
+  const firstLabel = labelOverrides?.first ?? firstLabelDefault;
+  const secondLabel = labelOverrides?.second ?? secondLabelDefault;
+
+  const labelClassName = `tag-selector-label${labelWeight === 'normal' ? ' tag-selector-label-normal' : ''}`;
+
+  const firstStepClasses = [
+    'tag-selector-step',
+    (category === '専門資格' || indentFirstStep) ? 'indented' : '',
+    inlineLayout ? 'inline-start' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const secondStepClasses = [
+    'tag-selector-step',
+    inlineLayout ? 'inline-end' : '',
+    category === '専門資格' ? 'indented' : '',
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const isSecondStepDisabled = disabled || !selectedSubcategory;
+
+  const secondStepContent = (
+    <div className={secondStepClasses}>
+      <label className={labelClassName}>{secondLabel}</label>
+      {multiple ? (
+        <select
+          className="tag-selector-select"
+          onChange={handleTagChange}
+          disabled={isSecondStepDisabled}
+        >
+          <option value="">{placeholder}</option>
+          {availableTags.map((tag) => (
+            <option key={tag.id} value={tag.id} disabled={selectedTags.includes(tag.id)}>
+              {tag.name}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <select
+          className="tag-selector-select"
+          value={selectedSubcategory ? selectedTags[0] || '' : ''}
+          onChange={handleTagChange}
+          disabled={isSecondStepDisabled}
+        >
+          <option value="">{placeholder}</option>
+          {availableTags.map((tag) => (
+            <option key={tag.id} value={tag.id}>
+              {tag.name}
+            </option>
+          ))}
+        </select>
+      )}
+    </div>
+  );
+
+  const steps = inlineLayout ? (
+    <div className="tag-selector-inline">
+      <div className={firstStepClasses}>
+        <label className={labelClassName}>{firstLabel}</label>
         <select
           className="tag-selector-select"
           value={selectedSubcategory}
           onChange={handleSubcategoryChange}
           disabled={disabled}
         >
-          <option value="">選択してください</option>
+          <option value="">{placeholder}</option>
           {subcategories.map((sub) => (
             <option key={sub} value={sub}>
               {sub}
@@ -120,51 +191,34 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
           ))}
         </select>
       </div>
+      {secondStepContent}
+    </div>
+  ) : (
+    <>
+      <div className={firstStepClasses}>
+        <label className={labelClassName}>{firstLabel}</label>
+        <select
+          className="tag-selector-select"
+          value={selectedSubcategory}
+          onChange={handleSubcategoryChange}
+          disabled={disabled}
+        >
+          <option value="">{placeholder}</option>
+          {subcategories.map((sub) => (
+            <option key={sub} value={sub}>
+              {sub}
+            </option>
+          ))}
+        </select>
+      </div>
+      {selectedSubcategory && secondStepContent}
+    </>
+  );
 
-      {/* ステップ2: タグ選択 */}
-      {selectedSubcategory && (
-        <div className={`tag-selector-step ${category === '専門資格' ? 'indented' : ''}`}>
-          <label className="tag-selector-label">
-            {category === 'サービス形態'
-              ? 'サービス形態'
-              : category === '診療科・分野'
-                ? '診療科・分野'
-                : category === '専門資格'
-                  ? '資格名'
-                  : '項目'}
-          </label>
-          {multiple ? (
-            <select
-              className="tag-selector-select"
-              onChange={handleTagChange}
-              disabled={disabled}
-            >
-              <option value="">選択してください</option>
-              {availableTags.map((tag) => (
-                <option key={tag.id} value={tag.id} disabled={selectedTags.includes(tag.id)}>
-                  {tag.name}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <select
-              className="tag-selector-select"
-              value={selectedTags[0] || ''}
-              onChange={handleTagChange}
-              disabled={disabled}
-            >
-              <option value="">{placeholder}</option>
-              {availableTags.map((tag) => (
-                <option key={tag.id} value={tag.id}>
-                  {tag.name}
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-      )}
+  return (
+    <div className="tag-selector">
+      {steps}
 
-      {/* 複数選択の場合、選択済みタグを表示 */}
       {multiple && selectedTags.length > 0 && (
         <div className={`tag-selector-selected ${category === '専門資格' ? 'indented' : ''}`}>
           {selectedTags.map((id) => {
@@ -188,4 +242,3 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
     </div>
   );
 };
-

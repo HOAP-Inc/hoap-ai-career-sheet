@@ -299,6 +299,10 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
                   }
                   multiple={false}
                   placeholder="サービス形態を選択"
+                  inlineLayout
+                  labelWeight="normal"
+                  labelOverrides={{ first: '　分類', second: 'サービス形態' }}
+                  indentFirstStep
                 />
               ) : (
                 <div className="detail-value">
@@ -318,6 +322,10 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
                   }
                   multiple={false}
                   placeholder="診療科・分野を選択"
+                  inlineLayout
+                  labelWeight="normal"
+                  labelOverrides={{ first: '　大分類', second: '詳細' }}
+                  indentFirstStep
                 />
               ) : (
                 <div className="detail-value">

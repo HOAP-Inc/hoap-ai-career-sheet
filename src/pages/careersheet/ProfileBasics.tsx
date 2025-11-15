@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card } from '../../components/Card';
+import { getTagNames } from '../../utils/tagsService';
 import './ProfileBasics.css';
 
 interface ProfileBasicsProps {
@@ -14,6 +15,7 @@ interface ProfileBasicsProps {
   email?: string;
   phone?: string;
   qualifications?: string[];
+  qualificationIds?: number[];
   onEdit?: () => void;
 }
 
@@ -29,6 +31,7 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
   email,
   phone,
   qualifications,
+  qualificationIds,
   onEdit,
 }) => {
   const formatLocation = (value?: string) => {
@@ -70,17 +73,24 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
           <div className="profile-row">
             <span className="profile-row-label">所有資格</span>
             <div className="profile-row-value profile-qualifications-value">
-              {qualifications && qualifications.length > 0 ? (
-                <div className="qualification-badges">
-                  {qualifications.map((qual, index) => (
-                    <span key={index} className="qualification-badge">
-                      {qual}
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <span className="empty">未入力</span>
-              )}
+              {(() => {
+                // qualificationIdsがあればそれを使用、なければqualificationsを使用
+                const qualNames = qualificationIds && qualificationIds.length > 0
+                  ? getTagNames(qualificationIds)
+                  : qualifications || [];
+                
+                return qualNames.length > 0 ? (
+                  <div className="qualification-badges">
+                    {qualNames.map((qual, index) => (
+                      <span key={index} className="qualification-badge">
+                        {qual}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <span className="empty">未入力</span>
+                );
+              })()}
             </div>
           </div>
         </div>

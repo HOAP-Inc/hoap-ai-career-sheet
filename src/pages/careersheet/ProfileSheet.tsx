@@ -154,6 +154,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             email={profileData.email}
             phone={profileData.phone}
             qualifications={profileData.qualifications}
+            qualificationIds={profileData.qualificationIds}
             onEdit={() => setIsEditingBasics(true)}
           />
         </div>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { ProfileData } from '../../types';
+import { TagSelector } from '../../components/TagSelector';
+import { getTagNames } from '../../utils/tagsService';
 import './ProfileBasicsEditModal.css';
 
 interface ProfileBasicsEditModalProps {
@@ -29,6 +31,7 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
     email: data.email,
     phone: data.phone,
     qualifications: data.qualifications,
+    qualificationIds: data.qualificationIds || [],
   });
   const [isFetchingAddress, setIsFetchingAddress] = useState(false);
 
@@ -45,6 +48,7 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
       email: data.email,
       phone: data.phone,
       qualifications: data.qualifications,
+      qualificationIds: data.qualificationIds || [],
     });
   }, [data, isOpen]);
 
@@ -99,9 +103,16 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
       formData.birthMonth,
       formData.birthDay,
     );
+    
+    // qualificationIdsから名前を生成（後方互換性のため）
+    const qualificationNames = formData.qualificationIds && formData.qualificationIds.length > 0
+      ? getTagNames(formData.qualificationIds)
+      : [];
+    
     const updatedData = {
       ...formData,
       age: calculatedAge,
+      qualifications: qualificationNames,
     };
     onSave(updatedData);
     onClose();
@@ -243,16 +254,12 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
           </div>
           <div className="profile-basics-edit-group">
             <label>所有資格</label>
-            <input
-              type="text"
-              value={formData.qualifications?.join(', ') || ''}
-              onChange={(e) =>
-                handleChange(
-                  'qualifications',
-                  e.target.value ? e.target.value.split(',').map((q) => q.trim()) : [],
-                )
-              }
-              placeholder="カンマ区切りで入力（例：看護師, ケアマネ）"
+            <TagSelector
+              category="専門資格"
+              value={formData.qualificationIds || []}
+              onChange={(value) => handleChange('qualificationIds', value as number[])}
+              multiple={true}
+              placeholder="資格を選択してください"
             />
           </div>
           <div className="profile-basics-edit-footer">

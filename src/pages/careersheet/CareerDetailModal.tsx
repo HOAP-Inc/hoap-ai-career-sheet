@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { CareerItem } from '../../types';
+import { TagSelector } from '../../components/TagSelector';
+import { getTagName } from '../../utils/tagsService';
 import './CareerDetailModal.css';
 
 interface CareerDetailModalProps {
@@ -116,7 +118,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
   const handleSave = () => {
     if (
       !editedItem.organization ||
-      !editedItem.serviceType ||
+      !editedItem.serviceTypeId ||
       !editedItem.startYear ||
       !editedItem.startMonth
     ) {
@@ -132,7 +134,15 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
       return;
     }
 
-    onSave(editedItem);
+    // IDから名前を生成（後方互換性のため）
+    const updatedItem = {
+      ...editedItem,
+      serviceType: editedItem.serviceTypeId ? getTagName(editedItem.serviceTypeId) : '',
+      medicalField: editedItem.medicalFieldId ? getTagName(editedItem.medicalFieldId) : '',
+      jobTitle: editedItem.jobTitleId ? getTagName(editedItem.jobTitleId) : '',
+    };
+
+    onSave(updatedItem);
     setIsEditing(false);
   };
 
@@ -281,18 +291,18 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             <div className="detail-item">
               <div className="detail-label">サービス形態</div>
               {isEditing ? (
-                <input
-                  type="text"
-                  className="detail-input"
-                  value={editedItem.serviceType || ''}
-                  onChange={(e) =>
-                    setEditedItem({ ...editedItem, serviceType: e.target.value })
+                <TagSelector
+                  category="サービス形態"
+                  value={editedItem.serviceTypeId || 0}
+                  onChange={(value) =>
+                    setEditedItem({ ...editedItem, serviceTypeId: value as number })
                   }
-                  placeholder="サービス形態を入力"
+                  multiple={false}
+                  placeholder="サービス形態を選択"
                 />
               ) : (
                 <div className="detail-value">
-                  {editedItem.serviceType || '未入力'}
+                  {editedItem.serviceTypeId ? getTagName(editedItem.serviceTypeId) : editedItem.serviceType || '未入力'}
                 </div>
               )}
             </div>
@@ -300,18 +310,18 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             <div className="detail-item">
               <div className="detail-label">診療科／分野</div>
               {isEditing ? (
-                <input
-                  type="text"
-                  className="detail-input"
-                  value={editedItem.medicalField || ''}
-                  onChange={(e) =>
-                    setEditedItem({ ...editedItem, medicalField: e.target.value })
+                <TagSelector
+                  category="診療科・分野"
+                  value={editedItem.medicalFieldId || 0}
+                  onChange={(value) =>
+                    setEditedItem({ ...editedItem, medicalFieldId: value as number })
                   }
-                  placeholder="診療科／分野を入力"
+                  multiple={false}
+                  placeholder="診療科・分野を選択"
                 />
               ) : (
                 <div className="detail-value">
-                  {editedItem.medicalField || '未入力'}
+                  {editedItem.medicalFieldId ? getTagName(editedItem.medicalFieldId) : editedItem.medicalField || '未入力'}
                 </div>
               )}
             </div>
@@ -319,18 +329,18 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             <div className="detail-item">
               <div className="detail-label">職種</div>
               {isEditing ? (
-                <input
-                  type="text"
-                  className="detail-input"
-                  value={editedItem.jobTitle || ''}
-                  onChange={(e) =>
-                    setEditedItem({ ...editedItem, jobTitle: e.target.value })
+                <TagSelector
+                  category="専門資格"
+                  value={editedItem.jobTitleId || 0}
+                  onChange={(value) =>
+                    setEditedItem({ ...editedItem, jobTitleId: value as number })
                   }
-                  placeholder="職種を入力"
+                  multiple={false}
+                  placeholder="職種を選択"
                 />
               ) : (
                 <div className="detail-value">
-                  {editedItem.jobTitle || '未入力'}
+                  {editedItem.jobTitleId ? getTagName(editedItem.jobTitleId) : editedItem.jobTitle || '未入力'}
                 </div>
               )}
             </div>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import type { CareerItem } from '../../types';
+import { TagSelector } from '../../components/TagSelector';
+import { getTagName } from '../../utils/tagsService';
 import './CareerAddForm.css';
 
 interface CareerAddFormProps {
@@ -20,9 +22,12 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
     endMonth: undefined,
     organization: '',
     serviceType: '',
+    serviceTypeId: undefined,
     medicalField: '',
+    medicalFieldId: undefined,
     isCurrent: false,
     jobTitle: '',
+    jobTitleId: undefined,
     workType: '',
     experienceDetail: '',
   })
@@ -92,7 +97,7 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (!careerItem.organization || !careerItem.serviceType || !careerItem.startYear || !careerItem.startMonth) {
+    if (!careerItem.organization || !careerItem.serviceTypeId || !careerItem.startYear || !careerItem.startMonth) {
       alert('すべての必須フィールドを入力してください')
       return
     }
@@ -102,16 +107,20 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
       return
     }
 
+    // IDから名前を生成（後方互換性のため）
     const newItem: CareerItem = {
       startYear: careerItem.startYear!,
       startMonth: careerItem.startMonth,
       endYear: careerItem.isCurrent ? undefined : (careerItem.endYear as number | undefined),
       endMonth: careerItem.isCurrent ? undefined : careerItem.endMonth,
       organization: careerItem.organization,
-      serviceType: careerItem.serviceType,
-      medicalField: careerItem.medicalField,
+      serviceType: careerItem.serviceTypeId ? getTagName(careerItem.serviceTypeId) : '',
+      serviceTypeId: careerItem.serviceTypeId,
+      medicalField: careerItem.medicalFieldId ? getTagName(careerItem.medicalFieldId) : '',
+      medicalFieldId: careerItem.medicalFieldId,
       isCurrent: careerItem.isCurrent || false,
-      jobTitle: careerItem.jobTitle,
+      jobTitle: careerItem.jobTitleId ? getTagName(careerItem.jobTitleId) : '',
+      jobTitleId: careerItem.jobTitleId,
       workType: careerItem.workType,
       experienceDetail: careerItem.experienceDetail,
     }
@@ -215,30 +224,35 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
         </div>
         <div className="form-group form-group-row">
           <div className="form-group-half">
-            <label>サービス形態</label>
-          <input
-            type="text"
-              value={careerItem.serviceType || ''}
-              onChange={(e) => handleCareerChange('serviceType', e.target.value)}
-            required
-          />
+            <label>サービス形態 *</label>
+            <TagSelector
+              category="サービス形態"
+              value={careerItem.serviceTypeId || 0}
+              onChange={(value) => handleCareerChange('serviceTypeId', value as number)}
+              multiple={false}
+              placeholder="サービス形態を選択"
+            />
           </div>
           <div className="form-group-half">
             <label>診療科／分野</label>
-            <input
-              type="text"
-              value={careerItem.medicalField || ''}
-              onChange={(e) => handleCareerChange('medicalField', e.target.value)}
+            <TagSelector
+              category="診療科・分野"
+              value={careerItem.medicalFieldId || 0}
+              onChange={(value) => handleCareerChange('medicalFieldId', value as number)}
+              multiple={false}
+              placeholder="診療科・分野を選択"
             />
           </div>
         </div>
         <div className="form-group form-group-row">
           <div className="form-group-half">
             <label>職種</label>
-            <input
-              type="text"
-              value={careerItem.jobTitle || ''}
-              onChange={(e) => handleCareerChange('jobTitle', e.target.value)}
+            <TagSelector
+              category="専門資格"
+              value={careerItem.jobTitleId || 0}
+              onChange={(value) => handleCareerChange('jobTitleId', value as number)}
+              multiple={false}
+              placeholder="職種を選択"
             />
           </div>
           <div className="form-group-half">

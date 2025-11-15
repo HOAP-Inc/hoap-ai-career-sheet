@@ -75,7 +75,7 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
           <ProfileRow label="電話番号" value={phone || '(非公開)'} />
         </div>
         <div className="profile-basics-row">
-          <div className="profile-row">
+          <div className="profile-row profile-row-qualifications">
             <span className="profile-row-label">所有資格</span>
             <div className="profile-row-value profile-qualifications-value">
               {(() => {
@@ -98,7 +98,7 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
               })()}
             </div>
           </div>
-          <div className="profile-row">
+          <div className="profile-row profile-row-qualifications">
             <span className="profile-row-label">専門資格</span>
             <div className="profile-row-value profile-qualifications-value">
               {(() => {

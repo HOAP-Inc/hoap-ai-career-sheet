@@ -85,12 +85,13 @@
   font-size: 13px;
   font-weight: 400;
   white-space: nowrap;
-  background: var(--bg-secondary);
+  background: transparent;
   border: 2px solid transparent;
   position: relative;
+  isolation: isolate;
 }
 
-/* グラデーション枠をbox-shadowで実現 */
+/* グラデーション枠を::beforeと::afterで実現 */
 .qualification-badge::before {
   content: '';
   position: absolute;
@@ -100,7 +101,7 @@
   bottom: -2px;
   border-radius: 20px;
   background: var(--accent-gradient);
-  z-index: -1;
+  z-index: -2;
 }
 
 .qualification-badge::after {

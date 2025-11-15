@@ -35,14 +35,14 @@
   font-weight: 400; /* 太字解除 */
 }
 
-.tag-selector-label-normal {
-  font-weight: 400; /* 太字解除 */
-}
-
 .tag-selector-label {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
+}
+
+.tag-selector-label.tag-selector-label-normal {
+  font-weight: 400 !important; /* 太字解除 */
 }
 
 .tag-selector-select {

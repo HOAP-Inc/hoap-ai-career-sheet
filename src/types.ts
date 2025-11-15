@@ -1,3 +1,10 @@
+export interface Tag {
+  id: number;
+  category: string;
+  subcategory: string;
+  name: string;
+}
+
 export interface ProfileData {
   name: string;
   photo?: string;
@@ -19,7 +26,8 @@ export interface ProfileData {
   doing: string;
   being: string;
   careerHistory: CareerItem[];
-  qualifications?: string[];
+  qualifications?: string[]; // 後方互換性のため残す
+  qualificationIds?: number[]; // ID配列で保存（新規）
   memberId?: string;
 }
 
@@ -29,11 +37,14 @@ export interface CareerItem {
   endYear?: number;
   endMonth?: number; // 1-12
   organization: string; // 勤務先
-  serviceType?: string; // サービス形態（新規）
-  medicalField?: string; // 診療科／分野
+  serviceType?: string; // サービス形態（後方互換性のため残す）
+  serviceTypeId?: number; // サービス形態ID（新規）
+  medicalField?: string; // 診療科／分野（後方互換性のため残す）
+  medicalFieldId?: number; // 診療科・分野ID（新規）
   department?: string; // 部署／診療科（後方互換性のため残す）
   isCurrent: boolean;
-  jobTitle?: string; // 職種
+  jobTitle?: string; // 職種（後方互換性のため残す）
+  jobTitleId?: number; // 職種ID（新規）
   workType?: string; // 勤務形態
   experienceDetail?: string; // 経験詳細
   whatDid?: string; // やったこと（後方互換性のため残す）

@@ -27,6 +27,10 @@
   overflow: hidden;
 }
 
+.profile-row.profile-row-qualifications {
+  align-items: stretch;
+}
+
 .profile-row-label {
   font-size: 13px;
   font-weight: 600;
@@ -43,6 +47,9 @@
 /* 所有資格・専門資格のラベルも他の項目と同様にグラデーション背景を適用 */
 .profile-row-qualifications .profile-row-label {
   background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 /* 単一項目（住所、所有資格）のグラデーション部分の幅を2列の項目と揃える */

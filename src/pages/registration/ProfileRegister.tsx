@@ -349,8 +349,8 @@ export const ProfileRegister: React.FC = () => {
                   style={{ marginTop: '8px' }}
                 >
                   <option value="">性別を選択してください</option>
-                  <option value="男">男</option>
-                  <option value="女">女</option>
+                  <option value="男性">男性</option>
+                  <option value="女性">女性</option>
                   <option value="その他">その他</option>
                 </select>
                 {errors.gender && <div className="error-message">{errors.gender}</div>}

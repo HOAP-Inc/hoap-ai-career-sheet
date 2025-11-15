@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from '../../components/Card';
 import { getTagNames } from '../../utils/tagsService';
+import { getQualificationNames } from '../../utils/qualificationsService';
 import './ProfileBasics.css';
 
 interface ProfileBasicsProps {
@@ -16,6 +17,8 @@ interface ProfileBasicsProps {
   phone?: string;
   qualifications?: string[];
   qualificationIds?: number[];
+  specializedSkills?: string[];
+  specializedSkillIds?: number[];
   onEdit?: () => void;
 }
 
@@ -32,6 +35,8 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
   phone,
   qualifications,
   qualificationIds,
+  specializedSkills,
+  specializedSkillIds,
   onEdit,
 }) => {
   const formatLocation = (value?: string) => {
@@ -69,14 +74,14 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
           <ProfileRow label="メールアドレス" value={email || ''} />
           <ProfileRow label="電話番号" value={phone || '(非公開)'} />
         </div>
-        <div className="profile-basics-row profile-basics-row-single">
+        <div className="profile-basics-row">
           <div className="profile-row">
             <span className="profile-row-label">所有資格</span>
             <div className="profile-row-value profile-qualifications-value">
               {(() => {
                 // qualificationIdsがあればそれを使用、なければqualificationsを使用
                 const qualNames = qualificationIds && qualificationIds.length > 0
-                  ? getTagNames(qualificationIds)
+                  ? getQualificationNames(qualificationIds)
                   : qualifications || [];
                 
                 return qualNames.length > 0 ? (
@@ -84,6 +89,29 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
                     {qualNames.map((qual, index) => (
                       <span key={index} className="qualification-badge">
                         {qual}
+                      </span>
+                    ))}
+                  </div>
+                ) : (
+                  <span className="empty">未入力</span>
+                );
+              })()}
+            </div>
+          </div>
+          <div className="profile-row">
+            <span className="profile-row-label">専門資格</span>
+            <div className="profile-row-value profile-qualifications-value">
+              {(() => {
+                // specializedSkillIdsがあればそれを使用、なければspecializedSkillsを使用
+                const skillNames = specializedSkillIds && specializedSkillIds.length > 0
+                  ? getTagNames(specializedSkillIds)
+                  : specializedSkills || [];
+                
+                return skillNames.length > 0 ? (
+                  <div className="qualification-badges">
+                    {skillNames.map((skill, index) => (
+                      <span key={index} className="qualification-badge">
+                        {skill}
                       </span>
                     ))}
                   </div>

@@ -5,6 +5,12 @@ export interface Tag {
   name: string;
 }
 
+export interface Qualification {
+  id: number;
+  category: string;
+  name: string;
+}
+
 export interface ProfileData {
   name: string;
   photo?: string;
@@ -27,7 +33,9 @@ export interface ProfileData {
   being: string;
   careerHistory: CareerItem[];
   qualifications?: string[]; // 後方互換性のため残す
-  qualificationIds?: number[]; // ID配列で保存（新規）
+  qualificationIds?: number[]; // 所有資格ID配列（qualifications.json）
+  specializedSkills?: string[]; // 後方互換性のため残す
+  specializedSkillIds?: number[]; // 専門資格ID配列（tags.json）
   memberId?: string;
 }
 

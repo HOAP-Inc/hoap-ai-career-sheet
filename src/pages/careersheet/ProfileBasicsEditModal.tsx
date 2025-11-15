@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import type { ProfileData } from '../../types';
 import { TagSelector } from '../../components/TagSelector';
+import { QualificationSelector } from '../../components/QualificationSelector';
 import { getTagNames } from '../../utils/tagsService';
+import { getQualificationNames } from '../../utils/qualificationsService';
 import './ProfileBasicsEditModal.css';
 
 interface ProfileBasicsEditModalProps {
@@ -32,6 +34,8 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
     phone: data.phone,
     qualifications: data.qualifications,
     qualificationIds: data.qualificationIds || [],
+    specializedSkills: data.specializedSkills,
+    specializedSkillIds: data.specializedSkillIds || [],
   });
   const [isFetchingAddress, setIsFetchingAddress] = useState(false);
 
@@ -49,6 +53,8 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
       phone: data.phone,
       qualifications: data.qualifications,
       qualificationIds: data.qualificationIds || [],
+      specializedSkills: data.specializedSkills,
+      specializedSkillIds: data.specializedSkillIds || [],
     });
   }, [data, isOpen]);
 
@@ -106,13 +112,19 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
     
     // qualificationIdsから名前を生成（後方互換性のため）
     const qualificationNames = formData.qualificationIds && formData.qualificationIds.length > 0
-      ? getTagNames(formData.qualificationIds)
+      ? getQualificationNames(formData.qualificationIds)
+      : [];
+    
+    // specializedSkillIdsから名前を生成（後方互換性のため）
+    const specializedSkillNames = formData.specializedSkillIds && formData.specializedSkillIds.length > 0
+      ? getTagNames(formData.specializedSkillIds)
       : [];
     
     const updatedData = {
       ...formData,
       age: calculatedAge,
       qualifications: qualificationNames,
+      specializedSkills: specializedSkillNames,
     };
     onSave(updatedData);
     onClose();
@@ -254,12 +266,21 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
           </div>
           <div className="profile-basics-edit-group">
             <label>所有資格</label>
-            <TagSelector
-              category="専門資格"
+            <QualificationSelector
               value={formData.qualificationIds || []}
               onChange={(value) => handleChange('qualificationIds', value as number[])}
               multiple={true}
               placeholder="資格を選択してください"
+            />
+          </div>
+          <div className="profile-basics-edit-group">
+            <label>専門資格</label>
+            <TagSelector
+              category="専門資格"
+              value={formData.specializedSkillIds || []}
+              onChange={(value) => handleChange('specializedSkillIds', value as number[])}
+              multiple={true}
+              placeholder="専門資格を選択してください"
             />
           </div>
           <div className="profile-basics-edit-footer">

@@ -257,11 +257,11 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
           </div>
           <div className="form-group-half">
             <label>勤務形態</label>
-            <input
-              type="text"
+          <input
+            type="text"
               value={careerItem.workType || ''}
               onChange={(e) => handleCareerChange('workType', e.target.value)}
-            />
+          />
           </div>
         </div>
         <div className="form-group">

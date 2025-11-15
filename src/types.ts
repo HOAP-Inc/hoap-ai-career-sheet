@@ -7,6 +7,9 @@ export interface ProfileData {
   email?: string;
   phone?: string;
   age?: number;
+  birthYear?: number;
+  birthMonth?: number;
+  birthDay?: number;
   gender?: string;
   jobTitle?: string;
   can: string;

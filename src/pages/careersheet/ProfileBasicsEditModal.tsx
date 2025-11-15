@@ -10,7 +10,6 @@ interface ProfileBasicsEditModalProps {
 }
 
 const genderOptions = ['男性', '女性', 'その他'];
-const ages = Array.from({ length: 71 }, (_, i) => i + 15);
 
 export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
   data,

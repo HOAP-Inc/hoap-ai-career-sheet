@@ -222,27 +222,33 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
             required
           />
         </div>
-        <div className="form-group form-group-row">
-          <div className="form-group-half">
-            <label>サービス形態 *</label>
-            <TagSelector
-              category="サービス形態"
-              value={careerItem.serviceTypeId || 0}
-              onChange={(value) => handleCareerChange('serviceTypeId', value as number)}
-              multiple={false}
-              placeholder="サービス形態を選択"
-            />
-          </div>
-          <div className="form-group-half">
-            <label>診療科／分野</label>
-            <TagSelector
-              category="診療科・分野"
-              value={careerItem.medicalFieldId || 0}
-              onChange={(value) => handleCareerChange('medicalFieldId', value as number)}
-              multiple={false}
-              placeholder="診療科・分野を選択"
-            />
-          </div>
+        <div className="form-group">
+          <label>サービス形態 *</label>
+          <TagSelector
+            category="サービス形態"
+            value={careerItem.serviceTypeId || 0}
+            onChange={(value) => handleCareerChange('serviceTypeId', value as number)}
+            multiple={false}
+            placeholder="サービス形態を選択"
+            inlineLayout
+            labelWeight="normal"
+            labelOverrides={{ first: '　分類', second: 'サービス形態' }}
+            indentFirstStep
+          />
+        </div>
+        <div className="form-group">
+          <label>診療科／分野</label>
+          <TagSelector
+            category="診療科・分野"
+            value={careerItem.medicalFieldId || 0}
+            onChange={(value) => handleCareerChange('medicalFieldId', value as number)}
+            multiple={false}
+            placeholder="診療科・分野を選択"
+            inlineLayout
+            labelWeight="normal"
+            labelOverrides={{ first: '　大分類', second: '詳細' }}
+            indentFirstStep
+          />
         </div>
         <div className="form-group form-group-row">
           <div className="form-group-half">

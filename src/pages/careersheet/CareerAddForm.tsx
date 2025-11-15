@@ -223,16 +223,16 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
           />
         </div>
         <div className="form-group">
-          <label>サービス形態 *</label>
+          <label>サービス形態</label>
           <TagSelector
             category="サービス形態"
             value={careerItem.serviceTypeId || 0}
             onChange={(value) => handleCareerChange('serviceTypeId', value as number)}
             multiple={false}
-            placeholder="サービス形態を選択"
+            placeholder="分類を選択"
             inlineLayout
             labelWeight="normal"
-            labelOverrides={{ first: '　分類', second: 'サービス形態' }}
+            labelOverrides={{ first: '　分類', second: '形態' }}
             indentFirstStep
           />
         </div>
@@ -243,32 +243,26 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
             value={careerItem.medicalFieldId || 0}
             onChange={(value) => handleCareerChange('medicalFieldId', value as number)}
             multiple={false}
-            placeholder="診療科・分野を選択"
+            placeholder="大分類を選択"
             inlineLayout
             labelWeight="normal"
             labelOverrides={{ first: '　大分類', second: '詳細' }}
             indentFirstStep
           />
         </div>
-        <div className="form-group form-group-row">
-          <div className="form-group-half">
-            <label>職種</label>
-            <TagSelector
-              category="専門資格"
-              value={careerItem.jobTitleId || 0}
-              onChange={(value) => handleCareerChange('jobTitleId', value as number)}
-              multiple={false}
-              placeholder="職種を選択"
-            />
-          </div>
-          <div className="form-group-half">
-            <label>勤務形態</label>
-          <input
-            type="text"
-              value={careerItem.workType || ''}
-              onChange={(e) => handleCareerChange('workType', e.target.value)}
-          />
-          </div>
+        <div className="form-group">
+          <label>勤務形態</label>
+          <select
+            value={careerItem.workType || ''}
+            onChange={(e) => handleCareerChange('workType', e.target.value)}
+          >
+            <option value="">選択してください</option>
+            <option value="正社員">正社員</option>
+            <option value="時短正社員">時短正社員</option>
+            <option value="パート">パート</option>
+            <option value="業務委託">業務委託</option>
+            <option value="その他">その他</option>
+          </select>
         </div>
         <div className="form-group">
           <label>経験詳細</label>

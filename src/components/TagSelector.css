@@ -18,7 +18,8 @@
 }
 
 .tag-selector-step.inline-start {
-  flex: 0 0 180px;
+  flex: 1;
+  min-width: 200px;
 }
 
 .tag-selector-step.inline-end {

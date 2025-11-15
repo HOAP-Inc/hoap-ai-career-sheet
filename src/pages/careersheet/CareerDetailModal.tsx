@@ -298,10 +298,10 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
                     setEditedItem({ ...editedItem, serviceTypeId: value as number })
                   }
                   multiple={false}
-                  placeholder="サービス形態を選択"
+                  placeholder="分類を選択"
                   inlineLayout
                   labelWeight="normal"
-                  labelOverrides={{ first: '　分類', second: 'サービス形態' }}
+                  labelOverrides={{ first: '　分類', second: '形態' }}
                   indentFirstStep
                 />
               ) : (
@@ -321,7 +321,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
                     setEditedItem({ ...editedItem, medicalFieldId: value as number })
                   }
                   multiple={false}
-                  placeholder="診療科・分野を選択"
+                  placeholder="大分類を選択"
                   inlineLayout
                   labelWeight="normal"
                   labelOverrides={{ first: '　大分類', second: '詳細' }}
@@ -335,36 +335,22 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             </div>
 
             <div className="detail-item">
-              <div className="detail-label">職種</div>
-              {isEditing ? (
-                <TagSelector
-                  category="専門資格"
-                  value={editedItem.jobTitleId || 0}
-                  onChange={(value) =>
-                    setEditedItem({ ...editedItem, jobTitleId: value as number })
-                  }
-                  multiple={false}
-                  placeholder="職種を選択"
-                />
-              ) : (
-                <div className="detail-value">
-                  {editedItem.jobTitleId ? getTagName(editedItem.jobTitleId) : editedItem.jobTitle || '未入力'}
-                </div>
-              )}
-            </div>
-
-            <div className="detail-item">
               <div className="detail-label">勤務形態</div>
               {isEditing ? (
-                <input
-                  type="text"
+                <select
                   className="detail-input"
                   value={editedItem.workType || ''}
                   onChange={(e) =>
                     setEditedItem({ ...editedItem, workType: e.target.value })
                   }
-                  placeholder="勤務形態を入力"
-                />
+                >
+                  <option value="">選択してください</option>
+                  <option value="正社員">正社員</option>
+                  <option value="時短正社員">時短正社員</option>
+                  <option value="パート">パート</option>
+                  <option value="業務委託">業務委託</option>
+                  <option value="その他">その他</option>
+                </select>
               ) : (
                 <div className="detail-value">
                   {editedItem.workType || '未入力'}

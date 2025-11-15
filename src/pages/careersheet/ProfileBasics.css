@@ -65,6 +65,29 @@
   color: var(--text-secondary);
 }
 
+.profile-qualifications-value {
+  padding: 8px 14px;
+}
+
+.qualification-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.qualification-badge {
+  display: inline-block;
+  background: var(--accent-gradient);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* スマホ向けスタイル */
 @media (max-width: 768px) {
   .profile-basics-row {

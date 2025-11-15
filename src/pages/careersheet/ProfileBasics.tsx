@@ -50,10 +50,22 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
           <ProfileRow label="電話番号" value={phone || '(非公開)'} />
         </div>
         <div className="profile-basics-row profile-basics-row-single">
-          <ProfileRow
-            label="所有資格"
-            value={qualifications && qualifications.length > 0 ? qualifications.join(' / ') : ''}
-          />
+          <div className="profile-row">
+            <span className="profile-row-label">所有資格</span>
+            <div className="profile-row-value profile-qualifications-value">
+              {qualifications && qualifications.length > 0 ? (
+                <div className="qualification-badges">
+                  {qualifications.map((qual, index) => (
+                    <span key={index} className="qualification-badge">
+                      {qual}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <span className="empty">未入力</span>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </Card>

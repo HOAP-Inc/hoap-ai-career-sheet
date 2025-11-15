@@ -229,3 +229,21 @@
   box-shadow: var(--shadow-hover);
 }
 
+/* スマートフォン用スタイル */
+@media (max-width: 768px) {
+  .profile-basics-edit-group-inline select {
+    min-height: 48px;
+    padding: 12px;
+  }
+
+  .profile-basics-edit-group select {
+    min-height: 48px;
+  }
+
+  /* 所有資格・専門資格のセレクトボックスも同じ高さに */
+  .profile-basics-edit-group .tag-selector-select {
+    min-height: 48px;
+    padding: 12px;
+  }
+}
+

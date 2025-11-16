@@ -201,19 +201,11 @@
   min-height: 100px;
 }
 
-.period-inputs {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
 .period-select {
   display: flex;
   align-items: center;
   gap: 6px;
-  flex: 1;
-  min-width: 200px;
+  width: 100%;
 }
 
 .period-select select {
@@ -239,11 +231,6 @@
   color: var(--text-primary);
 }
 
-.period-divider {
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--text-primary);
-}
 
 .checkbox-label {
   display: flex;

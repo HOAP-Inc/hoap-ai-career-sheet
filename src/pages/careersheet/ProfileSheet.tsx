@@ -131,47 +131,48 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
   };
 
   return (
-    <div className="profile-sheet">
+    <div className="profile-page">
       <Header />
-      <div className="profile-sheet-container">
-        <ProfileHeader
-          name={profileData.name}
-          photo={profileData.photo}
-          personalWords={profileData.personalWords}
-          memberId={profileData.memberId}
-          onPhotoChange={onPhotoChange}
-          onEditPersonalWords={() => setIsEditingPersonalWords(true)}
-        />
-
-        <div className="profile-basics-wrapper">
-          <ProfileBasics
-            age={profileData.age}
-            birthYear={profileData.birthYear}
-            birthMonth={profileData.birthMonth}
-            birthDay={profileData.birthDay}
-            gender={profileData.gender}
-            location={profileData.location}
-            addressDetail={profileData.addressDetail}
-            email={profileData.email}
-            phone={profileData.phone}
-            qualifications={profileData.qualifications}
-            qualificationIds={profileData.qualificationIds}
-            specializedSkills={profileData.specializedSkills}
-            specializedSkillIds={profileData.specializedSkillIds}
-            onEdit={() => setIsEditingBasics(true)}
+      <div className="profile-sheet">
+        <div className="profile-sheet-container">
+          <ProfileHeader
+            name={profileData.name}
+            photo={profileData.photo}
+            personalWords={profileData.personalWords}
+            memberId={profileData.memberId}
+            onPhotoChange={onPhotoChange}
+            onEditPersonalWords={() => setIsEditingPersonalWords(true)}
           />
-        </div>
 
-        <div className="sheet-grid">
-          <div className="sheet-row sheet-row-experience">
-            <div className="sheet-col">
-        <CareerGraph
-          careerHistory={profileData.careerHistory}
-          onCareerUpdate={handleCareerUpdate}
-          onCareerAdd={handleCareerAdd}
-          onCareerDelete={handleCareerDelete}
-        />
-            </div>
+          <div className="profile-basics-wrapper">
+            <ProfileBasics
+              age={profileData.age}
+              birthYear={profileData.birthYear}
+              birthMonth={profileData.birthMonth}
+              birthDay={profileData.birthDay}
+              gender={profileData.gender}
+              location={profileData.location}
+              addressDetail={profileData.addressDetail}
+              email={profileData.email}
+              phone={profileData.phone}
+              qualifications={profileData.qualifications}
+              qualificationIds={profileData.qualificationIds}
+              specializedSkills={profileData.specializedSkills}
+              specializedSkillIds={profileData.specializedSkillIds}
+              onEdit={() => setIsEditingBasics(true)}
+            />
+          </div>
+
+          <div className="sheet-grid">
+            <div className="sheet-row sheet-row-experience">
+              <div className="sheet-col">
+                <CareerGraph
+                  careerHistory={profileData.careerHistory}
+                  onCareerUpdate={handleCareerUpdate}
+                  onCareerAdd={handleCareerAdd}
+                  onCareerDelete={handleCareerDelete}
+                />
+              </div>
             <div className="sheet-col">
               <Card
                 title="Can"
@@ -243,6 +244,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
           </div>
         </div>
       </div>
+    </div>
       <ProfileEditModal
         data={profileData}
         isOpen={isEditingProfile}

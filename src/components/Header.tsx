@@ -3,7 +3,7 @@ import './Header.css';
 
 export const Header: React.FC = () => {
   return (
-    <header className="app-header">
+    <header className="global-header">
       <div className="header-container">
         <div className="header-left">
           {/* 左側は空白（将来的にロゴなどを配置可能） */}

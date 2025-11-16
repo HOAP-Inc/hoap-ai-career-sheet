@@ -104,9 +104,9 @@
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px;
   font-family: inherit;
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   color: var(--text-primary);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -115,6 +115,25 @@
 .career-add-body .form-group input[type="number"]:focus,
 .career-add-body .form-group select:focus,
 .career-add-body .form-group textarea:focus {
+  outline: none;
+  border-color: #bc1888;
+  box-shadow: 0 0 0 3px rgba(188, 24, 136, 0.1);
+}
+
+/* サービス形態・診療科／分野のTagSelectorを勤務先入力欄と同じサイズに */
+.career-add-body .form-group .tag-selector-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.career-add-body .form-group .tag-selector-select:focus {
   outline: none;
   border-color: #bc1888;
   box-shadow: 0 0 0 3px rgba(188, 24, 136, 0.1);
@@ -213,17 +232,18 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  flex: 1;
+  min-width: 200px;
 }
 
 .period-select select {
-  width: 100px;
-  min-width: 100px;
+  flex: 1;
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 16px;
   font-family: inherit;
-  background: var(--bg-secondary);
+  background: var(--bg-primary);
   color: var(--text-primary);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }

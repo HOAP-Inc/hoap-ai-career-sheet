@@ -183,90 +183,108 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
           {/* 詳細情報 */}
           <div className="career-details">
             <div className="detail-item">
-              <div className="detail-label">在籍期間</div>
+              <div className="detail-label">入社年月</div>
               {isEditing ? (
-                <div className="period-inputs">
-                  <div className="period-select">
-                    <select
-                      value={editedItem.startYear}
-                      onChange={(e) =>
-                        handleFieldChange('startYear', parseInt(e.target.value))
-                      }
-                    >
-                      {years.map((year) => (
-                        <option key={`edit-start-${year}`} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="period-suffix">年</span>
-                    <select
-                      value={editedItem.startMonth}
-                      onChange={(e) =>
-                        handleFieldChange('startMonth', parseInt(e.target.value))
-                      }
-                    >
-                      {months.map((month) => (
-                        <option key={`edit-start-month-${month}`} value={month}>
-                          {month}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="period-suffix">月</span>
-                  </div>
-                  <span className="period-divider">〜</span>
-                  <div className="period-select">
-                    <select
-                      value={editedItem.endYear ?? ''}
-                      onChange={(e) =>
-                        handleFieldChange(
-                          'endYear',
-                          e.target.value ? parseInt(e.target.value) : undefined
-                        )
-                      }
-                      disabled={editedItem.isCurrent}
-                    >
-                      <option value="">--</option>
-                      {years.map((year) => (
-                        <option key={`edit-end-${year}`} value={year}>
-                          {year}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="period-suffix">年</span>
-                    <select
-                      value={editedItem.endMonth ?? ''}
-                      onChange={(e) =>
-                        handleFieldChange(
-                          'endMonth',
-                          e.target.value ? parseInt(e.target.value) : undefined
-                        )
-                      }
-                      disabled={editedItem.isCurrent}
-                    >
-                      <option value="">--</option>
-                      {months.map((month) => (
-                        <option key={`edit-end-month-${month}`} value={month}>
-                          {month}
-                        </option>
-                      ))}
-                    </select>
-                    <span className="period-suffix">月</span>
-                  </div>
-                  <label className="checkbox-label">
-                    <input
-                      type="checkbox"
-                      checked={editedItem.isCurrent || false}
-                      onChange={(e) =>
-                        handleFieldChange('isCurrent', e.target.checked)
-                      }
-                    />
-                    <span className="checkbox-text">在籍中</span>
-                  </label>
+                <div className="period-select">
+                  <select
+                    value={editedItem.startYear}
+                    onChange={(e) =>
+                      handleFieldChange('startYear', parseInt(e.target.value))
+                    }
+                  >
+                    {years.map((year) => (
+                      <option key={`edit-start-${year}`} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="period-suffix">年</span>
+                  <select
+                    value={editedItem.startMonth}
+                    onChange={(e) =>
+                      handleFieldChange('startMonth', parseInt(e.target.value))
+                    }
+                  >
+                    {months.map((month) => (
+                      <option key={`edit-start-month-${month}`} value={month}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="period-suffix">月</span>
                 </div>
               ) : (
-                <div className="detail-value">{formatPeriod(editedItem)}</div>
+                <div className="detail-value">
+                  {editedItem.startYear && editedItem.startMonth
+                    ? `${editedItem.startYear}年${editedItem.startMonth}月`
+                    : '未入力'}
+                </div>
               )}
+            </div>
+
+            <div className="detail-item">
+              <div className="detail-label">退社年月（予定含む）</div>
+              {isEditing ? (
+                <div className="period-select">
+                  <select
+                    value={editedItem.endYear ?? ''}
+                    onChange={(e) =>
+                      handleFieldChange(
+                        'endYear',
+                        e.target.value ? parseInt(e.target.value) : undefined
+                      )
+                    }
+                    disabled={editedItem.isCurrent}
+                  >
+                    <option value="">--</option>
+                    {years.map((year) => (
+                      <option key={`edit-end-${year}`} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="period-suffix">年</span>
+                  <select
+                    value={editedItem.endMonth ?? ''}
+                    onChange={(e) =>
+                      handleFieldChange(
+                        'endMonth',
+                        e.target.value ? parseInt(e.target.value) : undefined
+                      )
+                    }
+                    disabled={editedItem.isCurrent}
+                  >
+                    <option value="">--</option>
+                    {months.map((month) => (
+                      <option key={`edit-end-month-${month}`} value={month}>
+                        {month}
+                      </option>
+                    ))}
+                  </select>
+                  <span className="period-suffix">月</span>
+                </div>
+              ) : (
+                <div className="detail-value">
+                  {editedItem.isCurrent
+                    ? '在籍中'
+                    : editedItem.endYear && editedItem.endMonth
+                      ? `${editedItem.endYear}年${editedItem.endMonth}月`
+                      : '未入力'}
+                </div>
+              )}
+            </div>
+
+            <div className="detail-item">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={editedItem.isCurrent || false}
+                  onChange={(e) =>
+                    handleFieldChange('isCurrent', e.target.checked)
+                  }
+                />
+                <span className="checkbox-text">在籍中</span>
+              </label>
             </div>
 
             <div className="detail-item">

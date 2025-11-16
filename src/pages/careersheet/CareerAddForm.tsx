@@ -140,78 +140,80 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
         </div>
         <form className="career-add-body" onSubmit={handleSubmit}>
         <div className="form-group">
-          <label>在籍期間</label>
-          <div className="period-inputs">
-            <div className="period-select">
-              <select
-                value={careerItem.startYear}
-                onChange={(e) => handleCareerChange('startYear', parseInt(e.target.value))}
-                required
-              >
-                {years.map((year) => (
-                  <option key={`start-${year}`} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-              <span className="period-suffix">年</span>
-              <select
-                value={careerItem.startMonth}
-                onChange={(e) => handleCareerChange('startMonth', parseInt(e.target.value))}
-                required
-              >
-                {months.map((month) => (
-                  <option key={`start-month-${month}`} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
-              <span className="period-suffix">月</span>
-            </div>
-
-            <span className="period-divider">〜</span>
-
-            <div className="period-select">
-              <select
-                value={careerItem.endYear ?? ''}
-                onChange={(e) =>
-                  handleCareerChange('endYear', e.target.value ? parseInt(e.target.value) : undefined)
-                }
-                disabled={careerItem.isCurrent}
-              >
-                <option value="">--</option>
-                {years.map((year) => (
-                  <option key={`end-${year}`} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-              <span className="period-suffix">年</span>
-              <select
-                value={careerItem.endMonth ?? ''}
-                onChange={(e) =>
-                  handleCareerChange('endMonth', e.target.value ? parseInt(e.target.value) : undefined)
-                }
-                disabled={careerItem.isCurrent}
-              >
-                <option value="">--</option>
-                {months.map((month) => (
-                  <option key={`end-month-${month}`} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
-              <span className="period-suffix">月</span>
-            </div>
-            <label className="checkbox-label period-checkbox">
-              <input
-                type="checkbox"
-                checked={careerItem.isCurrent || false}
-                onChange={(e) => handleCareerChange('isCurrent', e.target.checked)}
-              />
-              <span className="checkbox-text">在籍中</span>
-            </label>
+          <label>入社年月</label>
+          <div className="period-select">
+            <select
+              value={careerItem.startYear}
+              onChange={(e) => handleCareerChange('startYear', parseInt(e.target.value))}
+              required
+            >
+              {years.map((year) => (
+                <option key={`start-${year}`} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <span className="period-suffix">年</span>
+            <select
+              value={careerItem.startMonth}
+              onChange={(e) => handleCareerChange('startMonth', parseInt(e.target.value))}
+              required
+            >
+              {months.map((month) => (
+                <option key={`start-month-${month}`} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+            <span className="period-suffix">月</span>
           </div>
+        </div>
+
+        <div className="form-group">
+          <label>退社年月（予定含む）</label>
+          <div className="period-select">
+            <select
+              value={careerItem.endYear ?? ''}
+              onChange={(e) =>
+                handleCareerChange('endYear', e.target.value ? parseInt(e.target.value) : undefined)
+              }
+              disabled={careerItem.isCurrent}
+            >
+              <option value="">--</option>
+              {years.map((year) => (
+                <option key={`end-${year}`} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <span className="period-suffix">年</span>
+            <select
+              value={careerItem.endMonth ?? ''}
+              onChange={(e) =>
+                handleCareerChange('endMonth', e.target.value ? parseInt(e.target.value) : undefined)
+              }
+              disabled={careerItem.isCurrent}
+            >
+              <option value="">--</option>
+              {months.map((month) => (
+                <option key={`end-month-${month}`} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+            <span className="period-suffix">月</span>
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label className="checkbox-label">
+            <input
+              type="checkbox"
+              checked={careerItem.isCurrent || false}
+              onChange={(e) => handleCareerChange('isCurrent', e.target.checked)}
+            />
+            <span className="checkbox-text">在籍中</span>
+          </label>
         </div>
         <div className="form-group">
           <label>勤務先</label>

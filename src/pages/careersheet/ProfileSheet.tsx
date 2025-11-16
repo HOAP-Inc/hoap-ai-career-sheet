@@ -138,7 +138,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         name={profileData.name}
         memberId={profileData.memberId}
         photo={profileData.photo}
-        onEditCareerSheet={() => navigate('/')}
+        onEditCareerSheet={() => navigate('/careersheet')}
       />
       <div className="profile-sheet">
         <div className="profile-sheet-container">

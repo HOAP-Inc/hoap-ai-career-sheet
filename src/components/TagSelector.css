@@ -17,11 +17,7 @@
   align-items: flex-end;
 }
 
-.tag-selector-step.inline-start {
-  flex: 1;
-  min-width: 200px;
-}
-
+.tag-selector-step.inline-start,
 .tag-selector-step.inline-end {
   flex: 1;
   min-width: 200px;
@@ -147,14 +143,28 @@
     gap: 12px;
   }
 
+  .tag-selector-inline {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+
+  .tag-selector-step.inline-start,
+  .tag-selector-step.inline-end {
+    width: 100%;
+    min-width: 0;
+  }
+
   .tag-selector-label {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .tag-selector-select {
-    min-height: 48px;
-    padding: 12px;
-    font-size: 13px;
+    width: 100%;
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
   }
 }
 

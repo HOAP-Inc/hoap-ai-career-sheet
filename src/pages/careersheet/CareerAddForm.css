@@ -207,10 +207,16 @@
   }
 
   /* モバイルでも在籍期間・サービス形態・診療科／分野の入力欄を勤務先入力欄と同じサイズに */
+  .period-inputs {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 12px !important;
+  }
+
   .period-select {
-    flex: 1 !important;
-    min-width: 200px !important;
     width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
   }
 
   .period-select select {

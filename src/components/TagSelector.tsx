@@ -134,7 +134,7 @@ export const TagSelector: React.FC<TagSelectorProps> = ({
   const secondStepClasses = [
     'tag-selector-step',
     inlineLayout ? 'inline-end' : '',
-    category === '専門資格' ? 'indented' : '',
+    (category === '専門資格' || indentFirstStep) ? 'indented' : '',
   ]
     .filter(Boolean)
     .join(' ');

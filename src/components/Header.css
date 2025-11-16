@@ -1,17 +1,16 @@
 .app-header {
   width: 100%;
-  background: #ffffff;
-  border-bottom: 1px solid var(--border-color);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: linear-gradient(135deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .header-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 16px 40px;
+  width: 100%;
+  padding: 8px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -31,21 +30,21 @@
   width: 44px;
   height: 44px;
   border: none;
-  background: var(--bg-secondary);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: var(--text-primary);
+  color: #ffffff;
   padding: 0;
 }
 
 .header-icon-button:hover {
-  background: var(--bg-primary);
+  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .header-icon-button:active {
@@ -53,17 +52,17 @@
 }
 
 .header-profile-button {
-  background: linear-gradient(135deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 .header-profile-button:hover {
-  background: linear-gradient(135deg, #fce7f3 0%, #ede9fe 50%, #dbeafe 100%);
+  background: rgba(255, 255, 255, 0.4);
 }
 
 /* スマートフォン用スタイル */
 @media (max-width: 768px) {
   .header-container {
-    padding: 12px 20px;
+    padding: 6px 20px;
   }
 
   .header-right {

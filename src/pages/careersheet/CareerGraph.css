@@ -293,6 +293,31 @@
     padding: 16px 12px;
   }
 
+  .career-graph-header {
+    padding-right: 0; /* 追加ボタンを下に移動するため */
+    padding-bottom: 16px;
+  }
+
+  .career-add-button {
+    position: static;
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    border-radius: 8px;
+    background: #f5f5f5;
+    color: #0066cc;
+    border: none;
+  }
+
+  .career-add-button:hover {
+    transform: none;
+    box-shadow: none;
+    background: #e8e8e8;
+  }
+
   .timeline-years {
     padding: 0 8px;
     margin-bottom: 16px;
@@ -308,16 +333,6 @@
     font-size: 10px;
   }
 
-  .career-graph-header {
-    padding-right: 80px;
-    margin-bottom: 16px;
-  }
-
-  .career-add-button {
-    padding: 6px 12px;
-    font-size: 12px;
-    line-height: 1;
-  }
 
   .career-items-container {
     gap: 8px;

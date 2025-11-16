@@ -142,8 +142,8 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
         <form className="profile-basics-edit-body" onSubmit={handleSubmit}>
           <div className="profile-basics-edit-group">
             <label>生年月日</label>
-            <div className="profile-basics-edit-row">
-              <div className="profile-basics-edit-group-inline">
+            <div className="profile-basics-edit-row birthdate-row">
+              <div className="profile-basics-edit-group-inline birthdate-year">
                 <select
                   value={formData.birthYear ?? ''}
                   onChange={(e) =>
@@ -159,8 +159,9 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
                     ),
                   )}
                 </select>
+                <span className="birthdate-suffix">年</span>
               </div>
-              <div className="profile-basics-edit-group-inline">
+              <div className="profile-basics-edit-group-inline birthdate-month">
                 <select
                   value={formData.birthMonth ?? ''}
                   onChange={(e) =>
@@ -174,8 +175,9 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
                     </option>
                   ))}
                 </select>
+                <span className="birthdate-suffix">月</span>
               </div>
-              <div className="profile-basics-edit-group-inline">
+              <div className="profile-basics-edit-group-inline birthdate-day">
                 <select
                   value={formData.birthDay ?? ''}
                   onChange={(e) =>
@@ -189,6 +191,7 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
                     </option>
                   ))}
                 </select>
+                <span className="birthdate-suffix">日</span>
               </div>
             </div>
           </div>

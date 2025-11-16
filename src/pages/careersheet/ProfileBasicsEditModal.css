@@ -95,10 +95,19 @@
 .profile-basics-edit-group-inline {
   flex: 1;
   min-width: 100px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .profile-basics-edit-group-inline select {
-  width: 100%;
+  flex: 1;
+}
+
+.birthdate-suffix {
+  font-size: 14px;
+  color: var(--text-primary);
+  white-space: nowrap;
 }
 
 .postal-row {
@@ -231,6 +240,24 @@
 
 /* スマートフォン用スタイル */
 @media (max-width: 768px) {
+  /* 生年月日の行レイアウト */
+  .birthdate-row {
+    flex-wrap: wrap !important;
+  }
+
+  .birthdate-year {
+    width: 100% !important;
+    flex: none !important;
+    min-width: 0 !important;
+  }
+
+  .birthdate-month,
+  .birthdate-day {
+    width: calc(50% - 8px) !important;
+    flex: none !important;
+    min-width: 0 !important;
+  }
+
   /* 生年月日の入力フィールド */
   .profile-basics-edit-group-inline select,
   .profile-basics-edit-row .profile-basics-edit-group-inline select {
@@ -239,6 +266,10 @@
     font-size: 16px !important;
     height: 48px !important;
     box-sizing: border-box !important;
+  }
+
+  .birthdate-suffix {
+    font-size: 16px !important;
   }
 
   /* 性別選択 */

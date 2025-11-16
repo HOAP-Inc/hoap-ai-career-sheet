@@ -67,7 +67,7 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
         <div className="profile-basics-row profile-basics-row-single">
           <ProfileRow
             label="住所"
-            value={[postalCode ? `〒${postalCode}` : null, displayLocation, addressDetail].filter(Boolean).join(' ')}
+            value={[displayLocation, addressDetail].filter(Boolean).join(' ')}
           />
         </div>
         <div className="profile-basics-row">

@@ -132,7 +132,12 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
 
   return (
     <div className="profile-page">
-      <Header />
+      <Header
+        name={profileData.name}
+        memberId={profileData.memberId}
+        photo={profileData.photo}
+        onEditCareerSheet={() => setIsEditingProfile(true)}
+      />
       <div className="profile-sheet">
         <div className="profile-sheet-container">
           <ProfileHeader

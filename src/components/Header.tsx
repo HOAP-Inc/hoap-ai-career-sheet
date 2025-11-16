@@ -1,15 +1,160 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Header.css';
 
-export const Header: React.FC = () => {
+interface HeaderProps {
+  name?: string;
+  memberId?: string;
+  photo?: string;
+  onEditCareerSheet?: () => void;
+}
+
+const renderGradientStops = () => (
+  <>
+    <stop offset="0%" stopColor="#f09433" />
+    <stop offset="25%" stopColor="#e6683c" />
+    <stop offset="50%" stopColor="#dc2743" />
+    <stop offset="75%" stopColor="#cc2366" />
+    <stop offset="100%" stopColor="#bc1888" />
+  </>
+);
+
+export const Header: React.FC<HeaderProps> = ({
+  name,
+  memberId,
+  photo,
+  onEditCareerSheet,
+}) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const closeMenu = () => setIsMenuOpen(false);
+
+  const handleEditClick = () => {
+    if (onEditCareerSheet) {
+      onEditCareerSheet();
+    }
+    closeMenu();
+  };
+
+  const menuItems = [
+    {
+      key: 'account',
+      label: 'アカウント設定',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <defs>
+            <linearGradient id="headerMenuAccount" x1="0%" y1="0%" x2="100%" y2="100%">
+              {renderGradientStops()}
+            </linearGradient>
+          </defs>
+          <path
+            d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+            stroke="url(#headerMenuAccount)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M19.4 15C19.7825 14.2316 19.9898 13.3854 20 12.525C20.0102 11.6645 19.8237 10.8143 19.455 10.04L21 7L18 5.5L16.79 6.71C15.8691 6.25536 14.8646 5.99356 13.84 5.94C12.8154 5.88644 11.7898 6.04199 10.82 6.4L9.5 4H6.5L5.05 7.08C4.26843 7.44754 3.55865 7.9605 2.95 8.59L4.06 11.15C3.69664 12.1931 3.59085 13.3133 3.75 14.41C3.90915 15.5067 4.32935 16.5511 4.975 17.45L4 20L7 21.5L8.21 20.29C9.1309 20.7446 10.1354 21.0064 11.16 21.06C12.1846 21.1136 13.2102 20.958 14.18 20.6L15.5 23H18.5L19.95 19.92C20.7316 19.5525 21.4414 19.0395 22.05 18.41L20.94 15.85C21.3034 14.8069 21.4092 13.6867 21.25 12.59C21.0908 11.4933 20.6706 10.4489 20.025 9.55L21 7L18 5.5"
+            stroke="url(#headerMenuAccount)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+    },
+    {
+      key: 'logout',
+      label: 'ログアウト',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <defs>
+            <linearGradient id="headerMenuLogout" x1="0%" y1="0%" x2="100%" y2="100%">
+              {renderGradientStops()}
+            </linearGradient>
+          </defs>
+          <path
+            d="M9 21H5C4.44772 21 4 20.5523 4 20V4C4 3.44772 4.44772 3 5 3H9"
+            stroke="url(#headerMenuLogout)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M16 17L21 12L16 7"
+            stroke="url(#headerMenuLogout)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M21 12H9"
+            stroke="url(#headerMenuLogout)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+    },
+    {
+      key: 'withdraw',
+      label: '退会する',
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <defs>
+            <linearGradient id="headerMenuExit" x1="0%" y1="0%" x2="100%" y2="100%">
+              {renderGradientStops()}
+            </linearGradient>
+          </defs>
+          <path
+            d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+            stroke="url(#headerMenuExit)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M15 9L9 15"
+            stroke="url(#headerMenuExit)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M9 9L15 15"
+            stroke="url(#headerMenuExit)"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ),
+    },
+  ];
+
+  const handleMenuAction = (key: string) => {
+    console.log(`Header menu action: ${key}`);
+    closeMenu();
+  };
+
   return (
-    <header className="global-header">
-      <div className="header-container">
-        <div className="header-left">
-          {/* 左側は空白（将来的にロゴなどを配置可能） */}
-        </div>
-        <div className="header-right">
-          <button className="header-icon-button" title="メール">
+    <>
+      <header className="global-header">
+        <div className="header-container">
+          <div className="header-left" />
+          <div className="header-right">
+            <button className="header-icon-button" title="メール">
             <svg
               width="24"
               height="24"
@@ -19,11 +164,7 @@ export const Header: React.FC = () => {
             >
               <defs>
                 <linearGradient id="headerMailGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#f09433" />
-                  <stop offset="25%" stopColor="#e6683c" />
-                  <stop offset="50%" stopColor="#dc2743" />
-                  <stop offset="75%" stopColor="#cc2366" />
-                  <stop offset="100%" stopColor="#bc1888" />
+                    {renderGradientStops()}
                 </linearGradient>
               </defs>
               <path
@@ -61,7 +202,13 @@ export const Header: React.FC = () => {
               />
             </svg>
           </button>
-          <button className="header-icon-button header-profile-button" title="プロフィール">
+            <button
+              className="header-icon-button header-profile-button"
+              title="プロフィール"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              aria-expanded={isMenuOpen}
+              aria-haspopup="true"
+            >
             <svg
               width="24"
               height="24"
@@ -86,10 +233,70 @@ export const Header: React.FC = () => {
                 strokeLinejoin="round"
               />
             </svg>
-          </button>
+            </button>
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {isMenuOpen && (
+        <>
+          <div className="header-menu-overlay" onClick={closeMenu} />
+          <div className="header-menu-panel" role="dialog" aria-label="アカウントメニュー">
+            <button className="header-menu-close" onClick={closeMenu} aria-label="メニューを閉じる">
+              ×
+            </button>
+            <div className="header-menu-profile">
+              <div className="header-menu-photo">
+                {photo ? (
+                  <img src={photo} alt="プロフィール写真" />
+                ) : (
+                  <div className="header-menu-photo-placeholder">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M5 20C5 17.2386 7.23858 15 10 15H14C16.7614 15 19 17.2386 19 20"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <div className="header-menu-info">
+                <div className="header-menu-name">{name || '未登録'}</div>
+                <div className="header-menu-id">ID：{memberId || '未登録'}</div>
+              </div>
+            </div>
+
+            <button className="header-menu-edit-button" onClick={handleEditClick}>
+              キャリアシートを編集
+            </button>
+
+            <div className="header-menu-actions">
+              {menuItems.map((item) => (
+                <button
+                  key={item.key}
+                  className="header-menu-action"
+                  type="button"
+                  onClick={() => handleMenuAction(item.key)}
+                >
+                  <span className="header-menu-action-icon">{item.icon}</span>
+                  <span className="header-menu-action-label">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 

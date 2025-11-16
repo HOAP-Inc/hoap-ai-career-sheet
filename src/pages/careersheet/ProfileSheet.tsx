@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { ProfileData, CareerItem } from '../../types';
 import { Header } from '../../components/Header';
 import { ProfileHeader } from './ProfileHeader';
@@ -21,6 +22,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
   onPhotoChange,
   onDataUpdate,
 }) => {
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState<ProfileData>(data);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingBasics, setIsEditingBasics] = useState(false);
@@ -136,7 +138,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
         name={profileData.name}
         memberId={profileData.memberId}
         photo={profileData.photo}
-        onEditCareerSheet={() => setIsEditingProfile(true)}
+        onEditCareerSheet={() => navigate('/')}
       />
       <div className="profile-sheet">
         <div className="profile-sheet-container">

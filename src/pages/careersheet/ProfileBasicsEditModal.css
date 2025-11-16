@@ -231,19 +231,65 @@
 
 /* スマートフォン用スタイル */
 @media (max-width: 768px) {
-  .profile-basics-edit-group-inline select {
-    min-height: 48px;
-    padding: 12px;
+  /* 生年月日の入力フィールド */
+  .profile-basics-edit-group-inline select,
+  .profile-basics-edit-row .profile-basics-edit-group-inline select {
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
   }
 
-  .profile-basics-edit-group select {
-    min-height: 48px;
+  /* 性別選択 */
+  .profile-basics-edit-group select,
+  .profile-basics-edit-row .profile-basics-edit-group select {
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* テキスト入力フィールド */
+  .profile-basics-edit-group input {
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
   }
 
   /* 所有資格・専門資格のセレクトボックスも同じ高さに */
-  .profile-basics-edit-group .tag-selector-select {
-    min-height: 48px;
-    padding: 12px;
+  .profile-basics-edit-group .tag-selector-select,
+  .profile-basics-edit-group .tag-selector .tag-selector-select {
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
+  }
+
+  .profile-basics-edit-address-display {
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+  }
+
+  .postal-row input {
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
+  }
+
+  .btn-lookup {
+    min-height: 48px !important;
+    padding: 12px 18px !important;
+    font-size: 14px !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
   }
 }
 

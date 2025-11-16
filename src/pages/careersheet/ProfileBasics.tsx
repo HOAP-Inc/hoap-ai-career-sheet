@@ -10,7 +10,6 @@ interface ProfileBasicsProps {
   birthMonth?: number;
   birthDay?: number;
   gender?: string;
-  postalCode?: string;
   location?: string;
   addressDetail?: string;
   email?: string;
@@ -28,7 +27,6 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
   birthMonth,
   birthDay,
   gender,
-  postalCode,
   location,
   addressDetail,
   email,

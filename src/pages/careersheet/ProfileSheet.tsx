@@ -148,7 +148,6 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
             birthMonth={profileData.birthMonth}
             birthDay={profileData.birthDay}
             gender={profileData.gender}
-            postalCode={profileData.postalCode}
             location={profileData.location}
             addressDetail={profileData.addressDetail}
             email={profileData.email}

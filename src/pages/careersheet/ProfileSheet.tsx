@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import type { ProfileData, CareerItem } from '../../types';
+import { Header } from '../../components/Header';
 import { ProfileHeader } from './ProfileHeader';
 import { Card } from '../../components/Card';
 import { CareerGraph } from './CareerGraph';
@@ -131,6 +132,7 @@ export const ProfileSheet: React.FC<ProfileSheetProps> = ({
 
   return (
     <div className="profile-sheet">
+      <Header />
       <div className="profile-sheet-container">
         <ProfileHeader
           name={profileData.name}

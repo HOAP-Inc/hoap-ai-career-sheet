@@ -62,8 +62,7 @@ export const QualificationSelector: React.FC<QualificationSelectorProps> = ({
   return (
     <div className="tag-selector">
       {/* 資格選択 */}
-      <div className="tag-selector-step indented">
-        <label className="tag-selector-label">資格名</label>
+      <div className="tag-selector-step">
         {multiple ? (
           <select
             className="tag-selector-select"
@@ -100,7 +99,7 @@ export const QualificationSelector: React.FC<QualificationSelectorProps> = ({
 
       {/* 複数選択の場合、選択済み資格を表示 */}
       {multiple && selectedQualifications.length > 0 && (
-        <div className="tag-selector-selected indented">
+        <div className="tag-selector-selected">
           {selectedQualifications.map((id) => {
             const qual = getQualificationById(id);
             return qual ? (

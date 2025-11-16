@@ -223,7 +223,7 @@ export const CareerDetailModal: React.FC<CareerDetailModalProps> = ({
             </div>
 
             <div className="detail-item">
-              <div className="detail-label">退社年月（予定含む）</div>
+              <div className="detail-label">退社年月</div>
               {isEditing ? (
                 <div className="period-select">
                   <select

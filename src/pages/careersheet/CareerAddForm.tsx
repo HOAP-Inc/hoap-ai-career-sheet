@@ -170,7 +170,7 @@ export const CareerAddForm: React.FC<CareerAddFormProps> = ({ onAdd, onCancel })
         </div>
 
         <div className="form-group">
-          <label>退社年月（予定含む）</label>
+          <label>退社年月</label>
           <div className="period-select">
             <select
               value={careerItem.endYear ?? ''}

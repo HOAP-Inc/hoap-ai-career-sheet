@@ -140,31 +140,47 @@
   }
 
   .profile-row {
-    padding: 0; /* paddingを削除してPC版と同じ構造に */
-    align-items: stretch; /* 上下にグラデーションを広げる */
+    flex-direction: column; /* 上下に配置 */
+    padding: 0;
+    align-items: stretch;
   }
 
   .profile-row-label {
-    width: 33.33%; /* PC版と同じ幅 */
-    padding: 10px 14px; /* PC版と同じパディング */
+    width: 100%; /* 全幅に */
+    padding: 10px 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%; /* 上下にグラデーションを広げる */
+    background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
+    border-radius: 10px 10px 0 0; /* 上側の角を丸く */
   }
 
   .profile-basics-row.profile-basics-row-single .profile-row-label {
-    width: calc((100% - 12px) / 6); /* PC版と同じ計算式 */
-    max-width: calc((100% - 12px) / 6);
+    width: 100%; /* 全幅に */
+    max-width: 100%;
     flex-shrink: 0;
-    min-width: 80px;
+    min-width: auto;
   }
 
   .profile-row-value {
-    padding: 10px 14px; /* PC版と同じパディング */
+    padding: 10px 14px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: 0 0 10px 10px; /* 下側の角を丸く */
+  }
+
+  .profile-row-qualifications {
+    flex-direction: column; /* 資格も上下に配置 */
+  }
+
+  .profile-row-qualifications .profile-row-label {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .profile-row-qualifications .profile-row-value {
+    border-radius: 0 0 10px 10px;
   }
 }
 

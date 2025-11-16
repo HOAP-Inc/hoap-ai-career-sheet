@@ -134,7 +134,7 @@ export const ProfileBasicsEditModal: React.FC<ProfileBasicsEditModalProps> = ({
     <div className="profile-basics-edit-overlay" onClick={onClose}>
       <div className="profile-basics-edit-content" onClick={(e) => e.stopPropagation()}>
         <div className="profile-basics-edit-header">
-          <h2 className="profile-basics-edit-title">基本プロフィール編集</h2>
+          <h2 className="profile-basics-edit-title">プロフィール編集</h2>
           <button className="profile-basics-edit-close" onClick={onClose}>
             ×
           </button>

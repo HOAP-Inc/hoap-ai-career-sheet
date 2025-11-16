@@ -56,7 +56,7 @@ export const ProfileBasics: React.FC<ProfileBasicsProps> = ({
   };
 
   return (
-    <Card title="基本プロフィール" className="section-card" onEdit={onEdit}>
+    <Card title="プロフィール" className="section-card" onEdit={onEdit}>
       <div className="profile-basics-content">
         <div className="profile-basics-row">
           <ProfileRow label="生年月日" value={formatBirthDate()} />

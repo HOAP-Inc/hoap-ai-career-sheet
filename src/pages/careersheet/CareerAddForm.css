@@ -109,6 +109,9 @@
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  height: 48px;
+  line-height: 1.5;
 }
 
 .career-add-body .form-group input[type="text"]:focus,
@@ -131,6 +134,9 @@
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  height: 48px;
+  line-height: 1.5;
 }
 
 .career-add-body .form-group .tag-selector-select:focus {
@@ -143,6 +149,7 @@
   resize: vertical;
   min-height: 100px;
   line-height: 1.5;
+  height: auto;
 }
 
 .form-group-row {
@@ -218,6 +225,8 @@
     padding: 12px !important;
     font-size: 16px !important;
     background: var(--bg-primary) !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
   }
 
   /* TagSelectorのselectボックスも同じサイズに */
@@ -227,8 +236,8 @@
     padding: 12px !important;
     font-size: 16px !important;
     background: var(--bg-primary) !important;
-    min-height: auto !important;
-    height: auto !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
   }
 
   /* TagSelectorのインラインレイアウトでも各セレクトボックスを統一 */
@@ -244,10 +253,18 @@
   /* すべての入力欄を統一 */
   .career-add-body .form-group input[type="text"],
   .career-add-body .form-group input[type="number"],
-  .career-add-body .form-group select,
+  .career-add-body .form-group select {
+    font-size: 16px !important;
+    background: var(--bg-primary) !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
+  }
+
   .career-add-body .form-group textarea {
     font-size: 16px !important;
     background: var(--bg-primary) !important;
+    height: auto !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -268,6 +285,9 @@
   background: var(--bg-primary);
   color: var(--text-primary);
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+  height: 48px;
+  line-height: 1.5;
 }
 
 .period-select select:focus {

@@ -43,8 +43,28 @@
   position: relative;
 }
 
-.header-icon-button:hover {
+.header-icon-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: transparent;
+  transition: background 0.3s ease;
+  z-index: 0;
+}
+
+.header-icon-button:hover::before {
   background: rgba(0, 0, 0, 0.05);
+}
+
+.header-icon-button svg {
+  position: relative;
+  z-index: 1;
+  display: block;
+  pointer-events: none;
+}
+
+.header-icon-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -70,13 +90,18 @@
   padding: 0 6px;
   border: 2px solid white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 
 .header-profile-button {
+  background: transparent;
+}
+
+.header-profile-button::before {
   background: linear-gradient(135deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
 }
 
-.header-profile-button:hover {
+.header-profile-button:hover::before {
   background: linear-gradient(135deg, #fce7f3 0%, #ede9fe 50%, #dbeafe 100%);
 }
 

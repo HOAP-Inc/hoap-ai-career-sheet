@@ -36,6 +36,13 @@ export const MessageThread: React.FC<MessageThreadProps> = ({
     setInputValue('');
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // PC版でEnterキーでの送信を無効化
+    if (e.key === 'Enter' && window.innerWidth > 768) {
+      e.preventDefault();
+    }
+  };
+
   const formatTime = (date: Date) => {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -128,6 +135,7 @@ export const MessageThread: React.FC<MessageThreadProps> = ({
             placeholder="メッセージを入力..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <button
             type="submit"

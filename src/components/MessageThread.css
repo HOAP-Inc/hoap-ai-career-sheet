@@ -161,6 +161,7 @@
 
 .message-thread-input-area {
   display: flex;
+  align-items: flex-end;
   gap: 12px;
   padding: 16px 20px;
   border-top: 1px solid var(--border-color);

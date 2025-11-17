@@ -59,3 +59,31 @@ export interface CareerItem {
   whatLearned?: string; // 学んだこと（後方互換性のため残す）
 }
 
+// ===== メッセージ機能の型定義 =====
+
+export interface MessageThread {
+  id: string;
+  partnerId: string;
+  partnerName: string;
+  partnerCompanyName: string;
+  partnerIconUrl?: string;
+  latestMessageContent: string;
+  latestMessageTimestamp: Date;
+  unreadCount: number;
+  updatedAt: Date;
+}
+
+export interface Message {
+  id: string;
+  threadId: string;
+  senderId: string;
+  content: string;
+  sentAt: Date;
+  readAt: Date | null;
+}
+
+export interface SendMessageRequest {
+  threadId: string;
+  content: string;
+}
+

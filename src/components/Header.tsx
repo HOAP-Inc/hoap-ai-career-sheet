@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { MessageThreadList } from './MessageThreadList';
+import { MessageThread } from './MessageThread';
+import { mockThreads, mockMessages } from '../data/mockMessages';
 import './Header.css';
 
 interface HeaderProps {
@@ -25,11 +28,15 @@ export const Header: React.FC<HeaderProps> = ({
   onEditCareerSheet,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMessageListOpen, setIsMessageListOpen] = useState(false);
+  const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         setIsMenuOpen(false);
+        setIsMessageListOpen(false);
+        setSelectedThreadId(null);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -37,6 +44,21 @@ export const Header: React.FC<HeaderProps> = ({
   }, []);
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const handleSelectThread = (threadId: string) => {
+    setSelectedThreadId(threadId);
+    setIsMessageListOpen(false);
+  };
+
+  const handleBackToList = () => {
+    setSelectedThreadId(null);
+    setIsMessageListOpen(true);
+  };
+
+  const handleCloseMessages = () => {
+    setIsMessageListOpen(false);
+    setSelectedThreadId(null);
+  };
 
   const handleEditClick = () => {
     if (onEditCareerSheet) {
@@ -154,7 +176,11 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="header-container">
           <div className="header-left" />
           <div className="header-right">
-            <button className="header-icon-button" title="メール">
+            <button
+              className="header-icon-button"
+              title="メール"
+              onClick={() => setIsMessageListOpen(true)}
+            >
             <svg
               width="24"
               height="24"
@@ -295,6 +321,26 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </div>
         </>
+      )}
+
+      {/* メッセージスレッド一覧 */}
+      {isMessageListOpen && (
+        <MessageThreadList
+          threads={mockThreads}
+          onSelectThread={handleSelectThread}
+          onClose={handleCloseMessages}
+        />
+      )}
+
+      {/* メッセージ詳細 */}
+      {selectedThreadId && (
+        <MessageThread
+          threadId={selectedThreadId}
+          messages={mockMessages[selectedThreadId] || []}
+          thread={mockThreads.find((t) => t.id === selectedThreadId)}
+          onBack={handleBackToList}
+          onClose={handleCloseMessages}
+        />
       )}
     </>
   );

@@ -30,9 +30,10 @@ export const Header: React.FC<HeaderProps> = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMessageListOpen, setIsMessageListOpen] = useState(false);
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
+  const [threads, setThreads] = useState(mockThreads);
 
   // 未読メッセージ総数を計算
-  const totalUnreadCount = mockThreads.reduce((sum, thread) => sum + thread.unreadCount, 0);
+  const totalUnreadCount = threads.reduce((sum, thread) => sum + thread.unreadCount, 0);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -49,6 +50,12 @@ export const Header: React.FC<HeaderProps> = ({
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleSelectThread = (threadId: string) => {
+    // スレッドを開いた時に未読数を0にする
+    setThreads((prevThreads) =>
+      prevThreads.map((thread) =>
+        thread.id === threadId ? { ...thread, unreadCount: 0 } : thread
+      )
+    );
     setSelectedThreadId(threadId);
     setIsMessageListOpen(false);
   };
@@ -332,7 +339,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* メッセージスレッド一覧 */}
       {isMessageListOpen && (
         <MessageThreadList
-          threads={mockThreads}
+          threads={threads}
           onSelectThread={handleSelectThread}
           onClose={handleCloseMessages}
         />
@@ -343,7 +350,7 @@ export const Header: React.FC<HeaderProps> = ({
         <MessageThread
           threadId={selectedThreadId}
           messages={mockMessages[selectedThreadId] || []}
-          thread={mockThreads.find((t) => t.id === selectedThreadId)}
+          thread={threads.find((t) => t.id === selectedThreadId)}
           onBack={handleBackToList}
           onClose={handleCloseMessages}
         />

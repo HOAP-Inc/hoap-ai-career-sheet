@@ -13,6 +13,11 @@ export const MessageThreadList: React.FC<MessageThreadListProps> = ({
   onSelectThread,
   onClose,
 }) => {
+  // 新着順にソート（updatedAtの降順）
+  const sortedThreads = [...threads].sort(
+    (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
+  );
+
   const formatTimestamp = (date: Date) => {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
@@ -44,12 +49,12 @@ export const MessageThreadList: React.FC<MessageThreadListProps> = ({
         </div>
 
         <div className="message-thread-list-content">
-          {threads.length === 0 ? (
+          {sortedThreads.length === 0 ? (
             <div className="message-thread-list-empty">
               <p>メッセージがありません</p>
             </div>
           ) : (
-            threads.map((thread) => (
+            sortedThreads.map((thread) => (
               <button
                 key={thread.id}
                 className="message-thread-item"

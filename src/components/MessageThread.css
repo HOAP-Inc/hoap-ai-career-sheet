@@ -165,6 +165,10 @@
   padding: 16px 20px;
   border-top: 1px solid var(--border-color);
   background: var(--bg-secondary);
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  flex-shrink: 0;
 }
 
 .message-thread-input {

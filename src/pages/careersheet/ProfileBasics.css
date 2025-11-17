@@ -191,13 +191,18 @@
 
   .profile-row-qualifications {
     flex-direction: column; /* 資格も上下に配置 */
+    align-items: stretch; /* 電話番号と同様に */
   }
 
   .profile-row-qualifications .profile-row-label {
+    width: 100% !important; /* 電話番号と同様に全幅に */
+    max-width: 100% !important;
+    flex: none !important;
     border-radius: 10px 10px 0 0;
   }
 
   .profile-row-qualifications .profile-row-value {
+    width: 100% !important; /* 電話番号と同様に全幅に */
     border-radius: 0 0 10px 10px;
   }
 }

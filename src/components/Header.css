@@ -40,6 +40,7 @@
   transition: all 0.3s ease;
   color: var(--text-primary);
   padding: 0;
+  position: relative;
 }
 
 .header-icon-button:hover {
@@ -50,6 +51,25 @@
 
 .header-icon-button:active {
   transform: translateY(0);
+}
+
+.header-icon-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .header-profile-button {
@@ -217,6 +237,16 @@
   .header-icon-button svg {
     width: 20px;
     height: 20px;
+  }
+
+  .header-icon-badge {
+    top: -2px;
+    right: -2px;
+    font-size: 10px;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    padding: 0 5px;
   }
 
   .header-menu-overlay {

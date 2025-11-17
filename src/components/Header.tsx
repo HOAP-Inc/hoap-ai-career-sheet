@@ -31,6 +31,9 @@ export const Header: React.FC<HeaderProps> = ({
   const [isMessageListOpen, setIsMessageListOpen] = useState(false);
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
 
+  // 未読メッセージ総数を計算
+  const totalUnreadCount = mockThreads.reduce((sum, thread) => sum + thread.unreadCount, 0);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -177,7 +180,7 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="header-left" />
           <div className="header-right">
             <button
-              className="header-icon-button"
+              className="header-icon-button header-icon-with-badge"
               title="メール"
               onClick={() => setIsMessageListOpen(true)}
             >
@@ -201,6 +204,9 @@ export const Header: React.FC<HeaderProps> = ({
                 strokeLinejoin="round"
               />
             </svg>
+            {totalUnreadCount > 0 && (
+              <div className="header-icon-badge">{totalUnreadCount}</div>
+            )}
           </button>
           <button className="header-icon-button" title="通知">
             <svg

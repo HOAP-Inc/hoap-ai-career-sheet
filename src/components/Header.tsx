@@ -212,6 +212,10 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="header-container">
           <div className="header-left" />
           <div className="header-right">
+            {/* スマホ用の左2つのアイコン（プレースホルダー） */}
+            <button className="header-icon-button header-icon-mobile-only" title="" aria-hidden="true" />
+            <button className="header-icon-button header-icon-mobile-only" title="" aria-hidden="true" />
+            {/* 既存の3つのアイコン */}
             <button
               className="header-icon-button header-icon-with-badge"
               title="メール"

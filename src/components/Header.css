@@ -43,6 +43,11 @@
   position: relative;
 }
 
+/* スマホ用のアイコンはPC版では非表示 */
+.header-icon-mobile-only {
+  display: none;
+}
+
 .header-icon-button::before {
   content: '';
   position: absolute;
@@ -251,8 +256,18 @@
 
   .header-right {
     gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
+  /* スマホ用の左2つのアイコンを表示 */
+  .header-icon-mobile-only {
+    visibility: visible !important;
+    display: flex !important;
+  }
+
+  /* PC版では非表示 */
   .header-icon-button {
     width: 40px;
     height: 40px;

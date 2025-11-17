@@ -1,0 +1,107 @@
+# HOAP キャリアシートプロジェクト開発ルール
+
+## プロジェクト概要
+このプロジェクトは、HOAPモノレポに将来統合される予定のキャリアシート機能です。
+Vite + React + TypeScriptで構築されており、モノレポの `frontend/apps/career-sheet` として統合されます。
+
+## モノレポ統合を前提とした開発方針
+
+### 1. ディレクトリ構造
+- 現在: `/Users/gonmori/Code test/AI agent`
+- 統合後: `frontend/apps/career-sheet` （モノレポ内）
+- API通信は Orval生成のクライアントを使用する想定
+
+### 2. API通信の実装方針
+```typescript
+// 将来的には Orvalで生成されたクライアントを使用
+// 現在は fetch / axios で仮実装し、後で移行可能な構造にする
+// 例: lib/api-client/ 配下にクライアントコードを配置
+```
+
+### 3. 環境変数管理
+```env
+# .env.local に配置（NEXT_PUBLIC_ プレフィックスは不要）
+API_BASE_URL=http://localhost:8080
+# Viteの場合は VITE_ プレフィックスが必要
+VITE_API_BASE_URL=http://localhost:8080
+```
+
+### 4. 型定義とスキーマ
+- バックエンドAPIの型は将来的にTypeSpecから生成される
+- 現在は `src/types.ts` で定義しているが、統合時に生成コードに置き換え
+- 生成コードには直接編集を加えない
+
+### 5. コンポーネント設計
+- ドメインロジックと表示ロジックを分離
+- 再利用可能なコンポーネントは `src/components/` に配置
+- ページ固有のコンポーネントは `src/pages/*/` に配置
+- スタイルはコンポーネントごとにCSS Modulesまたは専用CSSファイル
+
+### 6. 状態管理
+- ローカル状態: useState / useReducer
+- グローバル状態: 必要に応じてContext API（将来的にはTanstack QueryやZustand検討）
+- サーバー状態: API通信結果のキャッシュ管理を考慮
+
+### 7. パッケージ管理
+- 現在: npm
+- 統合後: pnpm（モノレポの標準）
+- package.json の依存関係はモノレポのワークスペース構成に従う
+
+### 8. ビルドとデプロイ
+- 現在: Vite単独ビルド
+- 統合後: Turborepoのタスク経由でビルド
+- `task frontend:build` で全アプリと共にビルドされる
+
+### 9. コード生成物の扱い
+以下のディレクトリは自動生成されるため、手動編集禁止：
+- `lib/api-client/**` （Orval生成のAPIクライアント）
+- TypeSpec/OpenAPIから生成される型定義
+
+### 10. データベース連携
+- バックエンドAPIを経由してアクセス
+- 直接のDB接続は行わない
+- ローカル開発時は `task db:up` で起動されたPostgreSQLを使用
+
+## HOAPモノレポの技術スタック
+- スキーマ: TypeSpec → OpenAPI
+- バックエンド: Go 1.25+、ogen、sqlc
+- フロントエンド: Next.js（admin/company/job-seeker）+ Vite（career-sheet）
+- DB: PostgreSQL 17
+- パッケージ管理: pnpm 10.x
+- タスクランナー: Taskfile (go-task v3)
+- コード生成: TypeSpec → ogen (Go) + Orval (TypeScript)
+
+## 開発フロー（統合後）
+1. `task doctor` - 環境確認
+2. `task setup` - 依存関係インストール + コード生成
+3. `task db:up` - PostgreSQL起動
+4. `task dev` - バックエンド + 全フロントエンド起動
+5. スキーマ変更時: `task gen` で再生成
+
+## 現在の開発フロー
+1. `npm install` - 依存関係インストール
+2. `npm run dev` - 開発サーバー起動
+3. ブラウザで `http://localhost:5173/careersheet` を開く
+
+## コーディング規約
+- TypeScript strictモード有効
+- ESLint + Prettier でフォーマット
+- コンポーネントは関数コンポーネント（React.FC使用）
+- propsは interface で型定義
+- 非同期処理はasync/await
+- エラーハンドリングを適切に実装
+
+## 統合時の移行タスク
+- [ ] package.json を pnpm workspace 対応に変更
+- [ ] 環境変数を .env.local に統一（VITE_プレフィックス追加）
+- [ ] API通信をOrval生成クライアントに置き換え
+- [ ] 型定義をTypeSpec生成コードに置き換え
+- [ ] ビルドスクリプトをTurborepo対応に変更
+- [ ] テストをモノレポの規約に合わせて追加
+
+## 参考ドキュメント（モノレポ）
+- docs/overview.md — プロジェクト全体のサマリー
+- docs/getting-started.md — セットアップ手順
+- docs/architecture-overview.md — システム構成
+- docs/backend-testing-ja.md — テスト指針
+

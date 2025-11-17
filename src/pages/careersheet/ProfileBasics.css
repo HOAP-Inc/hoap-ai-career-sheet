@@ -37,7 +37,7 @@
   color: var(--text-primary);
   background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
   padding: 10px 14px;
-  width: 33.33%;
+  width: 33.33%; /* 所有資格と同じサイズに統一 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,12 +52,18 @@
   height: 100%;
 }
 
-/* 単一項目（住所、所有資格）のグラデーション部分の幅を2列の項目と揃える */
+/* 単一項目（住所）のグラデーション部分の幅は変更せず、上下の高さのみ所有資格に統一 */
 .profile-basics-row.profile-basics-row-single .profile-row-label {
-  width: calc((100% - 12px) / 6);
+  width: calc((100% - 12px) / 6); /* 横の長さは変更しない */
   max-width: calc((100% - 12px) / 6);
   flex-shrink: 0;
   min-width: 80px; /* 最小幅を設定して可読性を保つ */
+  padding: 10px 14px; /* 所有資格と同じ上下のpaddingに統一 */
+}
+
+/* 住所の値のpaddingも所有資格に統一 */
+.profile-basics-row.profile-basics-row-single .profile-row-value {
+  padding: 8px 14px; /* 所有資格と同じ上下のpaddingに統一 */
 }
 
 .profile-row-value {

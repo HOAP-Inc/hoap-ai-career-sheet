@@ -27,10 +27,6 @@
   overflow: hidden;
 }
 
-.profile-row.profile-row-qualifications {
-  align-items: stretch;
-}
-
 .profile-row-label {
   font-size: 13px;
   font-weight: 600;
@@ -45,18 +41,6 @@
   justify-content: center;
   text-align: center;
   height: 100%;
-}
-
-/* 所有資格・専門資格のラベルも他の項目と同様にグラデーション背景を適用 */
-.profile-row-qualifications .profile-row-label {
-  background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
-  display: flex;
-  align-items: center;
-  height: 100%;
-  width: 33.33%;
-  flex: 0 0 33.33%;
-  padding: 8px 14px; /* 値のpaddingと統一 */
-  box-sizing: border-box; /* paddingを幅に含める */
 }
 
 /* 単一項目（住所）のグラデーション部分の幅は変更せず、上下の高さのみ所有資格に統一 */
@@ -187,23 +171,6 @@
     justify-content: center;
     background: var(--bg-secondary);
     border-radius: 0 0 10px 10px; /* 下側の角を丸く */
-  }
-
-  .profile-row-qualifications {
-    flex-direction: column; /* 資格も上下に配置 */
-    align-items: stretch; /* 電話番号と同様に */
-  }
-
-  .profile-row-qualifications .profile-row-label {
-    width: 100% !important; /* 電話番号と同様に全幅に */
-    max-width: 100% !important;
-    flex: none !important;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .profile-row-qualifications .profile-row-value {
-    width: 100% !important; /* 電話番号と同様に全幅に */
-    border-radius: 0 0 10px 10px;
   }
 }
 

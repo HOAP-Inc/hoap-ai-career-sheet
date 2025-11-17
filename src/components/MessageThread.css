@@ -171,7 +171,7 @@
   flex: 1;
   padding: 12px 16px;
   border: 1px solid var(--border-color);
-  border-radius: 24px;
+  border-radius: 5px;
   font-size: 16px;
   font-family: inherit;
   background: #fafafa;
@@ -194,7 +194,7 @@
 
 .message-thread-input::-webkit-scrollbar-track {
   background: transparent;
-  border-radius: 24px;
+  border-radius: 5px;
 }
 
 .message-thread-input::-webkit-scrollbar-thumb {

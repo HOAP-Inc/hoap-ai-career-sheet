@@ -47,6 +47,32 @@ export const Header: React.FC<HeaderProps> = ({
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  // メッセージが開いている時に背景のスクロールをロック
+  useEffect(() => {
+    const isMessageOpen = isMessageListOpen || selectedThreadId !== null;
+    if (isMessageOpen) {
+      // スクロール位置を保存
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      
+      return () => {
+        // スクロール位置を復元
+        const savedScrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        if (savedScrollY) {
+          const scrollValue = parseInt(savedScrollY.replace('px', '').replace('-', ''), 10);
+          window.scrollTo(0, scrollValue);
+        }
+      };
+    }
+  }, [isMessageListOpen, selectedThreadId]);
+
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleSelectThread = (threadId: string) => {

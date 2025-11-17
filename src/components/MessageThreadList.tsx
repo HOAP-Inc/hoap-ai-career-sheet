@@ -21,13 +21,14 @@ export const MessageThreadList: React.FC<MessageThreadListProps> = ({
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
     if (minutes < 60) {
+      // 1時間以内：◯分前
       return `${minutes}分前`;
     } else if (hours < 24) {
+      // 1時間以上24時間以内：◯時間前
       return `${hours}時間前`;
-    } else if (days < 7) {
-      return `${days}日前`;
     } else {
-      return `${date.getMonth() + 1}/${date.getDate()}`;
+      // それ以外：◯日前
+      return `${days}日前`;
     }
   };
 

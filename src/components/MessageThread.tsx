@@ -20,11 +20,20 @@ export const MessageThread: React.FC<MessageThreadProps> = ({
 }) => {
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     // 新しいメッセージが追加されたら自動スクロール
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  useEffect(() => {
+    // textareaの高さを自動調整
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  }, [inputValue]);
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,13 +43,22 @@ export const MessageThread: React.FC<MessageThreadProps> = ({
     console.log('Send message:', { threadId, content: inputValue });
     
     setInputValue('');
+    // textareaの高さをリセット
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // PC版でEnterキーでの送信を無効化
-    if (e.key === 'Enter' && window.innerWidth > 768) {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    // スマホ版ではEnterで送信、PC版ではEnterで改行（デフォルト動作）
+    if (e.key === 'Enter' && window.innerWidth <= 768 && !e.shiftKey) {
+      // スマホ版ではEnterで送信
       e.preventDefault();
+      if (inputValue.trim()) {
+        handleSend(e as any);
+      }
     }
+    // PC版ではEnterで改行（デフォルト動作をそのまま使用）
   };
 
   const formatTime = (date: Date) => {
@@ -129,13 +147,14 @@ export const MessageThread: React.FC<MessageThreadProps> = ({
         </div>
 
         <form className="message-thread-input-area" onSubmit={handleSend}>
-          <input
-            type="text"
+          <textarea
+            ref={textareaRef}
             className="message-thread-input"
             placeholder="メッセージを入力..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
+            rows={1}
           />
           <button
             type="submit"

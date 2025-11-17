@@ -49,17 +49,8 @@ export const MessageThread: React.FC<MessageThreadProps> = ({
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    // スマホ版ではEnterで送信、PC版ではEnterで改行（デフォルト動作）
-    if (e.key === 'Enter' && window.innerWidth <= 768 && !e.shiftKey) {
-      // スマホ版ではEnterで送信
-      e.preventDefault();
-      if (inputValue.trim()) {
-        handleSend(e as any);
-      }
-    }
-    // PC版ではEnterで改行（デフォルト動作をそのまま使用）
-  };
+  // Enterキーは常に改行として扱う（送信は送信ボタンのみ）
+  // handleKeyDown は削除し、デフォルト動作（改行）を使用
 
   const formatTime = (date: Date) => {
     const hours = date.getHours().toString().padStart(2, '0');
@@ -153,7 +144,6 @@ export const MessageThread: React.FC<MessageThreadProps> = ({
             placeholder="メッセージを入力..."
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
             rows={1}
           />
           <button

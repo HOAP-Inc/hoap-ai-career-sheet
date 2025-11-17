@@ -17,7 +17,7 @@
 .profile-row {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: stretch;
   gap: 0;
   background: var(--bg-secondary);
   border-radius: 10px;
@@ -36,12 +36,15 @@
   font-weight: 600;
   color: var(--text-primary);
   background: linear-gradient(180deg, #fdf2f8 0%, #f5f3ff 50%, #eff6ff 100%);
-  padding: 10px 14px;
-  width: 33.33% !important; /* 所有資格と同じサイズに統一 */
+  padding: 8px 14px; /* 値のpaddingと統一して高さズレを解消 */
+  width: 33.33%;
+  flex: 0 0 33.33%;
+  box-sizing: border-box; /* paddingを幅に含める */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  height: 100%;
 }
 
 /* 所有資格・専門資格のラベルも他の項目と同様にグラデーション背景を適用 */
@@ -50,21 +53,26 @@
   display: flex;
   align-items: center;
   height: 100%;
-  width: 33.33% !important; /* 所有資格のラベルの幅を明示的に指定 */
+  width: 33.33%;
+  flex: 0 0 33.33%;
+  padding: 8px 14px; /* 値のpaddingと統一 */
+  box-sizing: border-box; /* paddingを幅に含める */
 }
 
 /* 単一項目（住所）のグラデーション部分の幅は変更せず、上下の高さのみ所有資格に統一 */
 .profile-basics-row.profile-basics-row-single .profile-row-label {
   width: calc((100% - 12px) / 6); /* 横の長さは変更しない */
   max-width: calc((100% - 12px) / 6);
-  flex-shrink: 0;
+  flex: 0 0 calc((100% - 12px) / 6);
   min-width: 80px; /* 最小幅を設定して可読性を保つ */
-  padding: 10px 14px; /* 所有資格と同じ上下のpaddingに統一 */
+  padding: 8px 14px; /* 値のpaddingと統一 */
+  box-sizing: border-box; /* paddingを幅に含める */
 }
 
 /* 住所の値のpaddingも所有資格に統一 */
 .profile-basics-row.profile-basics-row-single .profile-row-value {
-  padding: 8px 14px; /* 所有資格と同じ上下のpaddingに統一 */
+  padding: 8px 14px !important; /* 所有資格と同じ上下のpaddingに統一 */
+  box-sizing: border-box !important; /* paddingを幅に含める */
 }
 
 .profile-row-value {
@@ -72,12 +80,14 @@
   font-weight: 500;
   color: var(--text-primary);
   text-align: center;
-  padding: 10px 14px;
+  padding: 8px 14px; /* 所有資格と同じpaddingに統一 */
+  box-sizing: border-box; /* paddingを幅に含める */
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-secondary);
+  height: 100%;
 }
 
 .profile-row-value.profile-qualifications-value {
@@ -89,7 +99,8 @@
 }
 
 .profile-qualifications-value {
-  padding: 8px 14px;
+  padding: 8px 14px !important; /* 所有資格の値のpadding */
+  box-sizing: border-box !important; /* paddingを幅に含める */
 }
 
 .qualification-badges {
@@ -154,7 +165,7 @@
 
   .profile-row-label {
     width: 100%; /* 全幅に */
-    padding: 10px 14px;
+    padding: 8px 14px; /* 値のpaddingと統一 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -170,7 +181,7 @@
   }
 
   .profile-row-value {
-    padding: 10px 14px;
+    padding: 8px 14px; /* ラベルのpaddingと統一 */
     display: flex;
     align-items: center;
     justify-content: center;

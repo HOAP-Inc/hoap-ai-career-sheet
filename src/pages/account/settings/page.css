@@ -337,7 +337,7 @@
   }
 
   .account-settings-card {
-    padding: 20px;
+    padding: 20px 12px !important; /* 横幅を広げる */
     margin-bottom: 20px;
   }
 

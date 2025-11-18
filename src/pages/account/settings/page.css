@@ -364,10 +364,16 @@
 
   /* アカウント削除モーダル内のselect要素をボタンと同じサイズに */
   .account-settings-delete-modal .account-settings-input {
-    width: 100%;
-    padding: 12px 20px;
-    border-radius: 20px;
-    font-size: 15px;
+    width: 100% !important;
+    padding: 12px 20px !important;
+    border-radius: 20px !important;
+    font-size: 15px !important;
+  }
+
+  /* テキストエリアも同じスタイルに */
+  .account-settings-delete-modal .account-settings-textarea {
+    border-radius: 20px !important;
+    padding: 12px 20px !important;
   }
 }
 

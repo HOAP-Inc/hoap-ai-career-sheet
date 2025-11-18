@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { MessageThreadList } from './MessageThreadList';
 import { MessageThread } from './MessageThread';
 import { mockThreads, mockMessages } from '../data/mockMessages';
@@ -27,6 +28,7 @@ export const Header: React.FC<HeaderProps> = ({
   photo,
   onEditCareerSheet,
 }) => {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMessageListOpen, setIsMessageListOpen] = useState(false);
   const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
@@ -204,6 +206,9 @@ export const Header: React.FC<HeaderProps> = ({
   const handleMenuAction = (key: string) => {
     console.log(`Header menu action: ${key}`);
     closeMenu();
+    if (key === 'account') {
+      navigate('/account/settings');
+    }
   };
 
   return (

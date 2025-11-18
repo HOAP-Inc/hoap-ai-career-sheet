@@ -8,6 +8,7 @@ import { Verify } from './pages/registration/Verify';
 import { ProfileRegister } from './pages/registration/ProfileRegister';
 import { RegistrationComplete } from './pages/registration/RegistrationComplete';
 import { Login } from './pages/registration/Login';
+import { AccountSettings } from './pages/account/settings/page';
 import './App.css';
 
 function App() {
@@ -89,6 +90,9 @@ function App() {
             />
           }
         />
+        
+        {/* アカウント設定 */}
+        <Route path="/account/settings" element={<AccountSettings />} />
         
         {/* デフォルトルート */}
         <Route path="/" element={<Navigate to="/registration" replace />} />

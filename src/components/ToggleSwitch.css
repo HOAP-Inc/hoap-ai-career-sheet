@@ -1,0 +1,62 @@
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-switch.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggle-switch-label {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.toggle-switch-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-switch-slider {
+  position: relative;
+  width: 48px;
+  height: 24px;
+  background: #dbdbdb;
+  border-radius: 24px;
+  transition: background 0.3s ease;
+  flex-shrink: 0;
+}
+
+.toggle-switch-slider::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch-slider.checked {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.toggle-switch-slider.checked::before {
+  transform: translateX(24px);
+}
+
+.toggle-switch-input:focus + .toggle-switch-slider {
+  outline: 2px solid rgba(188, 24, 136, 0.3);
+  outline-offset: 2px;
+}
+

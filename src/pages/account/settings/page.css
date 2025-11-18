@@ -11,6 +11,30 @@
   width: 100%;
   margin: 0 auto;
   padding: 32px 20px;
+  position: relative;
+}
+
+.account-settings-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.04);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.account-settings-close:hover {
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .account-settings-title {
@@ -104,26 +128,100 @@
   box-shadow: 0 6px 16px rgba(188, 24, 136, 0.2);
 }
 
-.account-settings-footer {
-  text-align: center;
-  margin-top: 32px;
+.account-settings-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+  z-index: 1500;
 }
 
-.account-settings-delete-link {
-  background: none;
+.account-settings-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  max-width: calc(100% - 32px);
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  z-index: 1600;
+}
+
+.account-settings-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.account-settings-modal-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.account-settings-modal-close {
   border: none;
-  color: #dc2743;
-  font-size: 15px;
-  font-weight: 500;
+  background: transparent;
+  font-size: 24px;
   cursor: pointer;
-  padding: 8px 16px;
-  transition: color 0.2s ease;
-  text-decoration: none;
+  color: var(--text-primary);
+  line-height: 1;
 }
 
-.account-settings-delete-link:hover {
-  color: #c2185b;
-  text-decoration: underline;
+.account-settings-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.account-settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.account-settings-form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.account-settings-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-size: 15px;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-settings-input:focus {
+  outline: none;
+  border-color: #bc1888;
+  box-shadow: 0 0 0 3px rgba(188, 24, 136, 0.15);
+}
+
+.account-settings-submit-button {
+  margin-top: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  background-image: var(--accent-gradient);
+  color: #fff;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.account-settings-submit-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 /* スマートフォン用スタイル */
@@ -131,6 +229,11 @@
   .account-settings-container {
     min-width: auto;
     padding: 24px 16px;
+  }
+
+  .account-settings-close {
+    top: 12px;
+    right: 12px;
   }
 
   .account-settings-title {
@@ -157,6 +260,11 @@
 
   .account-settings-row-content {
     width: 100%;
+  }
+
+  .account-settings-modal {
+    width: calc(100% - 32px);
+    border-radius: 16px;
   }
 }
 

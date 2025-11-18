@@ -362,20 +362,16 @@
     border-radius: 16px;
   }
 
-  /* select要素 → 削除ボタンと同じ大きさ */
-  .account-settings-delete-modal .account-settings-input {
+  /* 削除モーダル全体の幅を100%に（これが決定的） */
+  .account-settings-delete-modal {
     width: 100% !important;
-    padding: 12px 20px !important;
-    border-radius: 12px !important; /* 角を少し控えめに */
-    font-size: 15px !important;
   }
 
   /* textarea → 幅を100%、角丸を控えめにして統一 */
   .account-settings-delete-modal .account-settings-textarea {
-    width: 100% !important;          /* 追加（必須） */
+    width: 100% !important;
     padding: 12px 20px !important;
-    border-radius: 12px !important;   /* 控えめに変更 */
-    font-size: 15px !important;
+    border-radius: 12px !important;
     box-sizing: border-box !important; /* iOSの幅ズレ防止 */
   }
 }

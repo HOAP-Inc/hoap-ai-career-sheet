@@ -192,18 +192,20 @@
 
 .account-settings-input {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 12px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
-  font-size: 15px;
+  font-size: 14px;
   font-family: inherit;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .account-settings-input:focus {
   outline: none;
   border-color: #bc1888;
-  box-shadow: 0 0 0 3px rgba(188, 24, 136, 0.15);
+  box-shadow: 0 0 0 3px rgba(188, 24, 136, 0.1);
 }
 
 .account-settings-submit-button {
@@ -365,6 +367,15 @@
   /* 削除モーダル全体の幅を100%に（これが決定的） */
   .account-settings-delete-modal {
     width: 100% !important;
+  }
+
+  /* select要素 → 性別選択欄と同じスタイル */
+  .account-settings-delete-modal .account-settings-input {
+    min-height: 48px !important;
+    padding: 12px !important;
+    font-size: 16px !important;
+    height: 48px !important;
+    box-sizing: border-box !important;
   }
 
   /* textarea → 幅を100%、角丸を控えめにして統一 */

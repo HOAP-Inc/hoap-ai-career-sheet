@@ -37,6 +37,12 @@ export const AccountSettings: React.FC = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [deleteCheckbox1, setDeleteCheckbox1] = useState(false);
+  const [deleteCheckbox2, setDeleteCheckbox2] = useState(false);
+  const [deleteCheckbox3, setDeleteCheckbox3] = useState(false);
+  const [deleteReason, setDeleteReason] = useState('');
+  const [deleteReasonDetail, setDeleteReasonDetail] = useState('');
 
   useEffect(() => {
     if (isEmailModalOpen) {
@@ -51,6 +57,16 @@ export const AccountSettings: React.FC = () => {
       setConfirmPassword('');
     }
   }, [isPasswordModalOpen]);
+
+  useEffect(() => {
+    if (isDeleteModalOpen) {
+      setDeleteCheckbox1(false);
+      setDeleteCheckbox2(false);
+      setDeleteCheckbox3(false);
+      setDeleteReason('');
+      setDeleteReasonDetail('');
+    }
+  }, [isDeleteModalOpen]);
 
   const handleEmailSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -67,6 +83,18 @@ export const AccountSettings: React.FC = () => {
     }
     console.log('Password updated');
     setPasswordModalOpen(false);
+  };
+
+  const isDeleteButtonEnabled =
+    deleteCheckbox1 && deleteCheckbox2 && deleteCheckbox3 && deleteReason !== '';
+
+  const handleDeleteAccount = () => {
+    if (!isDeleteButtonEnabled) return;
+    console.log('Delete account:', { reason: deleteReason, detail: deleteReasonDetail });
+    // TODO: API呼び出し
+    setDeleteModalOpen(false);
+    // 削除後はログアウトまたはトップページへ遷移
+    navigate('/login');
   };
 
   return (
@@ -170,6 +198,26 @@ export const AccountSettings: React.FC = () => {
           </div>
         </div>
 
+        {/* アカウントの削除 */}
+        <div className="account-settings-card">
+          <h2 className="account-settings-card-title">アカウントの削除</h2>
+          <div className="account-settings-section">
+            <div className="account-settings-row">
+              <div className="account-settings-row-content">
+                <span className="account-settings-label">
+                  アカウントを削除すると、すべてのデータが永久に削除されます
+                </span>
+              </div>
+              <button
+                className="account-settings-button"
+                onClick={() => setDeleteModalOpen(true)}
+              >
+                削除
+              </button>
+            </div>
+          </div>
+        </div>
+
         {isEmailModalOpen && (
           <Modal title="メールアドレスを変更" onClose={() => setEmailModalOpen(false)}>
             <form className="account-settings-form" onSubmit={handleEmailSubmit}>
@@ -234,6 +282,72 @@ export const AccountSettings: React.FC = () => {
                 変更する
               </button>
             </form>
+          </Modal>
+        )}
+
+        {isDeleteModalOpen && (
+          <Modal title="アカウントの削除" onClose={() => setDeleteModalOpen(false)}>
+            <div className="account-settings-delete-modal">
+              <h4 className="account-settings-delete-section-title">削除前にご確認下さい</h4>
+              <div className="account-settings-delete-checkboxes">
+                <label className="account-settings-delete-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={deleteCheckbox1}
+                    onChange={(e) => setDeleteCheckbox1(e.target.checked)}
+                  />
+                  <span>アカウント削除後は復元できません。</span>
+                </label>
+                <label className="account-settings-delete-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={deleteCheckbox2}
+                    onChange={(e) => setDeleteCheckbox2(e.target.checked)}
+                  />
+                  <span>キャリアシートも削除されます。</span>
+                </label>
+                <label className="account-settings-delete-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={deleteCheckbox3}
+                    onChange={(e) => setDeleteCheckbox3(e.target.checked)}
+                  />
+                  <span>企業からあなたにオファーが送れなくなります。</span>
+                </label>
+              </div>
+
+              <h4 className="account-settings-delete-section-title">アカウント削除の理由</h4>
+              <select
+                value={deleteReason}
+                onChange={(e) => setDeleteReason(e.target.value)}
+                className="account-settings-input"
+              >
+                <option value="">理由を選択</option>
+                <option value="job-search-ended">転職活動が終了した</option>
+                <option value="no-attractive-offers">魅力的なオファーがなかった</option>
+                <option value="privacy-concerns">プライバシーに不安があった</option>
+                <option value="other">その他</option>
+              </select>
+
+              <textarea
+                value={deleteReasonDetail}
+                onChange={(e) => setDeleteReasonDetail(e.target.value)}
+                className="account-settings-textarea"
+                placeholder="詳しい理由を記入（任意）"
+                rows={4}
+              />
+
+              <button
+                type="button"
+                className={`account-settings-delete-submit-button ${
+                  isDeleteButtonEnabled ? 'enabled' : 'disabled'
+                }`}
+                onClick={handleDeleteAccount}
+                disabled={!isDeleteButtonEnabled}
+              >
+                アカウントを完全に削除
+              </button>
+            </div>
           </Modal>
         )}
       </div>

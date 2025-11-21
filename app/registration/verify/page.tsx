@@ -20,24 +20,7 @@ export default function Verify() {
     message: string;
   } | null>(null);
 
-  useEffect(() => {
-    // URLパラメータからtokenを取得
-    // Next.js 15では searchParams が null の可能性があるため、オプショナルチェーンを使用
-    const tokenParam = searchParams?.get('token') ?? null;
-    if (tokenParam) {
-      setToken(tokenParam);
-      // tokenがある場合は自動認証を試みる
-      handleVerifyToken(tokenParam);
-    }
-  }, [searchParams, handleVerifyToken]);
-
-  useEffect(() => {
-    const savedEmail = localStorage.getItem('registration_email');
-    if (savedEmail) {
-      setEmail(savedEmail);
-    }
-  }, []);
-
+  // handleVerifyToken を useEffect より前に定義
   const handleVerifyToken = useCallback(
     async (tokenToVerify: string) => {
       setIsVerifying(true);
@@ -66,6 +49,24 @@ export default function Verify() {
     },
     [router],
   );
+
+  useEffect(() => {
+    // URLパラメータからtokenを取得
+    // Next.js 15では searchParams が null の可能性があるため、オプショナルチェーンを使用
+    const tokenParam = searchParams?.get('token') ?? null;
+    if (tokenParam) {
+      setToken(tokenParam);
+      // tokenがある場合は自動認証を試みる
+      handleVerifyToken(tokenParam);
+    }
+  }, [searchParams, handleVerifyToken]);
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('registration_email');
+    if (savedEmail) {
+      setEmail(savedEmail);
+    }
+  }, []);
 
   const handleResend = async () => {
     if (!email || isResending) return;
@@ -219,4 +220,3 @@ export default function Verify() {
     </div>
   );
 }
-

@@ -4,14 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { ProfileData, CareerItem } from '@/types';
 import { Header } from '@/components/Header';
-import { ProfileHeader } from '@/pages/careersheet/ProfileHeader';
+import { ProfileHeader } from '@/components/careersheet/ProfileHeader';
 import { Card } from '@/components/Card';
-import { CareerGraph } from '@/pages/careersheet/CareerGraph';
-import { ProfileBasics } from '@/pages/careersheet/ProfileBasics';
-import { ProfileEditModal } from '@/pages/careersheet/ProfileEditModal';
-import { ProfileBasicsEditModal } from '@/pages/careersheet/ProfileBasicsEditModal';
-import { SectionEditModal } from '@/pages/careersheet/SectionEditModal';
-import '@/pages/careersheet/ProfileSheet.css';
+import { CareerGraph } from '@/components/careersheet/CareerGraph';
+import { ProfileBasics } from '@/components/careersheet/ProfileBasics';
+import { ProfileEditModal } from '@/components/careersheet/ProfileEditModal';
+import { ProfileBasicsEditModal } from '@/components/careersheet/ProfileBasicsEditModal';
+import { SectionEditModal } from '@/components/careersheet/SectionEditModal';
+import '@/components/careersheet/ProfileSheet.css';
 
 export default function ProfileSheetPage() {
   const router = useRouter();

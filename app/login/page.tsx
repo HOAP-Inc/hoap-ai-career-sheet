@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import '@/src/pages/registration/RegistrationForm.css';
+import '@/pages/registration/RegistrationForm.css';
 
 export default function Login() {
   const router = useRouter();

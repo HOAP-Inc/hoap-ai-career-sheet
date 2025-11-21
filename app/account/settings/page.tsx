@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Header } from '@/src/components/Header';
-import { ToggleSwitch } from '@/src/components/ToggleSwitch';
-import '@/src/pages/account/settings/page.css';
+import { Header } from '@/components/Header';
+import { ToggleSwitch } from '@/components/ToggleSwitch';
+import '@/pages/account/settings/page.css';
 
 interface ModalProps {
   title: string;

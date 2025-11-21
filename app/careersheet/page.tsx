@@ -2,16 +2,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import type { ProfileData, CareerItem } from '@/src/types';
-import { Header } from '@/src/components/Header';
-import { ProfileHeader } from '@/src/pages/careersheet/ProfileHeader';
-import { Card } from '@/src/components/Card';
-import { CareerGraph } from '@/src/pages/careersheet/CareerGraph';
-import { ProfileBasics } from '@/src/pages/careersheet/ProfileBasics';
-import { ProfileEditModal } from '@/src/pages/careersheet/ProfileEditModal';
-import { ProfileBasicsEditModal } from '@/src/pages/careersheet/ProfileBasicsEditModal';
-import { SectionEditModal } from '@/src/pages/careersheet/SectionEditModal';
-import '@/src/pages/careersheet/ProfileSheet.css';
+import type { ProfileData, CareerItem } from '@/types';
+import { Header } from '@/components/Header';
+import { ProfileHeader } from '@/pages/careersheet/ProfileHeader';
+import { Card } from '@/components/Card';
+import { CareerGraph } from '@/pages/careersheet/CareerGraph';
+import { ProfileBasics } from '@/pages/careersheet/ProfileBasics';
+import { ProfileEditModal } from '@/pages/careersheet/ProfileEditModal';
+import { ProfileBasicsEditModal } from '@/pages/careersheet/ProfileBasicsEditModal';
+import { SectionEditModal } from '@/pages/careersheet/SectionEditModal';
+import '@/pages/careersheet/ProfileSheet.css';
 
 export default function ProfileSheetPage() {
   const router = useRouter();

@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { sendVerificationEmail } from '@/src/utils/api';
-import '@/src/pages/registration/RegistrationForm.css';
+import { sendVerificationEmail } from '@/utils/api';
+import '@/pages/registration/RegistrationForm.css';
 
 export default function EmailRegister() {
   const [email, setEmail] = useState('');

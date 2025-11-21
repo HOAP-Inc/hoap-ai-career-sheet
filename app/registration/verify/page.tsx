@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { verifyToken, verifyCode, resendVerificationEmail } from '@/src/utils/api';
-import '@/src/pages/registration/RegistrationForm.css';
+import { verifyToken, verifyCode, resendVerificationEmail } from '@/utils/api';
+import '@/pages/registration/RegistrationForm.css';
 
 export default function Verify() {
   const router = useRouter();

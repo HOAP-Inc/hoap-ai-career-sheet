@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { verifyToken, verifyCode, resendVerificationEmail } from '@/utils/api';
 import '@/pages/registration/RegistrationForm.css';
@@ -28,7 +28,7 @@ export default function Verify() {
       // tokenがある場合は自動認証を試みる
       handleVerifyToken(tokenParam);
     }
-  }, [searchParams]);
+  }, [searchParams, handleVerifyToken]);
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('registration_email');
@@ -37,31 +37,34 @@ export default function Verify() {
     }
   }, []);
 
-  const handleVerifyToken = async (tokenToVerify: string) => {
-    setIsVerifying(true);
-    setError('');
+  const handleVerifyToken = useCallback(
+    async (tokenToVerify: string) => {
+      setIsVerifying(true);
+      setError('');
 
-    try {
-      // API呼び出し（開発環境ではモックレスポンスを返す）
-      const data = await verifyToken(tokenToVerify);
-      setIsVerified(true);
-      // 認証成功時はProfileRegisterへ遷移
-      localStorage.setItem('registration_verified', 'true');
-      localStorage.setItem('registration_token', tokenToVerify);
-      if (data.email) {
-        localStorage.setItem('registration_email', data.email);
+      try {
+        // API呼び出し（開発環境ではモックレスポンスを返す）
+        const data = await verifyToken(tokenToVerify);
+        setIsVerified(true);
+        // 認証成功時はProfileRegisterへ遷移
+        localStorage.setItem('registration_verified', 'true');
+        localStorage.setItem('registration_token', tokenToVerify);
+        if (data.email) {
+          localStorage.setItem('registration_email', data.email);
+        }
+        router.push('/registration/profile');
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : '認証に失敗しました。認証コードを確認してください。',
+        );
+      } finally {
+        setIsVerifying(false);
       }
-      router.push('/registration/profile');
-    } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : '認証に失敗しました。認証コードを確認してください。',
-      );
-    } finally {
-      setIsVerifying(false);
-    }
-  };
+    },
+    [router],
+  );
 
   const handleResend = async () => {
     if (!email || isResending) return;

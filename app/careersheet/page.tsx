@@ -247,6 +247,7 @@ export default function ProfileSheetPage() {
               </Card>
             </div>
           </div>
+          </div>
         </div>
       </div>
       <ProfileEditModal

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { resendVerificationEmail } from '@/utils/api';
-import '@/pages/registration/RegistrationForm.css';
+import '../RegistrationForm.css';
 
 export default function EmailSent() {
   const router = useRouter();

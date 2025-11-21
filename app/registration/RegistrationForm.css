@@ -1,0 +1,481 @@
+.registration-container {
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding-top: 60px;
+}
+
+.step-indicator {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  padding: 0 4px;
+  position: relative;
+  gap: 4px;
+}
+
+.step-indicator::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: #e5e7eb;
+  z-index: 0;
+}
+
+.step-indicator-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.step-indicator-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #9ca3af;
+  transition: all 0.3s ease;
+}
+
+.step-indicator-item.active .step-indicator-number {
+  background: var(--accent-gradient);
+  border-color: transparent;
+  color: white;
+  transform: scale(1.1);
+}
+
+.step-indicator-item.completed .step-indicator-number {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.step-indicator-label {
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: center;
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-height: 1.2;
+  transition: all 0.3s ease;
+  max-width: 100%;
+}
+
+.step-indicator-item.active .step-indicator-label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.step-indicator-item.completed .step-indicator-label {
+  color: #10b981;
+}
+
+.registration-wrapper {
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.registration-card {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 24px;
+  padding: 36px 40px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.14);
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 400px;
+}
+
+.registration-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  display: block;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.registration-header {
+  text-align: left;
+  margin-bottom: 24px;
+}
+
+.registration-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
+}
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  justify-content: space-between;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-input {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background: #f3f4f6;
+  color: #1f2937;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-input.single-input {
+  margin-top: 0;
+}
+
+.form-input:focus {
+  outline: none;
+  background: #e5e7eb;
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+.birth-date-selectors {
+  display: flex;
+  gap: 8px;
+}
+
+.birth-select {
+  flex: 1;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background: #f3f4f6;
+  color: #1f2937;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.birth-select:focus {
+  outline: none;
+  background: #e5e7eb;
+}
+
+.postal-code-row {
+  display: flex;
+  gap: 8px;
+}
+
+.postal-input {
+  flex: 1;
+}
+
+.postal-search-btn {
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent-gradient);
+  color: white;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  box-shadow: var(--shadow);
+}
+
+.postal-search-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.postal-search-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.address-display {
+  padding: 12px 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-top: 8px;
+}
+
+.privacy-field {
+  margin-top: 8px;
+}
+
+.privacy-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #374151;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.privacy-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #3b82f6;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.privacy-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.privacy-link:hover {
+  text-decoration: underline;
+}
+
+.privacy-separator {
+  color: #374151;
+  margin: 0 2px;
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: auto;
+}
+
+.btn-next,
+.btn-submit {
+  width: 100%;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--accent-gradient);
+  color: white;
+  transition: all 0.3s ease;
+  margin-top: auto;
+  box-shadow: var(--shadow);
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.login-link-text {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.login-link-text:hover {
+  text-decoration: underline;
+  color: #2563eb;
+}
+
+.btn-next:hover:not(:disabled),
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.btn-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.step-2 {
+  text-align: center;
+}
+
+/* スマホ向けの調整 */
+@media (max-width: 480px) {
+  .registration-container {
+    padding: 16px;
+    padding-top: 24px;
+  }
+
+  .step-indicator {
+    padding: 0 2px;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+
+  .step-indicator-item {
+    gap: 6px;
+  }
+
+  .step-indicator-number {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+
+  .step-indicator-label {
+    font-size: 9px;
+    line-height: 1.1;
+  }
+
+  .registration-card {
+    padding: 24px 20px;
+    border-radius: 24px;
+  }
+
+  .registration-title {
+    font-size: 20px;
+  }
+
+  .form-input,
+  .birth-select {
+    padding: 14px;
+    font-size: 16px; /* iOSでズームを防ぐ */
+  }
+
+  .postal-code-row {
+    flex-direction: column;
+  }
+
+  .postal-search-btn {
+    width: 100%;
+  }
+}
+
+/* エラーメッセージ */
+.error-message {
+  color: #ef4444;
+  font-size: 14px;
+  margin-top: 4px;
+  padding: 8px 12px;
+  background: #fef2f2;
+  border-radius: 8px;
+  border-left: 3px solid #ef4444;
+}
+
+.form-input.error {
+  border: 2px solid #ef4444;
+  background: #fef2f2;
+}
+
+/* 成功メッセージ */
+.success-message {
+  color: #10b981;
+  font-size: 14px;
+  margin-top: 4px;
+  padding: 8px 12px;
+  background: #f0fdf4;
+  border-radius: 8px;
+  border-left: 3px solid #10b981;
+  text-align: center;
+}
+
+/* EmailSent用 */
+.email-sent-message {
+  text-align: center;
+  padding: 20px;
+}
+
+.email-sent-message p {
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.email-sent-message strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.email-sent-note {
+  font-size: 13px;
+  color: #6b7280;
+  margin-top: 16px;
+}
+
+/* RegistrationComplete用 */
+.complete-message {
+  text-align: center;
+  padding: 20px;
+}
+
+.complete-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #10b981;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 auto 20px;
+}
+
+.complete-message p {
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.complete-message strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}

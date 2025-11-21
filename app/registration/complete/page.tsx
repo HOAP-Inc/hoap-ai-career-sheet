@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { ProfileData } from '@/types';
-import '@/pages/registration/RegistrationForm.css';
+import '../RegistrationForm.css';
 
 export default function RegistrationComplete() {
   const router = useRouter();

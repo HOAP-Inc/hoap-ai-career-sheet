@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { sendVerificationEmail } from '@/utils/api';
-import '@/pages/registration/RegistrationForm.css';
+import './RegistrationForm.css';
 
 export default function EmailRegister() {
   const [email, setEmail] = useState('');

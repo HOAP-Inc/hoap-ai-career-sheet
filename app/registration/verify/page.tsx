@@ -22,7 +22,8 @@ export default function Verify() {
 
   useEffect(() => {
     // URLパラメータからtokenを取得
-    const tokenParam = searchParams.get('token');
+    // Next.js 15では searchParams が null の可能性があるため、オプショナルチェーンを使用
+    const tokenParam = searchParams?.get('token') ?? null;
     if (tokenParam) {
       setToken(tokenParam);
       // tokenがある場合は自動認証を試みる

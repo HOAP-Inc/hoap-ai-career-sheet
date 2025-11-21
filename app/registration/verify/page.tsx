@@ -5,6 +5,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { verifyToken, verifyCode, resendVerificationEmail } from '@/utils/api';
 import '../RegistrationForm.css';
 
+// Next.js 15: useSearchParams を使用するため、動的レンダリングを強制
+export const dynamic = 'force-dynamic';
+
 export default function Verify() {
   const router = useRouter();
   const searchParams = useSearchParams();

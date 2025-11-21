@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import type { CareerItem } from '../../types';
 import { TagSelector } from '../../components/TagSelector';

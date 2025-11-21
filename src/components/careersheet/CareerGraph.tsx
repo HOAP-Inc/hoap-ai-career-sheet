@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useRef, useEffect } from 'react';
 import type { CareerItem } from '../../types';
 import { CareerDetailModal } from './CareerDetailModal';

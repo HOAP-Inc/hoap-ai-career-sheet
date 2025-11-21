@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react';
 import type { ProfileData, CareerItem } from '../types';
 import './HearingForm.css';

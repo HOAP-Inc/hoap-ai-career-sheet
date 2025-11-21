@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useEffect, useRef } from 'react'
 import type { ProfileData } from '../../types'
 import './ProfileEditModal.css'

@@ -1,69 +1,23 @@
 /**
  * API呼び出し用のユーティリティ
- * USE_MOCK_API=true の場合はモックレスポンスを返します
+ * Next.js の /api/ ルートを使用（相対パス）
  */
-
-// モックモードの切り替え（環境変数で制御、デフォルトはfalse = 実際のAPI使用）
-const USE_MOCK_API = import.meta.env.VITE_USE_MOCK_API === 'true';
-const MOCK_DELAY = 1000; // モック時の遅延時間（ms）
-
-// APIのベースURL（本番とローカルで自動切り替え）
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-
-// モック用の遅延関数
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /**
  * 認証メール送信API
  */
 export const sendVerificationEmail = async (email: string): Promise<void> => {
-  console.log('📧 sendVerificationEmail called:', {
-    email,
-    USE_MOCK_API,
-    API_BASE_URL,
-    fullUrl: `${API_BASE_URL}/api/send-verification-code`,
+  const response = await fetch('/api/send-verification-code', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email }),
   });
 
-  if (USE_MOCK_API) {
-    // モック環境ではモックレスポンスを返す
-    console.log('📧 [MOCK] 認証メール送信:', email);
-    await delay(MOCK_DELAY);
-    return;
-  }
-
-  // 実際のAPIを呼び出す
-  // API_BASE_URLが空の場合は相対パスを使用（Vercelデプロイ時）
-  const url = API_BASE_URL 
-    ? `${API_BASE_URL}/api/send-verification-code`
-    : '/api/send-verification-code';
-  console.log('📧 Calling API:', url);
-  
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
-
-    console.log('📧 API Response:', {
-      status: response.status,
-      statusText: response.statusText,
-      ok: response.ok,
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      console.error('📧 API Error:', errorData);
-      throw new Error(errorData.error || 'メール送信に失敗しました');
-    }
-
-    const result = await response.json().catch(() => ({}));
-    console.log('📧 API Success:', result);
-  } catch (error) {
-    console.error('📧 Fetch Error:', error);
-    throw error;
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error || 'メール送信に失敗しました');
   }
 };
 
@@ -71,16 +25,7 @@ export const sendVerificationEmail = async (email: string): Promise<void> => {
  * 認証メール再送信API
  */
 export const resendVerificationEmail = async (email: string): Promise<void> => {
-  if (USE_MOCK_API) {
-    console.log('📧 [MOCK] 認証メール再送信:', email);
-    await delay(MOCK_DELAY);
-    return;
-  }
-
-  const url = API_BASE_URL 
-    ? `${API_BASE_URL}/api/send-verification-code`
-    : '/api/send-verification-code';
-  const response = await fetch(url, {
+  const response = await fetch('/api/send-verification-code', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -98,13 +43,6 @@ export const resendVerificationEmail = async (email: string): Promise<void> => {
  * トークン認証API
  */
 export const verifyToken = async (token: string): Promise<{ email: string }> => {
-  if (USE_MOCK_API) {
-    console.log('🔐 [MOCK] トークン認証:', token);
-    await delay(MOCK_DELAY);
-    // モック用のemailを返す（実際のトークンから取得できないため）
-    return { email: 'test@example.com' };
-  }
-
   const response = await fetch('/api/auth/verify-token', {
     method: 'POST',
     headers: {
@@ -125,26 +63,14 @@ export const verifyToken = async (token: string): Promise<{ email: string }> => 
  * 認証コード認証API
  */
 export const verifyCode = async (code: string): Promise<{ email: string }> => {
-  if (USE_MOCK_API) {
-    console.log('🔐 [MOCK] 認証コード認証:', code);
-    await delay(MOCK_DELAY);
-    
-    // EmailRegisterで入力されたemailをlocalStorageから取得
-    const email = localStorage.getItem('registration_email') || 'test@example.com';
-    return { email };
-  }
-
   // EmailRegisterで入力されたemailをlocalStorageから取得
   const email = localStorage.getItem('registration_email');
-  
+
   if (!email) {
     throw new Error('メールアドレスが見つかりません');
   }
 
-  const url = API_BASE_URL 
-    ? `${API_BASE_URL}/api/verify-code`
-    : '/api/verify-code';
-  const response = await fetch(url, {
+  const response = await fetch('/api/verify-code', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -177,16 +103,7 @@ export const registerUser = async (data: {
   password: string;
   agreedToPrivacy: boolean;
 }): Promise<void> => {
-  if (USE_MOCK_API) {
-    console.log('✅ [MOCK] ユーザー登録:', data);
-    await delay(MOCK_DELAY);
-    return;
-  }
-
-  const url = API_BASE_URL 
-    ? `${API_BASE_URL}/api/register-user`
-    : '/api/register-user';
-  const response = await fetch(url, {
+  const response = await fetch('/api/register-user', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -199,6 +116,3 @@ export const registerUser = async (data: {
     throw new Error(errorData.error || '登録に失敗しました');
   }
 };
-
-
-

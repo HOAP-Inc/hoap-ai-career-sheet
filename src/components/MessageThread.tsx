@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState, useRef, useEffect } from 'react';
 import type { Message, MessageThread as MessageThreadType } from '../types';
 import { CURRENT_USER_ID } from '../data/mockMessages';
